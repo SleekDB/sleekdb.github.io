@@ -1,4 +1,49 @@
 html, body {
   font-family: product sans,Helvetica,Arial,serif;
   -webkit-font-smoothing: antialiased;
+  margin: 10px 0px;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(113, 133, 243);
+}
+
+a:hover {
+  color: rgb(248, 121, 121);
+}
+
+p {
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: auto auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.header h1 {
+  padding: 0px;
+  margin: 0px;
+  font-size: 40px;
+}
+
+.header h1 a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.intro {
+  /* border-bottom: 4px solid rgb(183, 197, 255); */
+  padding: 30px 20px;
 }
