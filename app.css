@@ -30,6 +30,29 @@ p {
   background-color: #000;
   color: #fff;
   padding: 10px 20px;
+  display: flex;
+  align-items: center;
+}
+
+.header .menu {
+  display: flex;
+  flex-grow: 1;
+  margin-left: 20px;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.header .menu .link {
+  padding: 5px;
+  font-weight: bold;
+}
+
+.header .menu a.link {
+  color: rgb(240, 243, 43);
+}
+
+.header .menu a.link:hover {
+  color: #fff;
 }
 
 .header h1 {
@@ -44,6 +67,33 @@ p {
 }
 
 .intro {
-  /* border-bottom: 4px solid rgb(183, 197, 255); */
+  border-bottom: 4px solid #000;
   padding: 30px 20px;
+}
+
+.intro p {
+  font-size: 20px;
+  line-height: 35px;
+}
+
+.badge {
+  background-color: #7085f3;
+  padding: 10px;
+  font-size: 25px;
+  color: #fff;
+}
+
+.black-badge {
+  background-color: #000;
+  padding: 5px 10px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.bullet-box {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: #7085f3;
+  margin-right: 5px;
 }
