@@ -14,8 +14,9 @@ a:hover {
 }
 
 p {
-  font-size: 18px;
-  line-height: 26px;
+  font-size: 16px;
+  margin: 5px 0px;
+  color: rgb(41, 40, 49);
 }
 
 .container {
@@ -32,6 +33,7 @@ p {
   padding: 10px 20px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .header .menu {
@@ -66,14 +68,43 @@ p {
   text-decoration: none;
 }
 
+@media only screen and (max-width: 600px) {
+  html, body {
+    padding: 0px;
+    margin: 0px;
+  }
+  .header .menu {
+    display: flex;
+    flex-grow: 1;
+    margin-left: 0px;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .header {
+    padding: 10px 10px;
+    justify-content: center;
+  }
+  .container {
+    width: 100%;
+  }
+  .header .menu {
+    padding-top: 5px;
+  }
+  .header .menu a.link {
+    font-size: 14px;
+  }
+  .header h1 {
+    font-size: 25px;
+  }
+}
+
 .intro {
   border-bottom: 4px solid #000;
   padding: 30px 20px;
 }
 
 .intro p {
-  font-size: 20px;
-  line-height: 35px;
+  font-size: 16px;
 }
 
 .badge {
@@ -92,8 +123,29 @@ p {
 
 .bullet-box {
   display: inline-block;
-  width: 15px;
-  height: 15px;
-  background-color: #7085f3;
+  min-width: 12px;
+  min-height: 12px;
+  background-color: #426bda;
   margin-right: 5px;
+  border-radius: 100%;
+}
+
+.features-block .two-panel {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.features-block .two-panel div {
+  flex-grow: 1;
+}
+
+.features-block .two-panel div p {
+  display: flex;
+  align-items: center;
+}
+
+h1, h3 {
+  margin: 0px;
+  margin-bottom: 12px;
+  padding: 0px;
 }
