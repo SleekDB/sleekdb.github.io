@@ -42,6 +42,7 @@ p {
   margin-left: 20px;
   flex-direction: row;
   justify-content: flex-end;
+  min-width: 500px;
 }
 
 .header .menu .link {
@@ -68,7 +69,7 @@ p {
   text-decoration: none;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   html, body {
     padding: 0px;
     margin: 0px;
