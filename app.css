@@ -136,17 +136,42 @@ p {
   flex-wrap: wrap;
 }
 
-.features-block .two-panel div {
+.features-block .two-panel .panel-block {
   flex-grow: 1;
 }
 
 .features-block .two-panel div p {
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 
 h1, h3 {
   margin: 0px;
   margin-bottom: 12px;
   padding: 0px;
+}
+
+.list-block {
+  display: flex;
+}
+
+.list-block .list-icon {
+  flex-grow: 0;
+  max-width: 14px;
+  padding-right: 5px;
+}
+
+.list-block .list-block-content {
+  flex-grow: 1;
+}
+
+.list-block .list-block-content .list-block-header {
+  font-weight: bold;
+  padding-bottom: 2px;
+}
+
+.list-block .list-block-content .list-block-body {
+  line-height: 22px;
+  font-size: 15px;
+  color: #444;
 }
