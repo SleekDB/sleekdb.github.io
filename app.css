@@ -69,7 +69,7 @@ p {
   text-decoration: none;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 850px) {
   html, body {
     padding: 0px;
     margin: 0px;
@@ -82,7 +82,6 @@ p {
     justify-content: center;
   }
   .header {
-    padding: 10px 10px;
     justify-content: center;
   }
   .container {
@@ -90,9 +89,6 @@ p {
   }
   .header .menu {
     padding-top: 5px;
-  }
-  .header .menu a.link {
-    font-size: 14px;
   }
   .header h1 {
     font-size: 25px;
@@ -111,7 +107,7 @@ p {
 .badge {
   background-color: #7085f3;
   padding: 10px;
-  font-size: 25px;
+  /* font-size: 25px; */
   color: #fff;
 }
 
@@ -175,4 +171,28 @@ h1, h3 {
 .list-block .list-block-content .list-block-body {
   font-size: 16px;
   color: #333;
+}
+
+.black-intro {
+  background-color: #000;
+  color: #fff;
+}
+
+.black-intro p {
+  color: #fff;
+}
+
+.white-badge {
+  background-color: #fff;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #000;
+}
+
+.yellow-color {
+  color: rgb(240, 243, 43);
+}
+
+.pt5 {
+  padding-top: 5px;
 }

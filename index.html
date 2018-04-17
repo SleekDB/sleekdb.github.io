@@ -101,11 +101,11 @@
             <div class="list-icon"><span class="bullet-box"></span></div>
             <div class="list-block-content">
               <div class="list-block-header">
-                Filter, sort, skip, limit and search <datalist></datalist>.
+                Filter, sort, skip, limit and search.
               </div>
               <div class="list-block-body">
-                Use multiple conditional comparisons, fulltext like search, <br/>sorting 
-                on multiple properties of your data.
+                Use multiple conditional comparisons, text search, <br/>sorting 
+                on multiple properties and nested properties.
               </div>
             </div>
           </div>
@@ -146,6 +146,25 @@
         </div>
       </div>
 
+    </div>
+    <div class="intro black-intro">
+      <h3><span class="white-badge">How auto-cache works in SleekDB?</span></h3>
+      <div class="pt5"></div>
+      <p>
+        In the "config.php" file the <span class="yellow-color">enableAutoCache</span> is set to <span class="yellow-color">true</span> by default!
+      </p>
+      <p>
+        This tells SleekDB to cache the data of an unique query and later re-use the cache for the same query.
+      </p>
+      <p>
+        To keep the cached data synced with new data, SleekDB will delete all cache when we insert any new data to a store.
+      </p>
+      <p>
+        💡 But you can disable it by updating the value of <span class="yellow-color">enableAutoCache</span> to <span class="yellow-color">false</span> in "config.php" file.
+      </p>
+      <p>
+        ⚡️ Offcourse you can manually manage cache data with methods that SleekDB provides.<br/>Available caching methods's are: <span class="yellow-color">makeCache()</span>, <span class="yellow-color">useCache()</span>, <span class="yellow-color">deleteCache()</span> and <span class="yellow-color">deleteAllCache()</span>
+      </p>
     </div>
     <div class="intro">
       <p>
