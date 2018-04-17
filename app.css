@@ -126,9 +126,10 @@ p {
   display: inline-block;
   min-width: 12px;
   min-height: 12px;
-  background-color: #426bda;
+  background-color: #000;
   margin-right: 5px;
-  border-radius: 100%;
+  margin-top: 4px;
+  position: relative;
 }
 
 .features-block .two-panel {
@@ -153,6 +154,7 @@ h1, h3 {
 
 .list-block {
   display: flex;
+  margin-bottom: 5px;
 }
 
 .list-block .list-icon {
@@ -171,7 +173,6 @@ h1, h3 {
 }
 
 .list-block .list-block-content .list-block-body {
-  line-height: 22px;
-  font-size: 15px;
-  color: #444;
+  font-size: 14px;
+  color: #333;
 }
