@@ -106,9 +106,9 @@ p {
 
 .badge {
   background-color: #7085f3;
-  padding: 10px;
-  /* font-size: 25px; */
+  padding: 5px 10px;
   color: #fff;
+  display: inline-block;
 }
 
 .black-badge {
@@ -116,6 +116,7 @@ p {
   padding: 5px 10px;
   font-size: 18px;
   color: #fff;
+  display: inline-block;
 }
 
 .bullet-box {
@@ -191,6 +192,14 @@ h1, h3 {
 
 .yellow-color {
   color: rgb(240, 243, 43);
+}
+
+.blue-color {
+  color: rgb(47, 151, 236);
+}
+
+.red-color {
+  color: rgb(248, 60, 60);
 }
 
 .pt5 {
