@@ -104,6 +104,17 @@ p {
   font-size: 16px;
 }
 
+li {
+  margin-top: 5px;
+}
+
+pre {
+  font-size: 16px;
+  color: rgb(132, 70, 190);
+  padding: 0px;
+  margin: 5px 0px;
+}
+
 .badge {
   background-color: #7085f3;
   padding: 5px 10px;

@@ -151,7 +151,31 @@
       <h3><span class="badge">How to install and use SleekDB?</span></h3>
       <div class="pt5"></div>
       <p>
-        Coming Soon.
+        To use SleekDB make sure that you have PHP up and running in your system, and SleekDB has write permission.
+      </p>
+      <p>
+        <strong>Using SleekDB in a PHP project</strong>
+      </p>
+      <ol>
+        <li><a href=" https://github.com/rakibtg/SleekDB/archive/master.zip">Download</a> the latest version and extract the ZIP file inside your project directory.</li>
+        <li>
+          Import the <span class="red-color">SleekDB.php</span> file where you want to use SleekDB. Example:
+
+<pre>
+require_once "../SleekDB/SleekDB.php";
+</pre>
+
+        </li>
+        <li>
+          Create a new SleekDB object. You will need to provide a <span class="red-color">store</span> name while creating the object. Example:
+<pre>
+$sdb = new SleekDB( "items" );
+</pre>
+        </li>
+      </ol>
+      <p>
+        You need to include the SleekDB.php file inside our PHP project.<br/>
+        To do that at first 
       </p>
     </div>
     <div class="intro">
