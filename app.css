@@ -109,10 +109,12 @@ li {
 }
 
 pre {
-  font-size: 16px;
+  font-size: 15px;
+  font-family: 'Fira Mono', sans-serif;
   color: rgb(132, 70, 190);
   padding: 0px;
   margin: 5px 0px;
+  line-height: 20px;
 }
 
 .badge {
@@ -215,4 +217,13 @@ h1, h3 {
 
 .pt5 {
   padding-top: 5px;
+}
+
+.note-block {
+  padding: 20px;
+  background-color: rgb(239, 239, 255);
+  border: 1px solid rgb(228, 228, 252);
+  font-size: 15px !important;
+  line-height: 22px;
+  margin: 10px 0px;
 }
