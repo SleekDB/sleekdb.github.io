@@ -171,11 +171,33 @@ require_once "../SleekDB/SleekDB.php";
 <pre>
 $sdb = new SleekDB( "items" );
 </pre>
+Note that here "items" is a store name, it's like the table name for MySQL. This object is only 
+responsible for the "items" store. We could create more than one object for each stores.
+        </li>
+        <li>
+          Time to test! Let's insert some data.
+<pre>
+// An array that we want to insert.
+$items = [
+  [
+    "title" => "Google Pixel 2",
+    "about" => "The unlocked Pixel 2 provides..."  
+  ],
+  [
+    "title" => "Google Pixel XL",
+    "about" => "The unlocked biggest Pixel 2..."  
+  ]
+];
+$results = $sdb->insertMany( $items ); 
+</pre>
+The results variable would countain all the inserted data and with the _id property.
         </li>
       </ol>
       <p>
-        You need to include the SleekDB.php file inside our PHP project.<br/>
-        To do that at first 
+        <strong>Using SleekDB Independently</strong>
+      </p>
+      <p>
+        SleekDB would have a server that can handle all the data and returns them, works seperately and independently. This feature is not implemented yet.
       </p>
     </div>
     <div class="intro">
