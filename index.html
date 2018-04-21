@@ -444,46 +444,31 @@ $user = $usersDB->where( 'products.totalSaved', '>', 10 )
 </pre>
     </div>
     
-
-    <div class="intro">
-      <h3><span class="black-badge">Skip Data</span></h3>
-      <div class="pt5"></div>
-      <p>
-        Coming Soon.
-      </p>
-    </div>
-    
-
-    <div class="intro">
-      <h3><span class="black-badge">Limit Data</span></h3>
-      <div class="pt5"></div>
-      <p>
-        Coming Soon.
-      </p>
-    </div>
-    
-
-    <div class="intro">
-      <h3><span class="black-badge">Sort Data</span></h3>
-      <div class="pt5"></div>
-      <p>
-        Coming Soon.
-      </p>
-    </div>
-    
-    <div class="intro">
-      <h3><span class="black-badge">Search Data</span></h3>
-      <div class="pt5"></div>
-      <p>
-        Coming Soon.
-      </p>
-    </div>
-    
     <div class="intro">
       <h3><span class="black-badge">Edit Data</span></h3>
       <div class="pt5"></div>
       <p>
-        Coming Soon.
+        To edit a data object we would use the <span class="red-color">update()</span> method.
+      </p>
+      <p>
+        The update method takes only one argument.
+      </p>
+<pre>
+update( $updateable );
+</pre>
+      <p>
+        Lets update the "totalBought" value of a user whose name is "Joshua Edwards"
+      </p>
+<pre>
+$updateable = [
+  'products' => [
+    'totalBought' => 1
+  ]
+];
+$usersDB->where( 'name', '=', 'Joshua Edwards' )->update( $updateable );
+</pre>
+      <p>
+        You can use more than one where condition if required.
       </p>
     </div>
     
@@ -492,10 +477,131 @@ $user = $usersDB->where( 'products.totalSaved', '>', 10 )
       <h3><span class="black-badge">Delete Data</span></h3>
       <div class="pt5"></div>
       <p>
-        Coming Soon.
+          To delete a data object we would use the <span class="red-color">delete()</span> method. Example:
+        </p>
+        <p>
+          Lets delete the user whose name is "Joshua Edwards"
+        </p>
+<pre>
+$usersDB->where( 'name', '=', 'Joshua Edwards' )->delete();
+</pre>
+      <p>
+        You can use more than one where condition if required.
       </p>
     </div>
 
+    <div class="intro">
+      <h3><span class="black-badge">Skip and Limit Data</span></h3>
+      <div class="pt5"></div>
+      <p>
+        To skip a set of record we will use the <span class="red-color">skip()</span> method. Example:
+      </p>
+<pre>
+// Skip the first 5 users.
+$users = $usersDB->skip( 5 )->fetch();
+</pre>
+      <p>
+        To limit a set of record we will use the <span class="red-color">limit()</span> method. Example:
+      </p>
+<pre>
+// Fetch only 5 users.
+$users = $usersDB->limit( 5 )->fetch();
+</pre>
+      <p>
+        <strong>Query Offset</strong>
+      </p>
+      <p>
+        To obtain the query offset feature we can chain <span class="red-color">skip()</span> and <span class="red-color">limit()</span> 
+        into one query. Example:
+      </p>
+<pre>
+$users = $usersDB
+          ->where( 'age', '>=', 18 )
+          ->skip( 15 )
+          ->limit( 5 )
+        ->fetch();
+</pre>
+      <p>
+        The above query will skip first 15 records and will limit to next 5 records of data objects. This way we can also perform paginate.
+      </p>
+    </div>
+    
+    <div class="intro">
+      <h3><span class="black-badge">Sort Data</span></h3>
+      <div class="pt5"></div>
+        <p>
+          To sort data objects we would use the <span class="red-color">orderBy()</span> method.
+        </p>
+        <p>
+          The orderBy method takes two argument,
+        </p>
+<pre>
+orderBy( $order, $orderBy );
+</pre>
+        <p>
+          <ol>
+            <li>
+              <strong>$order</strong> argument receives the order direction, "asc" or "desc".
+            </li>
+            <li>
+              <strong>$orderBy</strong> argument receives the property name on which we want to sort. Default is _id property.
+            </li>
+          </ol>
+        </p>
+        <p>
+          Lets sort the data based on total items bought by the user.
+        </p>
+<pre>
+$users = $usersDB
+          ->orderBy( 'desc', 'products.totalBought' )
+          ->limit( 20 )
+        ->fetch();
+</pre>
+    </div>
+    
+    <div class="intro">
+      <h3><span class="black-badge">Search Data</span></h3>
+      <div class="pt5"></div>
+      <p>
+        We can search data using the <span class="red-color">search()</span> method. It utilizes the <a href="http://php.net/manual/en/function.similar-text.php" target="_blank">similar_text()</a> function and 
+        works better on medium length string.
+      </p>
+      <p>
+        The search method takes two argument,
+      </p>
+<pre>
+search( $field, $keyword );
+</pre>
+      <p>
+        <ol>
+          <li>
+            <strong>$field</strong> argument receives the property name on which we want to perform the search.
+          </li>
+          <li>
+            <strong>$keyword</strong> is the search keyword.
+          </li>
+        </ol>
+      </p>
+      <p>
+        Lets search for users who lives in Canada.
+      </p>
+<pre>
+$users = $usersDB
+          ->search( 'location.country', 'Canada' )
+        ->fetch();
+</pre>
+      <p>
+        To ensure proper search result we can search more than one property at a time. Example,
+      </p>
+<pre>
+$users = $usersDB
+          ->search( 'bio', 'I Love Canada' )
+          ->search( 'location.country', 'Canada' )
+          ->where( 'active', '=', 1 )
+        ->fetch();
+</pre>
+    </div>
+    
     <div class="intro">
       <h3><span class="black-badge">Use Cache</span></h3>
       <div class="pt5"></div>
