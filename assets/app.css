@@ -25,6 +25,12 @@ p {
   margin: auto auto;
   display: flex;
   flex-direction: column;
+  padding-top: 60px;
+}
+
+.header-wrapper {
+  width: 100%;
+  position: fixed;
 }
 
 .header {
@@ -34,6 +40,9 @@ p {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  width: 90%;
+  max-width: 1000px;
+  margin: auto auto;
 }
 
 .header .menu {
@@ -83,6 +92,7 @@ p {
   }
   .header {
     justify-content: center;
+    width: 100%;
   }
   .container {
     width: 100%;
