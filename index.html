@@ -508,7 +508,7 @@ $users = $usersDB->skip( 5 )->fetch();
 $users = $usersDB->limit( 5 )->fetch();
 </pre>
       <p>
-        <strong>Query Offset</strong>
+        <span class="badge">Query Offset</span>
       </p>
       <p>
         To obtain the query offset feature we can chain <span class="red-color">skip()</span> and <span class="red-color">limit()</span> 
@@ -606,23 +606,49 @@ $users = $usersDB
       <h3><span class="black-badge">Use Cache</span></h3>
       <div class="pt5"></div>
       <p>
-        Coming Soon.
+        The <span class="red-color">useCache()</span> method would return the data from the cache storage, if cache dosent exists then it 
+        would fetch the result then creates the cache for later use and return the data. Example,
       </p>
+<pre>
+$user = $usersDB
+          ->where( 'active', '=', 1 )
+          ->where( 'location.country', '=' 'United States' )
+          ->search( 'bio', 'PHP developer' )
+          ->search( 'bio', 'SleekDB' )
+          ->orderBy( 'desc', 'rank' )
+          ->limit( 20 )
+          ->useCache() // Use the cache data.
+        ->fetch();
+</pre>
     </div>
 
     <div class="intro">
       <h3><span class="black-badge">Re-generate Cache</span></h3>
       <div class="pt5"></div>
       <p>
-        Coming Soon.
+        To re-generate the cache for a query we would use the <span class="red-color">makeCache()</span> method. 
       </p>
-    </div>
+      <p>
+        Its more like the 
+        <span class="red-color">useCache()</span> method but the only difference is that instead of looking for existing cache data 
+        it would replace the old cache by generating a new cache from fresh data fetched. Example,
+      </p>
+<pre>
+$user = $usersDB
+          ->search( 'bio', 'SleekDB' )
+          ->orderBy( 'desc', 'rank' )
+          ->skip( 80 )
+          ->limit( 20 )
+          ->makeCache() // Re-generate the cache data.
+        ->fetch();
+</pre>
+    </div> 
 
     <div class="intro">
       <h3><span class="black-badge">Delete Cache</span></h3>
       <div class="pt5"></div>
       <p>
-        Coming Soon.
+        To delete the cache of a query we would use the <span class="red-color">deleteCache()</span> method.
       </p>
     </div>
 
