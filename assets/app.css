@@ -111,7 +111,6 @@ li {
 pre {
   font-size: 15px;
   font-family: 'Fira Mono', sans-serif;
-  color: rgb(132, 70, 190);
   padding: 0px;
   margin: 5px 0px;
   line-height: 20px;
@@ -122,6 +121,7 @@ pre {
   padding: 5px 10px;
   color: #fff;
   display: inline-block;
+  margin-top: 10px;
 }
 
 .black-badge {
@@ -226,4 +226,12 @@ h1, h3 {
   font-size: 15px !important;
   line-height: 22px;
   margin: 10px 0px;
+}
+
+.small-font {
+  font-size: 15px;
+}
+
+.pl5 {
+  padding-left: 5px !important;
 }
