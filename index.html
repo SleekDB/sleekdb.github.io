@@ -37,7 +37,7 @@
       <div class="header-link-con">
         <div class="logo"><h1><a href="/">SleekDB</a></h1></div>
         <div class="menu">
-          <a class="link" id="doc_link" href="">Documentaion</a> <span class="link">&bull;</span> 
+          <a class="link" id="doc_link" href="">Documentation</a> <span class="link">&bull;</span> 
           <!-- <a class="link" href="">Tutorial</a> <span class="link">&bull;</span>  -->
           <a class="link" href="https://github.com/rakibtg/SleekDB" target="_blank">GitHub</a>
         </div>
@@ -60,7 +60,7 @@
       <h3>SleekDB - A NoSQL Database made using PHP</h3>
       <p>SleekDB is a simple NoSQL database that store data in JSON files.</p>
       <p>
-        Intentionally SleekDB is not desgined for heavy-load IO operations, it is desgined to have 
+        Intentionally SleekDB is not designed for heavy-load IO operations, it is designed to have 
         a simple solution where we need a database for managing small amount of data!
       </p>
     </div>
@@ -76,7 +76,7 @@
                 Light-weight, only ~30Kb.
               </div>
               <div class="list-block-body">
-                Stores data in plaintext utilizing JSON format, <br/>no binary conversion needed to store or fetch the data.                
+                Stores data in plain-text utilizing JSON format, <br/>no binary conversion needed to store or fetch the data.                
               </div>
             </div>
           </div>
@@ -228,14 +228,14 @@ $items = [
 ];
 $results = $sdb->insertMany( $items ); 
 </pre>
-The results variable would countain all the inserted data and with the _id property.
+The results variable would contain all the inserted data and with the _id property.
         </li>
       </ol>
       <p>
         <strong>Using SleekDB Independently</strong>
       </p>
       <p>
-        SleekDB would have a server that can handle all the data and returns them, works seperately and independently. This feature is not implemented yet.
+        SleekDB would have a server that can handle all the data and returns them, works separately and independently. This feature is not implemented yet.
       </p>
     </div>
     <div class="intro">
@@ -266,7 +266,7 @@ $config[ 'storeLocation' ] = '/home/user/datastore/';
         To disable it update the value of <span class="blue-color">enableAutoCache</span> to <span class="red-color">false</span> in the $config array.
       </p>
       <p class="note-block">
-        Note that you can manually manage cache data with methods that SleekDB provides. Available caching methods's are: <span class="blue-color">makeCache()</span>, <span class="blue-color">useCache()</span>, <span class="blue-color">deleteCache()</span> and <span class="blue-color">deleteAllCache()</span>
+        Note that you can manually manage cache data with methods that SleekDB provides. Available caching method's are: <span class="blue-color">makeCache()</span>, <span class="blue-color">useCache()</span>, <span class="blue-color">deleteCache()</span> and <span class="blue-color">deleteAllCache()</span>
       </p>
       <p><strong class="red-color">3. timeOut</strong></p>
       <p>
@@ -279,7 +279,7 @@ $config[ 'storeLocation' ] = '/home/user/datastore/';
       <div class="pt5"></div>
       <p>
         The "store" contains all your data as JSON files, we call them data 
-        object. While using SleekDB you dont have to manage a store.
+        object. While using SleekDB you don't have to manage a store.
       </p>
       <p>
         When you create a new SleekDB object you need to provide a store name, if 
@@ -422,14 +422,14 @@ where( $fieldName, $condition, $value );
             </p>
             <p>
               <strong>Example:</strong> From our above users object if we want to target the "country" property of a user, then we would 
-              pass <span class="blue-color">location.country</span> in this argument, beacuse "location" is the parent property of the "country" property in 
+              pass <span class="blue-color">location.country</span> in this argument, because "location" is the parent property of the "country" property in 
               our data object.
             </p>
           </li>
           <li>
             <strong>$condition</strong>
             <p>
-              To apply the comparisonal filters we use this argument.
+              To apply the comparison filters we use this argument.
             </p>
             <p>
               Allowed comparisonal conditions are:
