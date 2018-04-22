@@ -37,34 +37,35 @@ p {
   background-color: #000;
   color: #fff;
   padding: 10px 0px;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
   width: 90%;
   max-width: 1000px;
   margin: auto auto;
   margin-top: 20px;
 }
 
-.header .logo {
-  margin: 0px 20px;
-}
-
-.header .menu {
+.header .header-link-con {
+  margin: auto auto;
+  width: 100%;
+  max-width: 1000px;
   display: flex;
-  flex-grow: 1;
-  margin: 0px 20px;
-  flex-direction: row;
-  justify-content: flex-end;
-  min-width: 500px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
+.header .header-link-con .logo {
+  margin: 0px 20px;
+}
+.header .menu {
+  flex-grow: 1;
+  text-align: right;
+  padding-right: 20px;
+}
 .header .menu .link {
   padding: 5px;
   font-weight: bold;
 }
 
-.header .menu a.link {
+.header a.link {
   color: rgb(240, 243, 43);
 }
 
@@ -88,18 +89,13 @@ p {
     padding: 0px;
     margin: 0px;
   }
-  .header .menu {
-    display: flex;
-    flex-grow: 1;
-    margin-left: 0px;
-    flex-direction: row;
-    justify-content: center;
+  .header, .undoActAnimationOnHeader {
+    margin: 0px !important;
+    width: 100% !important;
   }
-  .header {
-    justify-content: center;
-    width: 100%;
-    margin-top: 0px;
-    padding: 5px 0px;
+  .header .menu {
+    text-align: center;
+    padding-right: 0px;
   }
   .container {
     width: 100%;
@@ -198,7 +194,7 @@ pre {
   background-color: #000;
   margin-right: 5px;
   margin-top: 4px;
-  position: relative;
+  /* position: relative; */
 }
 
 .features-block .two-panel {
