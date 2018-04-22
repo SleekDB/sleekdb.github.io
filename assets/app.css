@@ -110,6 +110,9 @@ p {
   .header h1 {
     font-size: 25px;
   }
+  .docs_menu {
+    width: 100% !important;
+  }
 }
 
 .actAnimationOnHeader {
@@ -290,4 +293,125 @@ h1, h3 {
 
 .pl5 {
   padding-left: 5px !important;
+}
+
+.contact {
+  background-color: #1ca1f2;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact .contact_label {
+  font-weight: bold;
+  font-size: 25px;
+  color: #fff;
+  padding-bottom: 20px;
+}
+
+.contact form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact form textarea {
+  border: 0px;
+  font-size: 14px;
+  padding: 15px;
+}
+
+.contact form button {
+  padding: 0px;
+  margin: 0px;
+  display: block;
+  padding: 10px;
+  font-size: 16px;
+  border: 0px;
+  background-color: #fff;
+  width: 150px;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #1ca1f2;
+}
+
+.contact form button:hover {
+  background-color: #178bd2;
+  color: #fff;
+  cursor: pointer;
+}
+
+.contact .contact_dm {
+  font-size: 20px;
+  padding-top: 20px;
+  color: #ebee29;
+  font-weight: bold;
+}
+
+.bb0 {
+  border-bottom: 0px !important;
+}
+
+.dn {
+  display: none !important;
+}
+
+.docs_menu {
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  width: 50%;
+  max-width: 500px;
+  min-width: 250px;
+  overflow: auto;
+  max-height: 400px;
+}
+
+.docs_menu a {
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+.docs_menu a:hover {
+  background-color: #ececd5;
+}
+
+.docs_menu_wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.animate_docs_menu {
+  animation-name: slideDownMenu;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideDownMenu {
+  
+  from {
+    opacity: 0;
+    margin-top: -40px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0px;
+  }
+}
+
+.animate_docs_menu_up {
+  animation-name: slideUpMenu;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideUpMenu {
+  
+  from {
+    opacity: 1;
+    margin-top: 0px;
+  }
+  to {
+    opacity: 0;
+    margin-top: -40px;
+  }
 }

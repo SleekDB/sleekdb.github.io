@@ -15,9 +15,19 @@
     <div id="header" class="header">
       <div class="logo"><h1><a href="/">SleekDB</a></h1></div>
       <div class="menu">
-        <a class="link" href="">Documentaion</a> <span class="link">&bull;</span> 
+        <a class="link" id="doc_link" href="">Documentaion</a> <span class="link">&bull;</span> 
         <a class="link" href="">Tutorial</a> <span class="link">&bull;</span> 
         <a class="link" href="">GitHub</a>
+      </div>
+    </div>
+    <div class="docs_menu_wrapper">
+      <div id="docs_menu_container" class="dn">
+        <a href="">Features</a>
+        <a href="">Install and Use</a>
+        <a href="">Configurations</a>
+        <a href="">Understanding Store</a>
+        <a href="">The Database Object</a>
+        <a href="">Insert Data</a>
       </div>
     </div>
   </div>
@@ -650,16 +660,45 @@ $user = $usersDB
       <h3><span class="black-badge">Delete Cache</span></h3>
       <div class="pt5"></div>
       <p>
-        To delete the cache of a query we would use the <span class="red-color">deleteCache()</span> method.
+        To delete the cache of a query we would use the <span class="red-color">deleteCache()</span> method. Example,
+      </p>
+<pre>
+$user = $usersDB
+          ->search( 'bio', 'SleekDB' )
+          ->orderBy( 'desc', 'rank' )
+          ->skip( 80 )
+          ->limit( 20 )
+        ->deleteCache();
+</pre>
+      <p>
+        Note that if you need to get the data please add the <span class="red-color">fetch()</span> method.
       </p>
     </div>
 
-    <div class="intro">
+    <div class="intro bb0">
       <h3><span class="black-badge">Delete All Cache</span></h3>
       <div class="pt5"></div>
       <p>
-        Coming Soon.
+        To delete all cache use the <span class="red-color">deleteAllCache()</span> method. Example,
       </p>
+<pre>
+$usersDB->deleteAllCache();
+</pre>
+    </div>
+
+    <div class="contact">
+      <div class="contact_label">
+        Tweet us your thoughts.
+      </div>
+      <form action="https://twitter.com/intent/tweet" id="twitter_form" method="get" target="_blank">
+        <textarea name="text" id="" rows="6" maxlength="280">
+
+https://sleekdb.github.io/ #SleekDB @rakibtg</textarea>
+        <button>Post on Twitter</button>
+      </form>
+      <div class="contact_dm">
+        Or, direct message me on twitter @rakibtg
+      </div>
     </div>
     
     <div class="intro">
