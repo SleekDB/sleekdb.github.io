@@ -5,12 +5,36 @@ window.onload = function () {
     hljs.highlightBlock( element )
   }
   document.getElementById('doc_link').addEventListener('click', handleDocNav)
+  var menulinks = this.document.getElementsByClassName('gotoblock')
+  for (let index = 0; index < menulinks.length; index++) {
+    menulinks[index].addEventListener('click', goToBlock)    
+  }
 }
 
+var scrollpls = function( tagid ) {
+  var element = document.getElementById( tagid )
+  window.scroll( {
+    left: 0,
+    top: element.offsetTop
+  } );
+  element.classList += " flash-bg"
+  setTimeout(function(){
+    element.classList = element.classList.value.replace( "flash-bg", "" )
+  }, 1000)
+}
+
+function goToBlock(event) {
+  var id = event.target.href.split('#')[1]
+  scrollpls(id)
+  setTimeout(() => {
+    window.scrollBy(0,-50)
+  }, 50);
+}
 
 var docNavOpen = false
 function handleDocNav(event) {
   event.preventDefault()
+  // console.log(event)
   if ( docNavOpen ) {
     document.getElementById('docs_menu_container').classList = 'docs_menu animate_docs_menu_up'
     setTimeout(function(){

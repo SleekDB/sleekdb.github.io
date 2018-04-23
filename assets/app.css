@@ -411,3 +411,18 @@ h1, h3 {
     margin-top: -40px;
   }
 }
+
+.flash-bg {
+  animation-name: flashbg;
+  animation-duration: 1.5s;
+}
+
+@keyframes flashbg {
+  
+  from {
+    background-color: rgb(228, 184, 118);
+  }
+  to {
+    background-color: #fff;
+  }
+}
