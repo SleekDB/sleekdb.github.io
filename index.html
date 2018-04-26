@@ -217,6 +217,12 @@ composer require rakibtg/sleekdb
 </pre>
       </p>
       <p>
+        Now create the SleekDB object.
+      </p>
+<pre>
+$sdb = new \SleekDB\SleekDB( "items" );
+</pre>
+      <p>
         Find SleekDB on <a href="https://packagist.org/packages/rakibtg/sleekdb" target="_blank">packagist</a>.
       </p>
       <p>
@@ -235,7 +241,7 @@ require_once "../SleekDB/SleekDB.php";
         <li>
           Create a new SleekDB object. You will need to provide a <span class="red-color">store</span> name while creating the object. Example:
 <pre>
-$sdb = new SleekDB( "items" );
+$sdb = new \SleekDB\SleekDB( "items" );
 </pre>
 Note that here "items" is a store name, it's like the table name for MySQL. This object is only 
 responsible for the "items" store. We could create more than one object for each stores.
@@ -755,15 +761,12 @@ https://sleekdb.github.io/ #SleekDB @rakibtg</textarea>
     
     <div class="intro">
       <p>
-        SleekDB is a open-source database licensed under the MIT License.
-      </p>
-      <p>
-        Get the source code of SleekDB on <a href="https://github.com/rakibtg/SleekDB" target="_blank">GitHub</a> 
+        SleekDB is a open-source NoSQL database licensed under the MIT License. Source code on <a href="https://github.com/rakibtg/SleekDB" class="black-badge" target="_blank">GitHub</a> 
       </p>
       <p>
         Website designed by <a href="https://twitter.com/rakibtg">@rakibtg</a> &bull; This website is also <a href="https://github.com/SleekDB/sleekdb.github.io" target="_blank">open-source</a>!
       </p>
-      <p style="text-align: center; padding-top: 20px;">
+      <p style="text-align: center; padding-top: 50px;">
          <span style="font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 22px;">©</span> Copyright - SleekDB &bull; By <a href="https://twitter.com/rakibtg">@rakibtg</a>
       </p>
     </div>
