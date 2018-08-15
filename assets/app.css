@@ -14,18 +14,55 @@ a:hover {
 }
 
 p {
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 22px;
   margin: 5px 0px;
   color: rgb(41, 40, 49);
 }
 
 .container {
   width: 90%;
-  max-width: 1000px;
+  max-width: 1300px;
   margin: auto auto;
   display: flex;
+  flex-direction: row;
+  padding-top: 65px;
+}
+
+div#sidebar {
+  padding-top: 10px;
+  border-right: 4px solid #000;
+  min-width: 220px;
+  position: relative;
+}
+div#sidebar div#docs_menu_sidebar {
+  display: flex;
   flex-direction: column;
-  padding-top: 70px;
+  position: fixed;
+  min-width: 220px;
+}
+div#sidebar div#docs_menu_sidebar a {
+  padding: 6px 10px;
+  color: #2d4ef7;
+  font-size: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+div#sidebar div#docs_menu_sidebar a ion-icon {
+  padding-right: 5px;
+}
+div#sidebar div#docs_menu_sidebar a:hover {
+  color: #000 !important;
+  background-color: #eee !important;
+}
+div#sidebar div#docs_menu_sidebar a.visited {
+  color: #fff;
+  background-color: #000 !important;
+}
+
+div.top-intro {
+  padding-top: 40px;
 }
 
 .header-wrapper {
@@ -38,15 +75,15 @@ p {
   color: #fff;
   padding: 10px 0px;
   width: 90%;
-  max-width: 1000px;
+  max-width: 1300px;
   margin: auto auto;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 .header .header-link-con {
   margin: auto auto;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1300px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -120,7 +157,7 @@ p {
 @keyframes animateHeader {
   from {
     margin-top: 20px;
-    max-width: 1000px;
+    max-width: 1300px;
     width: 90%;
   }
   to {
@@ -145,7 +182,7 @@ p {
   }
   to {
     margin-top: 20px;
-    max-width: 1000px;
+    max-width: 1300px;
     width: 90%;
   }
 }
@@ -156,11 +193,13 @@ p {
 }
 
 .intro p {
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 22px;
 }
 
 li {
   margin-top: 15px;
+  font-size: 15px;
 }
 
 pre {
@@ -172,17 +211,18 @@ pre {
 }
 
 .badge {
-  background-color: #7085f3;
-  padding: 5px 10px;
-  color: #fff;
+  padding: 10px 0px;
+  color: #7085f3;
   display: inline-block;
   margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .black-badge {
   background-color: #000;
   padding: 5px 10px;
-  font-size: 18px;
+  font-size: 16px;
   color: #fff;
   display: inline-block;
 }
@@ -238,7 +278,7 @@ h1, h3 {
 }
 
 .list-block .list-block-content .list-block-body {
-  font-size: 16px;
+  font-size: 15px;
   color: #333;
 }
 
@@ -292,55 +332,9 @@ h1, h3 {
 }
 
 .contact {
-  background-color: #1ca1f2;
   padding: 20px;
   display: flex;
   flex-direction: column;
-}
-
-.contact .contact_label {
-  font-weight: bold;
-  font-size: 25px;
-  color: #fff;
-  padding-bottom: 20px;
-}
-
-.contact form {
-  display: flex;
-  flex-direction: column;
-}
-
-.contact form textarea {
-  border: 0px;
-  font-size: 14px;
-  padding: 15px;
-}
-
-.contact form button {
-  padding: 0px;
-  margin: 0px;
-  display: block;
-  padding: 10px;
-  font-size: 16px;
-  border: 0px;
-  background-color: #fff;
-  width: 150px;
-  margin-top: 10px;
-  font-weight: bold;
-  color: #1ca1f2;
-}
-
-.contact form button:hover {
-  background-color: #178bd2;
-  color: #fff;
-  cursor: pointer;
-}
-
-.contact .contact_dm {
-  font-size: 20px;
-  padding-top: 20px;
-  color: #ebee29;
-  font-weight: bold;
 }
 
 .bb0 {

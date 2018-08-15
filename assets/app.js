@@ -1,4 +1,13 @@
+var introHeight = function() {
+  var arr = document.getElementsByClassName('full-height')
+  for (let index = 0; index < arr.length; index++) {
+    var element = arr[index];
+    element.style.minHeight = ''+(window.innerHeight-70)+'px'
+  }
+}
+
 window.onload = function () {
+  introHeight()
   var arr = document.getElementsByTagName('pre')
   for (let index = 0; index < arr.length; index++) {
     var element = arr[index];
@@ -29,6 +38,14 @@ function goToBlock(event) {
   setTimeout(() => {
     window.scrollBy(0,-50)
   }, 50);
+  var arr = document.getElementsByClassName('gotoblock')
+  for (let index = 0; index < arr.length; index++) {
+    var element = arr[index];
+    element.style.backgroundColor = '#fff'
+    element.style.color = '#2d4ef7'
+  }
+  event.target.style.backgroundColor = '#000000'
+  event.target.style.color = '#fff'
 }
 
 var docNavOpen = false
@@ -51,20 +68,20 @@ function handleDocNav(event) {
   }
 }
 
-window.onscroll = function ( e ) {
-  var windowWidth = document.body["scrollWidth"]
-  if ( windowWidth > 800 ) {
-    if ( document.documentElement.scrollTop > 0 ) {
-      this.document.getElementById( 'header' ).classList.remove( 'undoActAnimationOnHeader' )
-      if ( this.document.getElementById( 'header' ).classList[1] != 'actAnimationOnHeader' ) {
-        this.document.getElementById( 'header' ).classList.add( 'actAnimationOnHeader' )
-        this.document.getElementById( 'header' ).classList.add( 'actAnimationOnHeader' )
-      }
-    } else if ( document.documentElement.scrollTop == 0 ) {
-      if ( this.document.getElementById( 'header' ).classList[1] == 'actAnimationOnHeader' ) {
-        this.document.getElementById( 'header' ).classList.remove( 'actAnimationOnHeader' )
-        this.document.getElementById( 'header' ).classList.add( 'undoActAnimationOnHeader' )
-      }
-    }
-  }
-}
+// window.onscroll = function ( e ) {
+//   var windowWidth = document.body["scrollWidth"]
+//   if ( windowWidth > 800 ) {
+//     if ( document.documentElement.scrollTop > 0 ) {
+//       this.document.getElementById( 'header' ).classList.remove( 'undoActAnimationOnHeader' )
+//       if ( this.document.getElementById( 'header' ).classList[1] != 'actAnimationOnHeader' ) {
+//         this.document.getElementById( 'header' ).classList.add( 'actAnimationOnHeader' )
+//         this.document.getElementById( 'header' ).classList.add( 'actAnimationOnHeader' )
+//       }
+//     } else if ( document.documentElement.scrollTop == 0 ) {
+//       if ( this.document.getElementById( 'header' ).classList[1] == 'actAnimationOnHeader' ) {
+//         this.document.getElementById( 'header' ).classList.remove( 'actAnimationOnHeader' )
+//         this.document.getElementById( 'header' ).classList.add( 'undoActAnimationOnHeader' )
+//       }
+//     }
+//   }
+// }
