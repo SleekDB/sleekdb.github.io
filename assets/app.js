@@ -1,87 +1,114 @@
-var introHeight = function() {
-  var arr = document.getElementsByClassName('full-height')
-  for (let index = 0; index < arr.length; index++) {
-    var element = arr[index];
-    element.style.minHeight = ''+(window.innerHeight-70)+'px'
-  }
-}
+// Disable auto scroll on hash url
+window.onunload = function(){ window.scrollTo(0,0); }
+
+var menulinks = document.getElementsByClassName('gotoblock')
 
 window.onload = function () {
-  introHeight()
+
   var arr = document.getElementsByTagName('pre')
   for (let index = 0; index < arr.length; index++) {
     var element = arr[index];
     hljs.highlightBlock( element )
   }
-  document.getElementById('doc_link').addEventListener('click', handleDocNav)
-  var menulinks = this.document.getElementsByClassName('gotoblock')
+
   for (let index = 0; index < menulinks.length; index++) {
     menulinks[index].addEventListener('click', goToBlock)    
   }
-}
 
-var scrollpls = function( tagid ) {
-  var element = document.getElementById( tagid )
-  window.scroll( {
-    left: 0,
-    top: element.offsetTop
-  } );
-  element.classList += " flash-bg"
-  setTimeout(function(){
-    element.classList = element.classList.value.replace( "flash-bg", "" )
-  }, 1000)
+  document.getElementsByClassName('toggler')[0].addEventListener('click', toggleSiderbarFromMenu)
+
+  checkPage()
+  toggleSidebar()
+
+  if(navigator.userAgent.search("Firefox") > -1) {
+    this.document.getElementById('firefox-issue').style.display = ''
+  }
+
 }
 
 function goToBlock(event) {
-  var id = event.target.href.split('#')[1]
-  scrollpls(id)
-  setTimeout(() => {
-    window.scrollBy(0,-50)
-  }, 50);
-  var arr = document.getElementsByClassName('gotoblock')
-  for (let index = 0; index < arr.length; index++) {
-    var element = arr[index];
-    element.style.backgroundColor = '#fff'
-    element.style.color = '#2d4ef7'
-  }
-  event.target.style.backgroundColor = '#000000'
-  event.target.style.color = '#fff'
-}
-
-var docNavOpen = false
-function handleDocNav(event) {
   event.preventDefault()
-  // console.log(event)
-  if ( docNavOpen ) {
-    document.getElementById('docs_menu_container').classList = 'docs_menu animate_docs_menu_up'
-    setTimeout(function(){
-      document.getElementById('docs_menu_container').classList = 'docs_menu dn'
-      document.body.removeEventListener('click', handleDocNav)
-      docNavOpen = false
-    }, 300)
-  } else {
-    setTimeout(function(){
-      document.body.addEventListener('click', handleDocNav)
-      docNavOpen = true
-    }, 300)
-    document.getElementById('docs_menu_container').classList = 'docs_menu animate_docs_menu'
+  var id = event.target.href.split('#')[1]
+  // window.location.hash = id
+  history.pushState(null, '', '/#'+id)
+  // change bg menu.
+  for (let index = 0; index < menulinks.length; index++) {
+    menulinks[index].classList.remove('visited')  
+  }
+  event.target.classList.add('visited')
+
+  var intros = document.getElementsByClassName('intro')
+  for (let index = 0; index < intros.length; index++) {
+    const element = intros[index];
+    if(element.id === 'block_'+id) {
+      element.classList.remove('hide')
+      document.title = element.querySelector('h3').innerText
+    } else {
+      element.classList.add('hide')
+    }
+  }
+  // rightTop()
+}
+
+function resetHome(event) {
+  event.preventDefault()
+  window.location.hash = 'home'
+  for (let index = 0; index < menulinks.length; index++) {
+    menulinks[index].classList.remove('visited')  
+  }
+
+  var intros = document.getElementsByClassName('intro')
+  for (let index = 0; index < intros.length; index++) {
+    const element = intros[index];
+    element.classList.remove('hide')
   }
 }
 
-// window.onscroll = function ( e ) {
-//   var windowWidth = document.body["scrollWidth"]
-//   if ( windowWidth > 800 ) {
-//     if ( document.documentElement.scrollTop > 0 ) {
-//       this.document.getElementById( 'header' ).classList.remove( 'undoActAnimationOnHeader' )
-//       if ( this.document.getElementById( 'header' ).classList[1] != 'actAnimationOnHeader' ) {
-//         this.document.getElementById( 'header' ).classList.add( 'actAnimationOnHeader' )
-//         this.document.getElementById( 'header' ).classList.add( 'actAnimationOnHeader' )
-//       }
-//     } else if ( document.documentElement.scrollTop == 0 ) {
-//       if ( this.document.getElementById( 'header' ).classList[1] == 'actAnimationOnHeader' ) {
-//         this.document.getElementById( 'header' ).classList.remove( 'actAnimationOnHeader' )
-//         this.document.getElementById( 'header' ).classList.add( 'undoActAnimationOnHeader' )
-//       }
-//     }
-//   }
-// }
+function rightTop() {
+  setTimeout(() => {
+    document.getElementsByClassName('right')[0].scrollTop = 0
+  }, 150);
+}
+
+function checkPage() {
+  if(window.location.hash) {
+    let id = window.location.hash.replace('#', '')
+    var intros = document.getElementsByClassName('intro')
+    for (let index = 0; index < intros.length; index++) {
+      const element = intros[index];
+      if(element.id === 'block_'+id) {
+        element.classList.remove('hide')
+        document.title = element.querySelector('h3').innerText
+      } else {
+        element.classList.add('hide')
+      }
+    }
+  }
+}
+
+window.onresize = function () {
+  toggleSidebar()
+}
+
+var sidebarIsOpen = true
+function toggleSidebar() {
+  if(window.innerWidth < 900) {
+    if(sidebarIsOpen) {
+      document.getElementsByClassName('left')[0].style.display = 'none'
+      sidebarIsOpen = false
+    }
+  } else {
+    if(!sidebarIsOpen) {
+      document.getElementsByClassName('left')[0].style.display = ''
+      sidebarIsOpen = true
+    }
+  }
+}
+function toggleSiderbarFromMenu() {
+  if(sidebarIsOpen) {
+    document.getElementsByClassName('left')[0].style.display = 'none'
+  } else {
+    document.getElementsByClassName('left')[0].style.display = ''
+  }
+  sidebarIsOpen = !sidebarIsOpen
+}

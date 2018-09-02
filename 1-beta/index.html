@@ -7,7 +7,6 @@
   <title>PHP NoSQL Document Database - SleekDB</title>
   <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Varela+Round" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/assets/app.css">
-  <link rel="stylesheet" type="text/css" href="/assets/normalize.css">
   <link rel="stylesheet" href="/assets/highlighter/styles/foundation.css">
   <script src="/assets/highlighter/highlight.pack.js"></script>
   <script src="https://unpkg.com/ionicons@4.3.0/dist/ionicons.js"></script>
@@ -35,25 +34,26 @@
 </head>
 <body>
 
-<div class="container">
-  <div class="header">
-    <div class="toggler" title="Toggle sidebar"><ion-icon name="menu"></ion-icon></div>
-    <div class="left_header">
-      <div class="logo">
-        <a href="/">SleekDB</a>
+  <div class="header-wrapper">
+    <div id="header" class="header">
+      <div class="header-link-con">
+        <div class="logo"><h1><a href="/">SleekDB</a></h1></div>
+        <div class="menu">
+          <a class="link" id="doc_link" href="">Documentation</a> <span class="link">&bull;</span> 
+          <!-- <a class="link" href="">Tutorial</a> <span class="link">&bull;</span>  -->
+          <a class="link" href="https://github.com/rakibtg/SleekDB" target="_blank">GitHub</a>  <span class="link">&bull;</span> 
+          <a class="link" href="https://twitter.com/rakibtg" target="_blank">@rakibtg</a>
+        </div>
+
       </div>
     </div>
-  </div>
-  <div class="app">
-    <div class="left">
-      <div id="docs_menu_sidebar">
-        <a href="/"><ion-icon name="home"></ion-icon> Home</a>
+    <div class="docs_menu_wrapper">
+      <div id="docs_menu_container" class="dn">
         <a class="gotoblock" href="/#features"><ion-icon name="filing"></ion-icon> Features</a>
-        <a class="gotoblock" href="/#installation"><ion-icon name="play"></ion-icon> Installation</a>
-        <a class="gotoblock" href="/#getting-started"><ion-icon name="rocket"></ion-icon> Getting Started</a>
+        <a class="gotoblock" href="/#usage"><ion-icon name="restaurant"></ion-icon> Install and Use</a>
         <a class="gotoblock" href="/#configurations"><ion-icon name="construct"></ion-icon> Configurations</a>
-        <a class="gotoblock" href="/#stores"><ion-icon name="cube"></ion-icon> Understanding Store</a>
-        <!-- <a class="gotoblock" href="/#database-object"><ion-icon name="cube"></ion-icon> The Database Object</a> -->
+        <a class="gotoblock" href="/#stores"><ion-icon name="code-working"></ion-icon> Understanding Store</a>
+        <a class="gotoblock" href="/#database-object"><ion-icon name="cube"></ion-icon> The Database Object</a>
         <a class="gotoblock" href="/#insert-data"><ion-icon name="create"></ion-icon> Insert Data</a>
         <a class="gotoblock" href="/#fetch-data"><ion-icon name="book"></ion-icon> Fetch Data</a>
         <a class="gotoblock" href="/#edit-data"><ion-icon name="hammer"></ion-icon> Edit Data</a>
@@ -69,72 +69,177 @@
         <a class="gotoblock" href="/#contact"><ion-icon name="mail"></ion-icon> Contact</a>
       </div>
     </div>
-    <div class="right">
+  </div>
 
-      <div class="intro top-intro" id="block_home">
-        <h3>SleekDB - A NoSQL Database made using PHP</h3>
-        <p>SleekDB is a simple NoSQL database implementation that store data in plain JSON files.</p>
-        <p>
-          Intentionally SleekDB is not designed for heavy-load IO operations, it is designed to have 
-          a simple solution where we need a database for managing few gigabytes of data.
-        </p>
-        <p>
-          SleekDB works great as the database engine for most low to medium traffic websites. 
-        </p>
-        <p>
-          Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB.
-        </p>
-      </div>
 
-      <div class="intro features-block" id="block_features">
-        <h3><span class="black-badge">Features</span></h3>
-        <div class="two-panel">
-          <div class="panel-block">
-
-            <ul>
-              <li>
-                <span class="_f1">Light-weight, faster</span>
-                Stores data in plain-text utilizing JSON format, no binary conversion needed to store or fetch the data.
-              </li>
-              <li>
-                  <span class="_f1">Schema free data storage</span>
-                  SleekDB does not require any schema meaning you can insert any types of data you want.
-              </li>
-              <li>
-                  <span class="_f1">Query on nested properties</span>
-                  Supports filter and conditions on nested properties of the JSON documents!
-              </li>
-              <li>
-                  <span class="_f1">Dependency free, only requires PHP to run</span>
-                  Supports PHP 5.5+, PHP 7+. Requires no third-party plugins or softwares.
-              </li>
-              <li>
-                  <span class="_f1">Default caching layer</span>
-                  SleekDB will serve data from cache by default and regenerate cache each time it creates, updates and deletes an object!
-              </li>
-              <li>
-                  <span class="_f1">Filter, sort, skip, limit and search</span>
-                  Use multiple conditional comparisons, text search, sorting on multiple properties and nested properties.
-              </li>
-              <li>
-                  <span class="_f1">Runs every where</span>
-                  Runs perfectly on shared-servers or VPS too.
-              </li>
-              <li>
-                  <span class="_f1">Easy to learn and implement</span>
-                  SleekDB provides a very simple elegant API to handle all of your data.
-              </li>
-              <li>Easily import/expert or backup data.</li>
-
-            </ul>
   
-          </div>
+  <div class="container">
+
+    <div id="sidebar">
+      <div id="docs_menu_sidebar">
+        <a class="gotoblock" href="/#features"><ion-icon name="filing"></ion-icon> Features</a>
+        <a class="gotoblock" href="/#usage"><ion-icon name="restaurant"></ion-icon> Install and Use</a>
+        <a class="gotoblock" href="/#configurations"><ion-icon name="construct"></ion-icon> Configurations</a>
+        <a class="gotoblock" href="/#stores"><ion-icon name="code-working"></ion-icon> Understanding Store</a>
+        <a class="gotoblock" href="/#database-object"><ion-icon name="cube"></ion-icon> The Database Object</a>
+        <a class="gotoblock" href="/#insert-data"><ion-icon name="create"></ion-icon> Insert Data</a>
+        <a class="gotoblock" href="/#fetch-data"><ion-icon name="book"></ion-icon> Fetch Data</a>
+        <a class="gotoblock" href="/#edit-data"><ion-icon name="hammer"></ion-icon> Edit Data</a>
+        <a class="gotoblock" href="/#delete-data"><ion-icon name="trash"></ion-icon> Delete Data</a>
+        <a class="gotoblock" href="/#skip-limit"><ion-icon name="git-pull-request"></ion-icon> Skip and Limit</a>
+        <a class="gotoblock" href="/#sort-data"><ion-icon name="switch"></ion-icon> Sort Data</a>
+        <a class="gotoblock" href="/#search-data"><ion-icon name="search"></ion-icon> Search Data</a>
+        <a class="gotoblock" href="/#use-cache"><ion-icon name="copy"></ion-icon> Cache Management</a>
+        <a class="gotoblock" href="/#regenerate-cache"><ion-icon name="sync"></ion-icon> Re-generate Cache</a>
+        <a class="gotoblock" href="/#delete-cache"><ion-icon name="refresh-circle"></ion-icon> Delete Cache</a>
+        <a class="gotoblock" href="/#delete-all-cache"><ion-icon name="save"></ion-icon> Delete All Cache</a>
+        <a class="gotoblock" href="/#contributing"><ion-icon name="heart"></ion-icon> Contributing</a>
+        <a class="gotoblock" href="/#contact"><ion-icon name="mail"></ion-icon> Contact</a>
+      </div>
+    </div>
+
+    <div id="content-main">
+
+      <div class="full-height">
+        <div style="border-bottom: none; padding-bottom: 15px;" class="intro top-intro" id="features">
+          <h3>SleekDB - A NoSQL Database made using PHP</h3>
+          <p>SleekDB is a simple NoSQL database implementation that store data in plain JSON files.</p>
+          <p>
+            Intentionally SleekDB is not designed for heavy-load IO operations, it is designed to have 
+            a simple solution where we need a database for managing few gigabytes of data.
+          </p>
+          <p>
+            SleekDB works great as the database engine for most low to medium traffic websites. 
+          </p>
+          <p>
+            Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB.
+          </p>
         </div>
-  
+        <div style="border-bottom: none; padding-top: 0px;" class="intro features-block">
+          <h1><span class="black-badge">Features</span></h1>
+          <div class="two-panel">
+            <div class="panel-block">
+    
+              <div class="list-block">
+                <div class="list-icon"><span class="bullet-box"></span></div>
+                <div class="list-block-content">
+                  <div class="list-block-header">
+                    Light-weight, faster.
+                  </div>
+                  <div class="list-block-body">
+                    Stores data in plain-text utilizing JSON format, <br/>no binary conversion needed to store or fetch the data.                
+                  </div>
+                </div>
+              </div>
+    
+              <div class="list-block">
+                <div class="list-icon"><span class="bullet-box"></span></div>
+                <div class="list-block-content">
+                  <div class="list-block-header">
+                    Schema free data storage.
+                  </div>
+                  <div class="list-block-body">
+                    SleekDB does not require any schema <br/>
+                    meaning you can insert any types of data you want.
+                  </div>
+                </div>
+              </div>
+    
+              <div class="list-block">
+                <div class="list-icon"><span class="bullet-box"></span></div>
+                <div class="list-block-content">
+                  <div class="list-block-header">
+                    Query on nested properties.
+                  </div>
+                  <div class="list-block-body">
+                    Supports filter and conditions on nested properties<br/>
+                    of the JSON documents!
+                  </div>
+                </div>
+              </div>
+    
+              <div class="list-block">
+                <div class="list-icon"><span class="bullet-box"></span></div>
+                <div class="list-block-content">
+                  <div class="list-block-header">
+                    Dependency free, only requires PHP to run.
+                  </div>
+                  <div class="list-block-body">
+                    Supports PHP 5.5+, PHP 7+<br/>
+                    Requires no third-party plugins or softwares.
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="panel-block">
+              <div class="list-block">
+                <div class="list-icon"><span class="bullet-box"></span></div>
+                <div class="list-block-content">
+                  <div class="list-block-header">
+                      Default caching layer.
+                  </div>
+                  <div class="list-block-body">
+                      SleekDB will serve data from cache by default 
+                      and regenerate <br/>cache each time it creates, updates and deletes an object!
+                  </div>
+                </div>
+              </div>
+    
+              <div class="list-block">
+                <div class="list-icon"><span class="bullet-box"></span></div>
+                <div class="list-block-content">
+                  <div class="list-block-header">
+                    Filter, sort, skip, limit and search.
+                  </div>
+                  <div class="list-block-body">
+                    Use multiple conditional comparisons, text search, <br/>sorting 
+                    on multiple properties and nested properties.
+                  </div>
+                </div>
+              </div>
+    
+              <div class="list-block">
+                <div class="list-icon"><span class="bullet-box"></span></div>
+                <div class="list-block-content">
+                  <div class="list-block-header">
+                    Runs every where.
+                  </div>
+                  <div class="list-block-body">
+                    Runs perfectly on shared-servers or VPS too.
+                  </div>
+                </div>
+              </div>
+    
+              <div class="list-block">
+                <div class="list-icon"><span class="bullet-box"></span></div>
+                <div class="list-block-content">
+                  <div class="list-block-header">
+                    Easy to learn and implement.
+                  </div>
+                  <div class="list-block-body">
+                    SleekDB provides a very simple elegant <br/>API to handle all of your data.
+                  </div>
+                </div>
+              </div>
+    
+              <div class="list-block">
+                <div class="list-icon"><span class="bullet-box"></span></div>
+                <div class="list-block-content">
+                  <div class="list-block-header">
+                    Easily import/expert or backup data.
+                  </div>
+                </div>
+              </div>
+    
+            </div>
+          </div>
+    
+        </div>
       </div>
 
-      <div class="intro" id="block_installation">
-        <h3><span class="black-badge">Installation</span></h3>
+      <div class="intro" id="usage">
+        <h3><span class="black-badge">How to install and use SleekDB?</span></h3>
         <div class="pt5"></div>
         <p>
           To use SleekDB make sure that you have PHP up and running in your system, and SleekDB has write permission.
@@ -146,13 +251,21 @@
           <span class="badge">Composer Installation</span>
         </p>
         <p>
-          To install SleekDB using composer, open a terminal, cd into your project root directory where "composer.json" file lives and run this:
+          To install SleekDB using composer, open a terminal and run this:
         </p>
         <p>
-          <pre>composer require rakibtg/sleekdb</pre>
+  <pre>
+  composer require rakibtg/sleekdb
+  </pre>
         </p>
         <p>
-          SleekDB should be auto loaded into your app using the composer. Find SleekDB on <a href="https://packagist.org/packages/rakibtg/sleekdb" target="_blank">packagist</a>.
+          Now create the SleekDB object.
+        </p>
+  <pre>
+  $sdb = new \SleekDB\SleekDB( "items" );
+  </pre>
+        <p>
+          Find SleekDB on <a href="https://packagist.org/packages/rakibtg/sleekdb" target="_blank">packagist</a>.
         </p>
         <p>
           <span class="badge">Install Manually (Without Composer)</span>
@@ -161,131 +274,118 @@
           <li><a href=" https://github.com/rakibtg/SleekDB/archive/master.zip">Download</a> the latest version and extract the ZIP file inside your project directory.</li>
           <li>
             Import the <span class="red-color">SleekDB.php</span> file where you want to use SleekDB. Example:
-            <pre>require_once "../SleekDB/SleekDB.php";</pre>
+  
+  <pre>
+  require_once "../SleekDB/SleekDB.php";
+  </pre>
+  
+          </li>
+          <li>
+            Create a new SleekDB object. You will need to provide a <span class="red-color">store</span> name while creating the object. Example:
+  <pre>
+  $sdb = new \SleekDB\SleekDB( "items" );
+  </pre>
+  Note that here "items" is a store name, it's like the table name for MySQL. This object is only 
+  responsible for the "items" store. We could create more than one object for each stores.
+          </li>
+          <li>
+            Time to test! Let's insert some data.
+  <pre>
+  // An array that we want to insert.
+  $items = [
+    [
+      "title" => "Google Pixel 2",
+      "about" => "The unlocked Pixel 2 provides..."  
+    ],
+    [
+      "title" => "Google Pixel XL",
+      "about" => "The unlocked biggest Pixel 2..."  
+    ]
+  ];
+  $results = $sdb->insertMany( $items ); 
+  </pre>
+  The results variable would contain all the inserted data and with the _id property.
           </li>
         </ol>
-      </div>
-
-      <div class="intro" id="block_getting-started">
-        <h3>Getting Started</h3>
         <p>
-          Getting started with SleekDB is super easy. We keep data in a "store", which is similar to MySQL "table" or MongoDB "collection". To start working with data at first we create a new instance of SleekDB. Later, we create a "store" using the instantiated object to start working with data.
+          <strong>Using SleekDB Independently</strong>
         </p>
-            <ol>
-              <li>
-                To create the SleekDB object we will need to pass a valid "path" as the data directory.
-                <pre>$database = new \SleekDB\SleekDB( "/Users/username/data/my_site" );</pre>
-                Optionally you can pass a configuration array in the second parameter. Read more about <a class="gotoblock" href="#configurations">configurations</a>.
-              </li>
-              <li>
-                Now we will create a "store" called "news", if the store doesn't exist then it will be created automatically.
-                <pre>$newsStore = $database->store( "news" );</pre>
-              </li>
-              <li>
-                Let's insert a news.
-<pre>
-// An array that we want to insert.
-$newsInsertable = [
-    "title" => "Google Pixel XL",
-    "about" => "The unlocked biggest Pixel 2..."  
-];
-$results = $newsStore->insert( $newsInsertable ); 
-</pre>
-      The results variable would contain all the inserted data and with the _id property.
-              </li>
-            </ol>
-            <span class="badge">Using SleekDB Independently</span>
-            <p>
-              SleekDB would have a server that could be used as the database server that works separately and independently. This feature is not implemented yet.
-            </p>
+        <p>
+          SleekDB would have a server that can handle all the data and returns them, works separately and independently. This feature is not implemented yet.
+        </p>
       </div>
-
-      <div class="intro" id="block_configurations">
+      <div class="intro" id="configurations">
         <h3><span class="black-badge">Configurations</span></h3>
         <div class="pt5"></div>
         <p>
-          At this moment SleekDB only allows two configurations, which are "auto_cache" and "timeout". Configurations should be passed as an array in the second parameter while instantiating SleekDB, store's created from this object will follow the configurations we have provided.
+          The configuration file "config.php" is located at the root directory of SleekDB. It has has an 
+          array called $config with few properties. Lets talk about them.
         </p>
-        <span class="badge">Using Custom Configuration</span>
-        <p>You should pass the configurations array in the second parameter, example:</p>
-        <pre>
-$database = new \SleekDB\SleekDB( "/Users/username/data/my_site", [
-    'auto_cache' => true,
-    'timeout' => 120
-]);</pre>
+        <p><strong class="red-color">1. storeLocation</strong></p>
         <p>
-          Let's talk about what this configurations do.
+          You can specify where to store data in the <span class="blue-color">storeLocation</span> property of the $config array. Example:
         </p>
-        <p><strong class="red-color">auto_cache</strong></p>
+          <pre>
+  $config[ 'storeLocation' ] = '/home/user/datastore/';
+  </pre>
+        <p><strong class="red-color">2. enableAutoCache</strong></p>
         <p>
-          The <span class="blue-color">auto_cache</span> is set to <span class="red-color">true</span> by default!
+          In the $config array the <span class="blue-color">enableAutoCache</span> is set to <span class="red-color">true</span> by default!
         </p>
         <p>
           This tells SleekDB to cache the data of an unique database query and later re-use the cache for the same query.
-          <br/>
+        </p>
+        <p>
           To keep the cached data synced with new data, SleekDB will delete all cache when we insert any new data to a store.
         </p>
         <p>
-          To disable it update the value of <span class="blue-color">auto_cache</span> to <span class="red-color">false</span> in the config array.
+          To disable it update the value of <span class="blue-color">enableAutoCache</span> to <span class="red-color">false</span> in the $config array.
         </p>
         <p class="note-block">
           Note that you can manually manage cache data with methods that SleekDB provides. Available caching method's are: <span class="blue-color">makeCache()</span>, <span class="blue-color">useCache()</span>, <span class="blue-color">deleteCache()</span> and <span class="blue-color">deleteAllCache()</span>
         </p>
-        <p><strong class="red-color">timeOut</strong></p>
+        <p><strong class="red-color">3. timeOut</strong></p>
         <p>
           Set timeout value, default value is <span class="blue-color">120</span> second.
         </p>
       </div>
   
-      <div class="intro" id="block_stores">
+      <div class="intro" id="stores">
         <h3><span class="black-badge">Understanding Store</span></h3>
         <div class="pt5"></div>
         <p>
-          Store is a simple directory where SleekDB will write all your data in JSON documents. "Store" is similar with the idea of "Table" in MySQL or "Collection" in MongoDB.
-          You dont need to create a "store" manually, while you use the "store" method from the SleekDB object it will first check if the "store" directory exists or not, if not then 
-          it would be created instantly.
+          The "store" contains all your data as JSON files, we call them data 
+          object. While using SleekDB you don't have to manage a store.
         </p>
         <p>
-          At this moment you can not rename a store, but you can do it manually 
+          When you create a new SleekDB object you need to provide a store name, if 
+          the store is not exists then SleekDB will create the store for you.
+        </p>
+        <p>
+          At this moment you can not edit/delete a store, but you can do it manually 
           using the File Browser of your OS or using the terminal.
         </p>
+      </div>
+  
+      <div class="intro" id="database-object">
+        <h3><span class="black-badge">The Database Object</span></h3>
+        <div class="pt5"></div>
         <p>
-          <span class="badge">Your first store</span>
+          To work with a store we will need to create a new SleekDB object with that store name.
         </p>
         <p>
-          To start working with a store, at first we need to create an object of SleekDB. Later, we can use that object to work with any store.
+          Throughout this API documentation we are going to use a store called "users". So lets create the database object.
         </p>
-        <ul>
-          <li>Create an object,
-            <pre>$database = new \SleekDB\SleekDB( "/path/to/data-dir/mysite" );</pre>
-          </li>
-          <li>
-            Activate the store, assuming we are working on a community site where need to have a users store.
-            <pre>$userStore = $database->store( "users" );</pre>
-            Another store to keep all the posts shared by the user.
-            <pre>$postStore = $database->store( "posts" );</pre>
-          </li>
-          <li>
-            Creating a new user,
-<pre>$userStore->insert([
-    'name' => 'Mike Doe',
-    'email' => 'miked@example.com'
-]);</pre>
-This could be also written as,
-<pre>$database->store( "users" )->insert([
-    'name' => 'Mike Doe',
-    'email' => 'miked@example.com'
-]);</pre>
-          </li>
-        </ul>
-        In the above example we have created an user to understand the use case of a store in SleekDB. In this documentation later we will see more examples on this.
+  <pre>
+  $usersDB = new SleekDB( 'users' );
+  </pre>
       </div>
       
-      <div class="intro" id="block_insert-data">
+      <div class="intro" id="insert-data">
         <h3><span class="black-badge">Insert Data</span></h3>
         <div class="pt5"></div>
         <p>
-          To insert data first you make a PHP array, and simply insert that array into a store.
+          To insert data first you make a PHP array, and simply insert that array.
         </p>
         <p>
           <span class="badge">Insert A Single Data Object</span>
@@ -357,7 +457,7 @@ This could be also written as,
   is generated by SleekDB.
       </div>
       
-      <div class="intro" id="block_fetch-data">
+      <div class="intro" id="fetch-data">
         <h3><span class="black-badge">Fetch Data</span></h3>
         <div class="pt5"></div>
         <p>
@@ -454,7 +554,7 @@ This could be also written as,
   </pre>
       </div>
       
-      <div class="intro" id="block_edit-data">
+      <div class="intro" id="edit-data">
         <h3><span class="black-badge">Edit Data</span></h3>
         <div class="pt5"></div>
         <p>
@@ -482,7 +582,7 @@ This could be also written as,
         </p>
       </div>
   
-      <div class="intro" id="block_delete-data">
+      <div class="intro" id="delete-data">
         <h3><span class="black-badge">Delete Data</span></h3>
         <div class="pt5"></div>
         <p>
@@ -499,7 +599,7 @@ This could be also written as,
         </p>
       </div>
   
-      <div class="intro" id="block_skip-limit">
+      <div class="intro" id="skip-limit">
         <h3><span class="black-badge">Skip and Limit Data</span></h3>
         <div class="pt5"></div>
         <p>
@@ -535,7 +635,7 @@ This could be also written as,
         </p>
       </div>
       
-      <div class="intro" id="block_sort-data">
+      <div class="intro" id="sort-data">
         <h3><span class="black-badge">Sort Data</span></h3>
         <div class="pt5"></div>
           <p>
@@ -568,7 +668,7 @@ This could be also written as,
   </pre>
       </div>
       
-      <div class="intro" id="block_search-data">
+      <div class="intro" id="search-data">
         <h3><span class="black-badge">Search Data</span></h3>
         <div class="pt5"></div>
         <p>
@@ -611,7 +711,7 @@ This could be also written as,
   </pre>
       </div>
       
-      <div class="intro" id="block_use-cache">
+      <div class="intro" id="use-cache">
         <h3><span class="black-badge">Cache Management</span></h3>
         <div class="pt5"></div>
         <p>
@@ -631,7 +731,7 @@ This could be also written as,
   </pre>
       </div>
   
-      <div class="intro" id="block_regenerate-cache">
+      <div class="intro" id="regenerate-cache">
         <h3><span class="black-badge">Re-generate Cache</span></h3>
         <div class="pt5"></div>
         <p>
@@ -653,7 +753,7 @@ This could be also written as,
   </pre>
       </div> 
   
-      <div class="intro" id="block_delete-cache">
+      <div class="intro" id="delete-cache">
         <h3><span class="black-badge">Delete Cache</span></h3>
         <div class="pt5"></div>
         <p>
@@ -672,7 +772,7 @@ This could be also written as,
         </p>
       </div>
   
-      <div class="intro bb0" id="block_delete-all-cache">
+      <div class="intro bb0" id="delete-all-cache">
         <h3><span class="black-badge">Delete All Cache</span></h3>
         <div class="pt5"></div>
         <p>
@@ -683,7 +783,7 @@ This could be also written as,
   </pre>
       </div>
 
-      <div class="intro" id="block_contributing">
+      <div class="intro" id="contributing" style="border-top: 4px solid #444">
         <h3><span class="black-badge">Contributing</span></h3>
         <div class="pt5"></div>
         <p>
@@ -697,7 +797,7 @@ This could be also written as,
         </p>
       </div>
   
-      <div class="intro contact" id="block_contact">
+      <div class="contact" id="contact">
         <h3><span class="black-badge">Contact</span></h3>
         <p>
           We would love to see how you are using the database, if you have implemented something or how it is working for you. <br>What 
@@ -717,14 +817,12 @@ This could be also written as,
             <span style="font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 22px;">©</span> Copyright - SleekDB &bull; By <a href="https://twitter.com/rakibtg">@rakibtg</a>
         </p>
       </div>
+
     </div>
+
   </div>
-</div>
-<div id="firefox-issue" style="display: none;">
-  <img src="/assets/images/firefox.png">
-  <p>The design sometime breaks in Firefox, please visit using Opera or Chrome. Fix in progress.
-  </p>
-</div>
-<script src="/assets/app.js"></script>
+  <div style="display: none;"><script type="text/javascript" src="//widget.supercounters.com/ssl/flag.js"></script><script type="text/javascript">sc_flag(1503416,"FFFFFF","FFFFFF","FFFFFF",1,1,1,1)</script>
+  </div>
+  <script src="/assets/app.js"></script>
 </body>
 </html>
