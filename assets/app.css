@@ -167,3 +167,25 @@ div.logo a {
 .toggler:hover {
   color: rgb(248, 227, 198);
 }
+
+.header_menu ion-icon {
+/*   border: 1px solid red; */
+  margin-bottom: -4px;
+  margin-right: 2px;
+  font-size: 20px;
+}
+
+.header_menu a {
+  color: #eace79;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #333;
+  padding: 6px 15px;
+  border-radius: 5px;
+}
+
+.header_menu a:hover {
+  background-color: #555;
+  color: #fff;
+}
