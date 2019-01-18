@@ -17,6 +17,7 @@ li {
   display: flex;
   flex-direction: row;
   align-items: center;
+  z-index: 9;
 }
 
 div.container {
@@ -35,6 +36,7 @@ div.app {
 div.left {
   border-right: 4px solid #000;
   min-width: 250px;
+  padding-top: 70px;
 }
 
 div.right {
@@ -46,8 +48,8 @@ div.right {
 div#docs_menu_sidebar {
   background-color: #fff;
   height: 100%;
-  padding-top: 10px;
   overflow: scroll;
+  margin-top: -60px;
 }
 
 div#docs_menu_sidebar a {
