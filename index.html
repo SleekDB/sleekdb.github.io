@@ -176,13 +176,14 @@
         </p>
             <ol>
               <li>
-                To create the SleekDB object we will need to pass a valid "path" as the data directory.
-                <pre>$database = new \SleekDB\SleekDB( "/Users/username/data/my_site" );</pre>
-                Optionally you can pass a configuration array in the second parameter. Read more about <a class="gotoblock" href="#configurations">configurations</a>.
+                To create the SleekDB instance we need a valid "path" where it can write data.
+                <pre>$dataDir = "/Users/username/documents/mydb";</pre>
               </li>
               <li>
-                Now we will create a "store" called "news", if the store doesn't exist then it will be created automatically.
-                <pre>$newsStore = $database->store( "news" );</pre>
+                Once we have the data directory lets create the SleekDB store, which can be treated as the "table" in SQL databases. <br/>
+                If the store doesn't exist then it will be created automatically.
+                <pre>$newsStore = \SleekDB\SleekDB::store('news', $dataDir);</pre>
+                Optionally you can pass a configuration array in the second parameter. Read more about <a class="gotoblock" href="#configurations">configurations</a>.
               </li>
               <li>
                 Let's insert a news.
@@ -212,10 +213,11 @@ $results = $newsStore->insert( $newsInsertable );
         <span class="badge">Using Custom Configuration</span>
         <p>You should pass the configurations array in the second parameter, example:</p>
         <pre>
-$database = new \SleekDB\SleekDB( "/Users/username/data/my_site", [
-    'auto_cache' => true,
-    'timeout' => 120
-]);</pre>
+$newsStore = \SleekDB\SleekDB::store('news', $dataDir, [
+  'auto_cache' => true,
+  'timeout' => 120
+]);
+</pre>
         <p>
           Let's talk about what this configurations do.
         </p>
@@ -256,26 +258,22 @@ $database = new \SleekDB\SleekDB( "/Users/username/data/my_site", [
           <span class="badge">Your first store</span>
         </p>
         <p>
-          To start working with a store, at first we need to create an object of SleekDB. Later, we can use that object to work with any store.
+          To start working with a store, at first we need to create an object using the "store" static method. <br/>
+          Later, we can use that object to work with data for that store.
         </p>
         <ul>
-          <li>Create an object,
-            <pre>$database = new \SleekDB\SleekDB( "/path/to/data-dir/mysite" );</pre>
+          <li>Create an store,
+            <pre>$newsStore = \SleekDB\SleekDB::store('news', $dataDir);</pre>
           </li>
           <li>
-            Activate the store, assuming we are working on a community site where need to have a users store.
-            <pre>$userStore = $database->store( "users" );</pre>
+            Having multiple store; assuming we are working on a community site where need to have a users store.
+            <pre>$userStore = \SleekDB\SleekDB::store('users', $dataDir);</pre>
             Another store to keep all the posts shared by the user.
-            <pre>$postStore = $database->store( "posts" );</pre>
+            <pre>$postStore = \SleekDB\SleekDB::store('posts', $dataDir);</pre>
           </li>
           <li>
             Creating a new user,
 <pre>$userStore->insert([
-    'name' => 'Mike Doe',
-    'email' => 'miked@example.com'
-]);</pre>
-This could be also written as,
-<pre>$database->store( "users" )->insert([
     'name' => 'Mike Doe',
     'email' => 'miked@example.com'
 ]);</pre>
