@@ -7,6 +7,15 @@ html, body {
   line-height: 20px;
 }
 
+a {
+  color: #2798e4;
+}
+
+a:hover {
+  color: #1783ca;
+  text-decoration: none;
+}
+
 li {
   line-height: 26px;
 }
