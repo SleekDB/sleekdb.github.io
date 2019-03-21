@@ -69,7 +69,7 @@
         <a class="gotoblock" href="/#delete-cache"><ion-icon name="refresh-circle"></ion-icon> Delete Cache</a>
         <a class="gotoblock" href="/#delete-all-cache"><ion-icon name="save"></ion-icon> Delete All Cache</a>
         <a class="gotoblock" href="/#contributing"><ion-icon name="heart"></ion-icon> Contributing</a>
-        <a class="gotoblock" href="/#contact"><ion-icon name="mail"></ion-icon> Contact</a>
+        <a class="gotoblock" href="/#contact"><ion-icon name="mail"></ion-icon> About &amp; Contact</a>
       </div>
     </div>
     <div class="right">
@@ -199,13 +199,13 @@ $newsInsertable = [
 ];
 $results = $newsStore->insert( $newsInsertable ); 
 </pre>
-      The results variable would contain all the inserted data and with the _id property.
+      The results variable would contain all the inserted data and with the <span class="red-color">_id</span> property.
               </li>
             </ol>
-            <span class="badge">Using SleekDB Independently</span>
+            <!-- <span class="badge">Using SleekDB Independently</span>
             <p>
               SleekDB would have a server that could be used as the database server that works separately and independently. This feature is not implemented yet.
-            </p>
+            </p> -->
       </div>
 
       <div class="intro" id="block_configurations">
@@ -283,7 +283,21 @@ $newsStore = \SleekDB\SleekDB::store('news', $dataDir, [
 ]);</pre>
           </li>
         </ul>
-        In the above example we have created an user to understand the use case of a store in SleekDB. In this documentation later we will see more examples on this.
+        <p>
+          In the above example we have created an user to understand the use case of a store in SleekDB. In this documentation later we will see more examples on this.
+        </p>
+        <p>
+          <span class="badge">Deleting A Store</span>
+        </p>
+        <p>
+          To delete a store use the <span class="red-color">deleteStore()</span> method.
+          <br/>
+          It deletes a store and wipes all the data and cache it contains.
+        </p>
+        <p>Example:</p>
+<pre>// > Delete everything from the above user store.
+$userStore->deleteStore();
+</pre>
       </div>
       
       <div class="intro" id="block_insert-data">
@@ -694,20 +708,25 @@ $newsStore = \SleekDB\SleekDB::store('news', $dataDir, [
         <p>
           <ol>
             <li>Fork SleekDB</li>
-            <li>Create your feature branch (git checkout -b feature/my-new-feature)</li>
-            <li>Commit your changes (git commit -am 'Added some feature')</li>
-            <li>Push to the branch (git push origin feature/my-new-feature)</li>
+            <li>Create your feature branch <span class="blue-color">git checkout -b feature/my-new-feature</span></li>
+            <li>Commit your changes <span class="blue-color">git commit -am 'Added some feature'</span></li>
+            <li>Push to the branch <span class="blue-color">git push origin feature/my-new-feature</span></li>
             <li>Create new Pull Request</li>
           </ol>
         </p>
       </div>
   
       <div class="intro contact" id="block_contact">
-        <h3><span class="black-badge">Contact</span></h3>
+        <h3><span class="black-badge">About &amp; Contact</span></h3>
         <p>
           We would love to see how you are using the database, if you have implemented something or how it is working for you. <br>What 
           changes will make you more interested. <br>
           If you want to submit a bug feel free to create a new <a href="https://github.com/rakibtg/SleekDB/issues" target="_blank">issue</a> or email me @ rakibtg [-at-] gmail.
+        </p>
+        <span class="badge">About</span>
+        <p>
+          SleekDB is actively maintained by <a href="https://twitter.com/rakibtg">@rakibtg</a>(Twitter). <br/>
+          Let me know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.
         </p>
       </div>
       
