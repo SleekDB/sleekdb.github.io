@@ -2,13 +2,9 @@ html, body {
   margin: 0px;
   padding: 0px;
   height: 100%; width: 100%;
-  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-family: 'Varela Round', sans-serif, sans;
   font-size: 14px;
   line-height: 20px;
-}
-
-* {
-  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
 }
 
 a {

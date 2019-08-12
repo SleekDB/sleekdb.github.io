@@ -36,6 +36,13 @@
     <div id="header" class="header">
       <div class="header-link-con">
         <div class="logo"><h1><a href="/">SleekDB</a></h1></div>
+        <select onchange="window.location.href = `${window.location.origin}/${document.querySelector('#versions').value}`" id="versions">
+          <option value="">1.5.0</option>
+          <option value="1.0.3">1.0.3</option>
+          <option value="1.0.1">1.0.1</option>
+          <option value="1-beta">1.0 Beta</option>
+          <option value="0.7" selected>0.7 Alpha</option>
+        </select>
         <div class="menu">
           <a class="link" id="doc_link" href="">Documentation</a> <span class="link">&bull;</span> 
           <!-- <a class="link" href="">Tutorial</a> <span class="link">&bull;</span>  -->
