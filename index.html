@@ -45,6 +45,14 @@
     </div>
     <div class="right_header header_menu">
       <a class="menu" href="https://github.com/rakibtg/SleekDB" target="_blank" title="SleekDB is open-source. See the source code in GitHub"><ion-icon name="logo-github"></ion-icon> GitHub</a>
+      <select class="menu" onchange="window.location.href = `${window.location.origin}/${document.querySelector('#versions').value}`" id="versions">
+        <option value="/" selected>1.5.0</option>
+        <option value="1.0.3">1.0.3</option>
+        <option value="1.0.1">1.0.1</option>
+        <option value="1-beta">1.0 Beta</option>
+        <option value="0.7">0.7 Alpha</option>
+      </select>
+      <a class="menu" href="https://twitter.com/rakibtg" target="_blank" title="Follow me on twitter for SleekDB updates."><ion-icon name="logo-twitter"></ion-icon> @rakibtg</a>
     </div>
   </div>
   <div class="app">
@@ -56,7 +64,6 @@
         <a class="gotoblock" href="/#getting-started"><ion-icon name="rocket"></ion-icon> Getting Started</a>
         <a class="gotoblock" href="/#configurations"><ion-icon name="construct"></ion-icon> Configurations</a>
         <a class="gotoblock" href="/#stores"><ion-icon name="cube"></ion-icon> Managing Store</a>
-        <!-- <a class="gotoblock" href="/#database-object"><ion-icon name="cube"></ion-icon> The Database Object</a> -->
         <a class="gotoblock" href="/#insert-data"><ion-icon name="create"></ion-icon> Insert Data</a>
         <a class="gotoblock" href="/#fetch-data"><ion-icon name="book"></ion-icon> Fetch Data</a>
         <a class="gotoblock" href="/#edit-data"><ion-icon name="hammer"></ion-icon> Edit Data</a>
@@ -69,6 +76,7 @@
         <a class="gotoblock" href="/#delete-cache"><ion-icon name="refresh-circle"></ion-icon> Delete Cache</a>
         <a class="gotoblock" href="/#delete-all-cache"><ion-icon name="save"></ion-icon> Delete All Cache</a>
         <a class="gotoblock" href="/#contributing"><ion-icon name="heart"></ion-icon> Contributing</a>
+        <a class="gotoblock" href="/#release-notes"><ion-icon name="megaphone"></ion-icon> Release Notes(1.5.0)</a>
         <a class="gotoblock" href="/#contact"><ion-icon name="mail"></ion-icon> About &amp; Contact</a>
       </div>
     </div>
@@ -76,16 +84,13 @@
 
       <div class="intro top-intro" id="block_home">
         <h3>SleekDB - A NoSQL Database made using PHP</h3>
-        <p>SleekDB is a simple NoSQL database implementation that store data in plain JSON files.</p>
+        <p>SleekDB is a simple NoSQL database implementation using pure PHP that store data in plain JSON files.</p>
         <p>
-          Intentionally SleekDB is not designed for heavy-load IO operations, it is designed to have 
+          SleekDB is not designed for heavy-load IO operations, it is designed to have 
           a simple solution where we need a database for managing few gigabytes of data.
         </p>
         <p>
-          SleekDB works great as the database engine for most low to medium traffic websites. 
-        </p>
-        <p>
-          Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB.
+          SleekDB works great as the database engine for low to medium traffic websites. 
         </p>
       </div>
 
@@ -105,7 +110,21 @@
               </li>
               <li>
                   <span class="_f1">Query on nested properties</span>
-                  Supports filter and conditions on nested properties of the JSON documents!
+                  Supports filter and conditions on nested properties of the JSON documents!<br/>
+                  If you write this where clause: 
+<pre lang="PHP">
+  where( 'post.author.role' '=', 'admin' )
+</pre>
+                  SleekDB will look for data at:
+<pre lang="JSON">
+  {
+    "post": {
+      "author": {
+        "role": "admin"
+      }
+    }                  
+  }
+</pre>
               </li>
               <li>
                   <span class="_f1">Dependency free, only requires PHP to run</span>
@@ -116,7 +135,7 @@
                   SleekDB will serve data from cache by default and regenerate cache each time it creates, updates and deletes an object!
               </li>
               <li>
-                  <span class="_f1">Filter, sort, skip, limit and search</span>
+                  <span class="_f1">Filters: where, in, notIn, orWhere, sort, skip, limit and search</span>
                   Use multiple conditional comparisons, text search, sorting on multiple properties and nested properties.
               </li>
               <li>
@@ -126,6 +145,10 @@
               <li>
                   <span class="_f1">Easy to learn and implement</span>
                   SleekDB provides a very simple elegant API to handle all of your data.
+              </li>
+              <li>
+                  <span class="_f1">Actively maintained</span>
+                  SleekDB is actively maintained by <a href="https://twitter.com/rakibtg" target="_blank">@rakibtg</a>. For support and other requirements <a class="gotoblock" href="/#contact">contact</a>.
               </li>
               <li>Easily import/expert or backup data.</li>
 
@@ -298,6 +321,37 @@ $newsStore = \SleekDB\SleekDB::store('news', $dataDir, [
 <pre>// > Delete everything from the above user store.
 $userStore->deleteStore();
 </pre>
+<p>
+    <span class="badge">Keeping Store Conditions</span>
+  </p>
+  <p>
+    When you run a query and use a action method like <span class="red-color">fetch</span>, <span class="red-color">update</span> or <span class="red-color">delete</span> the conditions you have added 
+    for the active query will be reset to default.
+  </p>
+  <p>
+    But if you want to keep the condition parameters for query and perform additional operations then you may want to use 
+    the <span class="red-color">keepConditions()</span> method.
+  </p>
+  <p>
+    Here is an example showing how you may fetch data and then update on the discovered documents without 
+    running an additional query:
+  </p>
+  <pre>
+
+    // Find documents.
+    $result = $usersDB
+        ->keepConditions() // Won't reset the active query state.
+        ->where('products.totalBought', '>', 0)
+        ->where('products.totalSaved', '>', 0);
+
+    // Fetch data.
+    $result->fetch();
+    
+    // Update matched documents.
+    $result->update([
+        'someRandomData' => '123',
+    ]);
+  </pre>
       </div>
       
       <div class="intro" id="block_insert-data">
@@ -383,6 +437,7 @@ $userStore->deleteStore();
           To get data from the store we use the <span class="red-color">fetch()</span> method. Example:
         </p>
   <pre>
+
   $usersDB->fetch();
   </pre>
         <p>
@@ -391,6 +446,7 @@ $userStore->deleteStore();
         <p>
           <span class="badge">Apply Filters and Conditions</span>
         </p>
+        <h3 class="blue-color">where()</h3>
         <p>
           To filter data we use the <span class="red-color">where()</span> method.
         </p>
@@ -398,6 +454,7 @@ $userStore->deleteStore();
           The <span class="red-color">where()</span> method takes three arguments, those are:
         </p>
   <pre>
+
   where( $fieldName, $condition, $value );
   </pre>
         <p>
@@ -405,7 +462,7 @@ $userStore->deleteStore();
             <li>
               <strong>$fieldName</strong>
               <p>
-                The filed name argument is the property that we want to check in our data object.
+                The field name argument is the property that we want to check in our data object.
               </p>
               <p>
                   As our data object is basically a JSON document so it could have nested properties.
@@ -461,15 +518,121 @@ $userStore->deleteStore();
           To only get the user whose country is equal to "England" we would query like this:
         </p>
   <pre>
+
   $user = $usersDB->where( 'name', '=', 'Joshua Edwards' )->fetch();
   </pre> 
         <p>
           You can use multiple <span class="red-color">where()</span> conditions. Example:
         </p>
   <pre>
-  $user = $usersDB->where( 'products.totalSaved', '>', 10 )
-            ->where( 'products.totalBought', '>', 20 )
-          ->fetch();
+
+  $user = $usersDB
+      ->where( 'products.totalSaved', '>', 10 )
+      ->where( 'products.totalBought', '>', 20 )
+      ->fetch();
+  </pre>
+
+  <h3 class="blue-color">orWhere()</h3>
+  <p>
+    <code>orWhere(...)</code> works as the <code>OR</code> condition of SQL. SleekDB supports multiple orWhere as object chain.
+  </p>
+  <p>
+    The orWhere() method takes three arguments same as where() condition, those are:
+  </p>
+  <pre>
+
+    orWhere( $fieldName, $condition, $value );
+  </pre>
+  <p>
+    <b>Example:</b>
+  </p>
+  <pre>
+
+    $user = $usersDB
+        ->where( 'products.totalSaved', '>', 10 )
+        ->orWhere( 'products.totalBought', '>', 20 )
+        ->fetch();
+  </pre>
+  <p>
+    <b>Multiple orWhere clause example:</b>
+  </p>
+  <pre>
+
+    $user = $usersDB->where( 'products.totalSaved', '>', 10 )
+        ->orWhere( 'products.totalBought', '>', 20 )
+        ->orWhere( 'products.shipped', '=', 1 )
+        ->fetch();
+  </pre>
+
+  <h3 class="blue-color">in()</h3>
+  <p>
+    <code>in(...)</code> works as the <code>IN</code> clause of SQL. SleekDB supports multiple IN as object chain for different fields.
+  </p>
+  <p>
+    The in() method takes two arguments, those are:
+  </p>
+  <pre>
+
+    in( $fieldName = '', $values = [] );
+  </pre>
+  <ol>
+    <li>
+      <strong>$fieldName</strong> <br/>
+      The field name argument is the property that we want to check in our data object.<br />
+      As our data object is basically a JSON document so it could have nested properties.
+    </li>
+    <li>
+      <strong>$values</strong> <br/>
+      This argument takes an array to match documents within its items.
+    </li>
+  </ol>
+  <p>
+    <b>Example:</b>
+  </p>
+  <pre>
+
+    $user = $usersDB->in('country', ['BD', 'CA', 'SE', 'NA'])->fetch();
+  </pre>
+  <p>
+    <b>Multiple in clause example with nested properties:</b>
+  </p>
+  <pre>
+
+    $user = $usersDB
+      ->in('country', ['BD', 'CA', 'SE', 'NA'])
+      ->in('products.totalSaved', [100, 150, 200])
+      ->fetch();
+  </pre>
+
+  <h3 class="blue-color">notIn()</h3>
+  <p>
+    <code>notIn(...)</code> works as the opposite of in() method.<br/>
+    It will filter out all documents that has particular data items from the given array.<br/>
+    SleekDB supports multiple notIn as object chain for different fields.
+  </p>
+  <p>
+    The notIn() method takes two arguments as in() method, those are:
+  </p>
+  <pre>
+
+    notIn( $fieldName = '', $values = [] );
+  </pre>
+  <p>
+    <b>Example:</b>
+  </p>
+  <pre>
+
+    $user = $usersDB->notIn('country', ['IN', 'KE', 'OP'])->fetch();
+  </pre>
+  <p>
+    <b>Multiple notIn clause example with nested properties:</b>
+  </p>
+  <pre>
+
+    $user = $usersDB
+      ->notIn('country', ['IN', 'KE', 'OP'])
+      ->notIn('products.totalSaved', [100, 150, 200])
+      ->fetch();
   </pre>
       </div>
       
@@ -623,7 +786,7 @@ $userStore->deleteStore();
         </p>
   <pre>
   $users = $usersDB
-            ->search( 'bio', 'I Love Canada' )
+            ->search( 'bio', 'Manufactured in Canada' )
             ->search( 'location.country', 'Canada' )
             ->where( 'active', '=', 1 )
           ->fetch();
@@ -713,6 +876,82 @@ $userStore->deleteStore();
             <li>Push to the branch <span class="blue-color">git push origin feature/my-new-feature</span></li>
             <li>Create new Pull Request</li>
           </ol>
+        </p>
+      </div>
+  
+
+      <div style="font-size: 14px;" class="intro" id="block_release-notes">
+        <h3><span class="black-badge">🎉 Release Notes</span></h3>
+        <div class="pt5"></div>
+        <p>
+            <strong>📢 Optimizations, new clause methods and more control</strong>
+        </p>
+        <p>
+            SleekDB <code>1.5.0</code> comes with few important optimizations and with other features that will make it more easier to manage data. This is a recommended update if you are using an older version of SleekDB.
+        </p>
+        <p style="font-size: 18px;">
+            ✌️ No breaking changes from 1.0.3 to 1.5.0
+        </p>
+        <ul>
+          <li>
+              💪 <strong>Improving document discovery process</strong><br/>
+              Starting from version 1.5.0 SleekDB will discover new documents without affecting the _id serializer, that means it will need to do a lot less work than before. That makes it more faster less memory hungry than ever before.
+          </li>
+          <li>
+              🐍 <strong><code>orWhere()</code> clause method</strong><br/>
+              It will work as the OR condition of SQL. SleekDB supports multiple orWhere as object chain.
+<pre>
+    $user = $usersDB->where( 'products.totalSaved', '>', 10 )
+      ->orWhere( 'products.totalBought', '>', 20 )
+      ->orWhere( 'products.shipped', '=', 1 )
+      ->fetch();
+</pre>
+          </li>
+          <li>
+              😍 <strong>in() clause method</strong><br/>
+              It work like the IN clause of SQL. SleekDB supports multiple in() as object chain for different fields.
+<pre>
+    $user = $usersDB
+      ->in('country', ['BD', 'CA', 'SE', 'NA'])
+      ->in('products.totalSaved', [100, 150, 200])
+      ->fetch();
+</pre>
+          </li>
+          <li>
+              😎 <strong>notIn() clause method</strong><br/>
+              It works as the opposite of in() method.<br/>
+              It will filter out all documents that has particular data items from the given array.
+              SleekDB supports multiple notIn as object chain for different fields.
+<pre>
+    $user = $usersDB
+      ->notIn('country', ['IN', 'KE', 'OP'])
+      ->notIn('products.totalSaved', [100, 150, 200])
+      ->fetch();
+</pre>
+          </li>
+          <li>
+              🤗 <strong>Keeping Query State</strong><br/>
+              If you want to keep the condition parameters for query and perform additional operations then you may want to use the keepConditions() method.<br/>
+              Here is an example showing how you may fetch data and then update on the discovered documents without running an additional query:
+<pre>
+    // Find documents.
+    $result = $usersDB
+        ->keepConditions() // Won't reset the active query state.
+        ->where('products.totalBought', '>', 0)
+        ->where('products.totalSaved', '>', 0);
+    
+    // Fetch data.
+    $result->fetch();
+    
+    // Update matched documents.
+    $result->update([
+        'someRandomData' => '123',
+    ]);
+</pre>
+          </li>
+        </ul>
+        <p>
+          Github release note: <a href="https://github.com/rakibtg/SleekDB/releases/tag/1.5.0" target="_blank">https://github.com/rakibtg/SleekDB/releases/tag/1.5.0</a>
         </p>
       </div>
   
