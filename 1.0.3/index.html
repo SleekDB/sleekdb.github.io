@@ -647,7 +647,7 @@ $userStore->deleteStore();
   <pre>
   $user = $usersDB
             ->where( 'active', '=', 1 )
-            ->where( 'location.country', '=' 'United States' )
+            ->where( 'location.country', '=', 'United States' )
             ->search( 'bio', 'PHP developer' )
             ->search( 'bio', 'SleekDB' )
             ->orderBy( 'desc', 'rank' )
