@@ -5,10 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PHP NoSQL Document Database - SleekDB</title>
-  <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Varela+Round" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/assets/app.css">
   <link rel="stylesheet" type="text/css" href="/assets/normalize.css">
-  <link rel="stylesheet" href="/assets/highlighter/styles/foundation.css">
+  <link rel="stylesheet" href="/assets/highlighter/styles/darcula.css">
   <script src="/assets/highlighter/highlight.pack.js"></script>
   <script src="https://unpkg.com/ionicons@4.3.0/dist/ionicons.js"></script>
   <!-- Search Engine -->
@@ -40,19 +39,14 @@
     <div class="toggler" title="Toggle sidebar"><ion-icon name="menu"></ion-icon></div>
     <div class="left_header">
       <div class="logo">
-        <a href="/">SleekDB</a>
+        <a href="/">SLEEK<span>DB</span></a>
       </div>
     </div>
     <div class="right_header header_menu">
-      <select class="menu" onchange="window.location.href = `${window.location.origin}/${document.querySelector('#versions').value}`" id="versions">
-        <option value="/" selected>1.5.0</option>
-        <option value="1.0.3">1.0.3</option>
-        <option value="1.0.1">1.0.1</option>
-        <option value="1-beta">1.0 Beta</option>
-        <option value="0.7">0.7 Alpha</option>
-      </select>
-      <a class="menu" href="https://github.com/rakibtg/SleekDB" target="_blank" title="SleekDB is open-source. See the source code in GitHub"><ion-icon name="logo-github"></ion-icon> GitHub</a>
-      <a class="menu" href="https://twitter.com/rakibtg" target="_blank" title="Follow me on twitter for SleekDB updates."><ion-icon name="logo-twitter"></ion-icon> @rakibtg</a>
+      <a href="#versions" title="Find all versions of SleekDB" class="menu gotoblock"><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.0.0</a>
+      <a class="menu" href="https://github.com/rakibtg/SleekDB" target="_blank" title="SleekDB is open-source. See the source code in GitHub"><ion-icon name="logo-github"></ion-icon> <span class="hide-sm">GitHub</span></a>
+      <a class="menu" href="https://twitter.com/rakibtg" target="_blank" title="Follow me on twitter for SleekDB updates."><ion-icon name="logo-twitter"></ion-icon> <span class="hide-sm">@rakibtg</span></a>
+      <a class="menu gotoblock" href="/#/support" target="_blank" title="Learn more on supporting this open source database."><ion-icon name="heart"></ion-icon> <span class="hide-sm">Support</span></a>
     </div>
   </div>
   <div class="app">
@@ -72,12 +66,14 @@
         <a class="gotoblock" href="/#sort-data"><ion-icon name="switch"></ion-icon> Sort Data</a>
         <a class="gotoblock" href="/#search-data"><ion-icon name="search"></ion-icon> Search Data</a>
         <a class="gotoblock" href="/#use-cache"><ion-icon name="copy"></ion-icon> Cache Management</a>
-        <a class="gotoblock" href="/#regenerate-cache"><ion-icon name="sync"></ion-icon> Re-generate Cache</a>
+        <!-- <a class="gotoblock" href="/#regenerate-cache"><ion-icon name="sync"></ion-icon> Re-generate Cache</a>
         <a class="gotoblock" href="/#delete-cache"><ion-icon name="refresh-circle"></ion-icon> Delete Cache</a>
-        <a class="gotoblock" href="/#delete-all-cache"><ion-icon name="save"></ion-icon> Delete All Cache</a>
-        <a class="gotoblock" href="/#contributing"><ion-icon name="heart"></ion-icon> Contributing</a>
+        <a class="gotoblock" href="/#delete-all-cache"><ion-icon name="save"></ion-icon> Delete All Cache</a> -->
+        <a class="gotoblock" href="/#contributing"><ion-icon name="rocket"></ion-icon> Contributing</a>
         <a class="gotoblock" href="/#release-notes"><ion-icon name="megaphone"></ion-icon> Release Notes(1.5.0)</a>
         <a class="gotoblock" href="/#contact"><ion-icon name="mail"></ion-icon> About &amp; Contact</a>
+        <a class="gotoblock" href="/#support"><ion-icon name="pricetag"></ion-icon> Versions</a>
+        <a class="gotoblock" href="/#support"><ion-icon name="heart"></ion-icon> Support</a>
       </div>
     </div>
     <div class="right">
@@ -87,7 +83,7 @@
         <p>SleekDB is a simple NoSQL database implementation using pure PHP that store data in plain JSON files.</p>
         <p>
           SleekDB is not designed for heavy-load IO operations, it is designed to have 
-          a simple solution where we need a database for managing few gigabytes of data.
+          a simple solution where we need a database for managing few gigabytes of data focusing on read operations and requires less write operations.
         </p>
         <p>
           SleekDB works great as the database engine for low to medium traffic websites. 
