@@ -30,9 +30,7 @@ window.onload = function () {
 
 function goToBlock(event) {
   event.preventDefault();
-  console.log(event.target.baseURI);
   var id = event.target.href.split("#")[1];
-  // window.location.hash = id
   history.pushState(null, "", "/#/" + id);
   // change bg menu.
   for (let index = 0; index < menulinks.length; index++) {
@@ -75,7 +73,7 @@ function rightTop() {
 
 function checkPage() {
   if (window.location.hash) {
-    let id = window.location.hash.replace("#", "");
+    let id = window.location.hash.replace("#/", "");
     var intros = document.getElementsByClassName("intro");
     for (let index = 0; index < intros.length; index++) {
       const element = intros[index];
