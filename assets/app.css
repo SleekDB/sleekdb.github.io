@@ -39,6 +39,7 @@ h3 {
   flex-direction: row;
   align-items: center;
   z-index: 9;
+  border-bottom: 1px solid #1b1b20;
 }
 
 div.container {
@@ -75,7 +76,7 @@ pre.hljs {
 
 div#docs_menu_sidebar {
   background-color: #2c2c31;
-  overflow: scroll;
+  overflow: auto;
   height: calc(100vh - 68px);
   overflow-x: hidden;
 }
@@ -159,7 +160,7 @@ div.logo a {
   text-decoration: none;
   color: #fff;
   font-size: 20px;
-  padding: 20px;
+  padding: 18px;
   padding-left: 10px;
   display: block;
   letter-spacing: 0.3px;
@@ -184,7 +185,6 @@ div.logo a span {
 }
 
 .header_menu ion-icon {
-  /* border: 1px solid red; */
   margin-bottom: -4px;
   margin-right: 2px;
   font-size: 18px;
@@ -197,6 +197,7 @@ div.logo a span {
   background-color: #2a2a30;
   padding: 6px 15px;
   border-radius: 5px;
+  border: 1px solid #1b1b20;
 }
 
 .header_menu a:hover {
@@ -224,6 +225,7 @@ div.logo a span {
 @media only screen and (max-width: 700px) {
   .header_menu a {
     background-color: transparent;
+    border: none;
   }
   .header_menu .menu {
     padding: 10px 5px;
@@ -233,5 +235,16 @@ div.logo a span {
   }
   .hide-sm {
     display: none;
+  }
+  div.logo a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px;
+    padding-left: 5px;
+    display: block;
+    letter-spacing: 0.3px;
+    font-weight: bold;
+    color: rgb(221, 221, 221);
   }
 }
