@@ -1,994 +1,805 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PHP NoSQL Document Database - SleekDB</title>
-  <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Varela+Round" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/assets/app.css">
-  <link rel="stylesheet" type="text/css" href="/assets/normalize.css">
-  <link rel="stylesheet" href="/assets/highlighter/styles/foundation.css">
+
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SleekDB - A Pure PHP NoSQL Document Database</title>
+  <link rel="stylesheet" type="text/css" href="/assets/app.css" />
+  <link rel="stylesheet" type="text/css" href="/assets/normalize.css" />
+  <link rel="stylesheet" href="/assets/highlighter/styles/darcula.css" />
   <script src="/assets/highlighter/highlight.pack.js"></script>
   <script src="https://unpkg.com/ionicons@4.3.0/dist/ionicons.js"></script>
   <!-- Search Engine -->
-  <meta name="description" content="SleekDB is a simple NoSQL database that store data in plain JSON files. Intentionally SleekDB is not designed for heavy-load IO operations, it is designed to have a simple solution where we need a database for managing few gigabytes of data. SleekDB works great as the database engine for most low to medium traffic websites. Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB.">
-  <meta name="image" content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png">
+  <meta name="description" content="SleekDB is a simple document based NoSQL database that store data in plain JSON files. It is not designed for heavy-load IO operations, it is designed to have a simple solution for managing few gigabytes of data. SleekDB works great as the database engine for most low to medium traffic websites. Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB." />
+  <meta
+    name="image"
+    content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png"
+  />
   <!-- Schema.org for Google -->
-  <meta itemprop="name" content="PHP NoSQL Document Database - SleekDB">
-  <meta itemprop="description" content="SleekDB is a simple NoSQL database that store data in plain JSON files. Intentionally SleekDB is not designed for heavy-load IO operations, it is designed to have a simple solution where we need a database for managing few gigabytes of data. SleekDB works great as the database engine for most low to medium traffic websites. Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB.">
-  <meta itemprop="image" content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png">
+  <meta itemprop="name" content="SleekDB - A Pure PHP NoSQL Document Database" />
+  <meta itemprop="description" content="SleekDB is a simple document based NoSQL database that store data in plain JSON files. It is not designed for heavy-load IO operations, it is designed to have a simple solution for managing few gigabytes of data. SleekDB works great as the database engine for most low to medium traffic websites. Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB." />
+  <meta
+    itemprop="image"
+    content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png"
+  />
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="SleekDB - A NoSQL Database made using PHP">
-  <meta name="twitter:description" content="SleekDB is a simple NoSQL database that store data in plain JSON files. Intentionally SleekDB is not designed for heavy-load IO operations, it is designed to have a simple solution where we need a database for managing few gigabytes of data. SleekDB works great as the database engine for most low to medium traffic websites. Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB.">
-  <meta name="twitter:site" content="@rakibtg">
-  <meta name="twitter:creator" content="@rakibtg">
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="SleekDB - A Pure PHP NoSQL Document Database" />
+  <meta name="twitter:description" content="SleekDB is a simple document based NoSQL database that store data in plain JSON files. It is not designed for heavy-load IO operations, it is designed to have a simple solution for managing few gigabytes of data. SleekDB works great as the database engine for most low to medium traffic websites. Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB." />
+  <meta name="twitter:site" content="@rakibtg" />
+  <meta name="twitter:creator" content="@rakibtg" />
   <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-  <meta name="og:title" content="PHP NoSQL Document Database - SleekDB">
-  <meta name="og:description" content="SleekDB is a simple NoSQL database that store data in plain JSON files. Intentionally SleekDB is not designed for heavy-load IO operations, it is designed to have a simple solution where we need a database for managing few gigabytes of data. SleekDB works great as the database engine for most low to medium traffic websites. Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB.">
-  <meta name="og:image" content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png">
-  <meta name="og:url" content="https://sleekdb.github.io/">
-  <meta name="og:site_name" content="PHP NoSQL Document Database - SleekDB">
-  <meta name="og:locale" content="en_US">
-  <meta name="og:type" content="website">
+  <meta name="og:title" content="SleekDB - A Pure PHP NoSQL Document Database" />
+  <meta name="og:description" content="SleekDB is a simple document based NoSQL database that store data in plain JSON files. It is not designed for heavy-load IO operations, it is designed to have a simple solution for managing few gigabytes of data. SleekDB works great as the database engine for most low to medium traffic websites. Any site that gets fewer than 50k to 100K hits/day should work fine with SleekDB." />
+  <meta
+    name="og:image"
+    content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png"
+  />
+  <meta name="og:url" content="https://sleekdb.github.io/" />
+  <meta name="og:site_name" content="SleekDB - A Pure PHP NoSQL Document Database" />
+  <meta name="og:locale" content="en_US" />
+  <meta name="og:type" content="website" />
 </head>
-<body>
 
-<div class="container">
-  <div class="header">
-    <div class="toggler" title="Toggle sidebar"><ion-icon name="menu"></ion-icon></div>
-    <div class="left_header">
-      <div class="logo">
-        <a href="/">SleekDB</a>
-      </div>
-    </div>
-    <div class="right_header header_menu">
-      <select class="menu" onchange="window.location.href = `${window.location.origin}/${document.querySelector('#versions').value}`" id="versions">
-        <option value="/" selected>1.5.0</option>
-        <option value="1.0.3">1.0.3</option>
-        <option value="1.0.1">1.0.1</option>
-        <option value="1-beta">1.0 Beta</option>
-        <option value="0.7">0.7 Alpha</option>
-      </select>
-      <a class="menu" href="https://github.com/rakibtg/SleekDB" target="_blank" title="SleekDB is open-source. See the source code in GitHub"><ion-icon name="logo-github"></ion-icon> GitHub</a>
-      <a class="menu" href="https://twitter.com/rakibtg" target="_blank" title="Follow me on twitter for SleekDB updates."><ion-icon name="logo-twitter"></ion-icon> @rakibtg</a>
-    </div>
-  </div>
-  <div class="app">
-    <div class="left">
-      <div id="docs_menu_sidebar">
-        <a href="/"><ion-icon name="home"></ion-icon> Home</a>
-        <a class="gotoblock" href="/#features"><ion-icon name="filing"></ion-icon> Features</a>
-        <a class="gotoblock" href="/#installation"><ion-icon name="play"></ion-icon> Installation</a>
-        <a class="gotoblock" href="/#getting-started"><ion-icon name="rocket"></ion-icon> Getting Started</a>
-        <a class="gotoblock" href="/#configurations"><ion-icon name="construct"></ion-icon> Configurations</a>
-        <a class="gotoblock" href="/#stores"><ion-icon name="cube"></ion-icon> Managing Store</a>
-        <a class="gotoblock" href="/#insert-data"><ion-icon name="create"></ion-icon> Insert Data</a>
-        <a class="gotoblock" href="/#fetch-data"><ion-icon name="book"></ion-icon> Fetch Data</a>
-        <a class="gotoblock" href="/#edit-data"><ion-icon name="hammer"></ion-icon> Edit Data</a>
-        <a class="gotoblock" href="/#delete-data"><ion-icon name="trash"></ion-icon> Delete Data</a>
-        <a class="gotoblock" href="/#skip-limit"><ion-icon name="git-pull-request"></ion-icon> Skip and Limit</a>
-        <a class="gotoblock" href="/#sort-data"><ion-icon name="switch"></ion-icon> Sort Data</a>
-        <a class="gotoblock" href="/#search-data"><ion-icon name="search"></ion-icon> Search Data</a>
-        <a class="gotoblock" href="/#use-cache"><ion-icon name="copy"></ion-icon> Cache Management</a>
-        <a class="gotoblock" href="/#regenerate-cache"><ion-icon name="sync"></ion-icon> Re-generate Cache</a>
-        <a class="gotoblock" href="/#delete-cache"><ion-icon name="refresh-circle"></ion-icon> Delete Cache</a>
-        <a class="gotoblock" href="/#delete-all-cache"><ion-icon name="save"></ion-icon> Delete All Cache</a>
-        <a class="gotoblock" href="/#contributing"><ion-icon name="heart"></ion-icon> Contributing</a>
-        <a class="gotoblock" href="/#release-notes"><ion-icon name="megaphone"></ion-icon> Release Notes(1.5.0)</a>
-        <a class="gotoblock" href="/#contact"><ion-icon name="mail"></ion-icon> About &amp; Contact</a>
-      </div>
-    </div>
-    <div class="right">
-
-      <div class="intro top-intro" id="block_home">
-        <h3>SleekDB - A NoSQL Database made using PHP</h3>
-        <p>SleekDB is a simple NoSQL database implementation using pure PHP that store data in plain JSON files.</p>
-        <p>
-          SleekDB is not designed for heavy-load IO operations, it is designed to have 
-          a simple solution where we need a database for managing few gigabytes of data.
-        </p>
-        <p>
-          SleekDB works great as the database engine for low to medium traffic websites. 
-        </p>
-      </div>
-
-      <div class="intro features-block" id="block_features">
-        <h3><span class="black-badge">Features</span></h3>
-        <div class="two-panel">
-          <div class="panel-block">
-
-            <ul>
-              <li>
-                <span class="_f1">Light-weight, faster</span>
-                Stores data in plain-text utilizing JSON format, no binary conversion needed to store or fetch the data.
-              </li>
-              <li>
-                  <span class="_f1">Schema free data storage</span>
-                  SleekDB does not require any schema meaning you can insert any types of data you want.
-              </li>
-              <li>
-                  <span class="_f1">Query on nested properties</span>
-                  Supports filter and conditions on nested properties of the JSON documents!<br/>
-                  If you write this where clause: 
-<pre lang="PHP">
-  where( 'post.author.role' '=', 'admin' )
-</pre>
-                  SleekDB will look for data at:
-<pre lang="JSON">
-  {
-    "post": {
-      "author": {
-        "role": "admin"
-      }
-    }                  
-  }
-</pre>
-              </li>
-              <li>
-                  <span class="_f1">Dependency free, only requires PHP to run</span>
-                  Supports PHP 5.5+, PHP 7+. Requires no third-party plugins or softwares.
-              </li>
-              <li>
-                  <span class="_f1">Default caching layer</span>
-                  SleekDB will serve data from cache by default and regenerate cache each time it creates, updates and deletes an object!
-              </li>
-              <li>
-                  <span class="_f1">Filters: where, in, notIn, orWhere, sort, skip, limit and search</span>
-                  Use multiple conditional comparisons, text search, sorting on multiple properties and nested properties.
-              </li>
-              <li>
-                  <span class="_f1">Runs every where</span>
-                  Runs perfectly on shared-servers or VPS too.
-              </li>
-              <li>
-                  <span class="_f1">Easy to learn and implement</span>
-                  SleekDB provides a very simple elegant API to handle all of your data.
-              </li>
-              <li>
-                  <span class="_f1">Actively maintained</span>
-                  SleekDB is actively maintained by <a href="https://twitter.com/rakibtg" target="_blank">@rakibtg</a>. For support and other requirements <a class="gotoblock" href="/#contact">contact</a>.
-              </li>
-              <li>Easily import/expert or backup data.</li>
-
-            </ul>
-  
-          </div>
-        </div>
-  
-      </div>
-
-      <div class="intro" id="block_installation">
-        <h3><span class="black-badge">Installation</span></h3>
-        <div class="pt5"></div>
-        <p>
-          To use SleekDB make sure that you have PHP up and running in your system, and SleekDB has write permission.
-        </p>
-        <p>
-          <strong>Using SleekDB in a PHP project</strong>
-        </p>
-        <p>
-          <span class="badge">Composer Installation (recommended)</span>
-        </p>
-        <p>
-          To install SleekDB using composer, open a terminal, cd into your project root directory where "composer.json" file lives and run this:
-        </p>
-        <p>
-          <pre>composer require rakibtg/sleekdb</pre>
-        </p>
-        <p>
-          SleekDB should be auto loaded into your app using the composer. Find SleekDB on <a href="https://packagist.org/packages/rakibtg/sleekdb" target="_blank">packagist</a>.
-        </p>
-        <p>
-          <span class="badge">Install Manually (without composer)</span>
-        </p>
-        <ol>
-          <li><a href=" https://github.com/rakibtg/SleekDB/archive/master.zip">Download</a> the latest version and extract the ZIP file inside your project directory.</li>
-          <li>
-            Import the <span class="red-color">SleekDB.php</span> file where you want to use SleekDB. Example:
-            <pre>require_once "../SleekDB/SleekDB.php";</pre>
-          </li>
-        </ol>
-        <p>
-          To download older versions please check the 
-          <a target="_blank" title="Click here to download old versions" href="https://github.com/rakibtg/SleekDB/releases">releases</a>.
-        </p>
-      </div>
-
-      <div class="intro" id="block_getting-started">
-        <h3>Getting Started</h3>
-        <p>
-          Getting started with SleekDB is super easy. We keep data in a "store", which is similar to MySQL "table" or MongoDB "collection". To start working with data at first we create a new instance of SleekDB. Later, we create a "store" using the instantiated object to start working with data.
-        </p>
-            <ol>
-              <li>
-                To create the SleekDB instance we need a valid "path" where it can write data.
-                <pre>$dataDir = "/Users/username/documents/mydb";</pre>
-              </li>
-              <li>
-                Once we have the data directory lets create the SleekDB store, which can be treated as the "table" in SQL databases. <br/>
-                If the store doesn't exist then it will be created automatically.
-                <pre>$newsStore = \SleekDB\SleekDB::store('news', $dataDir);</pre>
-                Optionally you can pass a configuration array in the second parameter. Read more about <a class="gotoblock" href="#configurations">configurations</a>.
-              </li>
-              <li>
-                Let's insert a news.
-<pre>
-// An array that we want to insert.
-$newsInsertable = [
-    "title" => "Google Pixel XL",
-    "about" => "The unlocked biggest Pixel 2..."  
-];
-$results = $newsStore->insert( $newsInsertable ); 
-</pre>
-      The results variable would contain all the inserted data and with the <span class="red-color">_id</span> property.
-              </li>
-            </ol>
-            <!-- <span class="badge">Using SleekDB Independently</span>
-            <p>
-              SleekDB would have a server that could be used as the database server that works separately and independently. This feature is not implemented yet.
-            </p> -->
-      </div>
-
-      <div class="intro" id="block_configurations">
-        <h3><span class="black-badge">Configurations</span></h3>
-        <div class="pt5"></div>
-        <p>
-          At this moment SleekDB only allows two configurations, which are "auto_cache" and "timeout". Configurations should be passed as an array in the second parameter while instantiating SleekDB, store's created from this object will follow the configurations we have provided.
-        </p>
-        <span class="badge">Using Custom Configuration</span>
-        <p>You should pass the configurations array in the second parameter, example:</p>
-        <pre>
-$newsStore = \SleekDB\SleekDB::store('news', $dataDir, [
-  'auto_cache' => true,
-  'timeout' => 120
-]);
-</pre>
-        <p>
-          Let's talk about what this configurations do.
-        </p>
-        <p><strong class="red-color">auto_cache</strong></p>
-        <p>
-          The <span class="blue-color">auto_cache</span> is set to <span class="red-color">true</span> by default!
-        </p>
-        <p>
-          This tells SleekDB to cache the data of an unique database query and later re-use the cache for the same query.
-          <br/>
-          To keep the cached data synced with new data, SleekDB will delete all cache when we insert any new data to a store.
-        </p>
-        <p>
-          To disable it update the value of <span class="blue-color">auto_cache</span> to <span class="red-color">false</span> in the config array.
-        </p>
-        <p class="note-block">
-          Note that you can manually manage cache data with methods that SleekDB provides. Available caching method's are: <span class="blue-color">makeCache()</span>, <span class="blue-color">useCache()</span>, <span class="blue-color">deleteCache()</span> and <span class="blue-color">deleteAllCache()</span>
-        </p>
-        <p><strong class="red-color">timeOut</strong></p>
-        <p>
-          Set timeout value, default value is <span class="blue-color">120</span> second.
-        </p>
-      </div>
-  
-      <div class="intro" id="block_stores">
-        <h3><span class="black-badge">Understanding Store</span></h3>
-        <div class="pt5"></div>
-        <p>
-          Store is a simple directory where SleekDB will write all your data in JSON documents. "Store" is similar with the idea of "Table" in MySQL or "Collection" in MongoDB.
-          You dont need to create a "store" manually, while you use the "store" method from the SleekDB object it will first check if the "store" directory exists or not, if not then 
-          it would be created instantly.
-        </p>
-        <p>
-          At this moment you can not rename a store, but you can do it manually 
-          using the File Browser of your OS or using the terminal.
-        </p>
-        <p>
-          <span class="badge">Your first store</span>
-        </p>
-        <p>
-          To start working with a store, at first we need to create an object using the "store" static method. <br/>
-          Later, we can use that object to work with data for that store.
-        </p>
-        <ul>
-          <li>Create an store,
-            <pre>$newsStore = \SleekDB\SleekDB::store('news', $dataDir);</pre>
-          </li>
-          <li>
-            Having multiple store; assuming we are working on a community site where need to have a users store.
-            <pre>$userStore = \SleekDB\SleekDB::store('users', $dataDir);</pre>
-            Another store to keep all the posts shared by the user.
-            <pre>$postStore = \SleekDB\SleekDB::store('posts', $dataDir);</pre>
-          </li>
-          <li>
-            Creating a new user,
-<pre>$userStore->insert([
-    'name' => 'Mike Doe',
-    'email' => 'miked@example.com'
-]);</pre>
-          </li>
-        </ul>
-        <p>
-          In the above example we have created an user to understand the use case of a store in SleekDB. In this documentation later we will see more examples on this.
-        </p>
-        <p>
-          <span class="badge">Deleting A Store</span>
-        </p>
-        <p>
-          To delete a store use the <span class="red-color">deleteStore()</span> method.
-          <br/>
-          It deletes a store and wipes all the data and cache it contains.
-        </p>
-        <p>Example:</p>
-<pre>// > Delete everything from the above user store.
-$userStore->deleteStore();
-</pre>
-<p>
-    <span class="badge">Keeping Store Conditions</span>
-  </p>
-  <p>
-    When you run a query and use a action method like <span class="red-color">fetch</span>, <span class="red-color">update</span> or <span class="red-color">delete</span> the conditions you have added 
-    for the active query will be reset to default.
-  </p>
-  <p>
-    But if you want to keep the condition parameters for query and perform additional operations then you may want to use 
-    the <span class="red-color">keepConditions()</span> method.
-  </p>
-  <p>
-    Here is an example showing how you may fetch data and then update on the discovered documents without 
-    running an additional query:
-  </p>
-  <pre>
-
-    // Find documents.
-    $result = $usersDB
-        ->keepConditions() // Won't reset the active query state.
-        ->where('products.totalBought', '>', 0)
-        ->where('products.totalSaved', '>', 0);
-
-    // Fetch data.
-    $result->fetch();
-    
-    // Update matched documents.
-    $result->update([
-        'someRandomData' => '123',
-    ]);
-  </pre>
-      </div>
-      
-      <div class="intro" id="block_insert-data">
-        <h3><span class="black-badge">Insert Data</span></h3>
-        <div class="pt5"></div>
-        <p>
-          To insert data first you make a PHP array, and simply insert that array into a store.
-        </p>
-        <p>
-          <span class="badge">Insert A Single Data Object</span>
-        </p>
-        <p>
-          Using the <span class="red-color">insert()</span> method we will insert a new data object. Example:
-  <pre>
-  // Prepare a PHP array to insert.
-  $user = [
-    'name' => 'Kazi Hasan',
-    'products' => [
-      'totalSaved' => 19,
-      'totalBought' => 27
-    ],
-    'location' => [
-      'town' => 'Nagar',
-      'city' => 'Dhaka',
-      'country' => 'Bangladesh'
-    ]
-  ];
-  // Insert the data.
-  $user = $usersDB->insert( $user );
-  </pre>
-          Here, the <span class="red-color">insert()</span> method will return the inserted object with the <span class="blue-color">_id</span> property which 
-          is generated by SleekDB.
-        </p>
-        <p>
-          <span class="badge">Insert Multiple Data Object</span>
-        </p>
-        Using the <span class="red-color">insertMany()</span> method you can insert more than one data object at a time, example:
-  <pre>
-  // Prepare users data.
-  $users = [
-    [ 
-      'name' => 'Russell Newman',
-      'products' => [
-        'totalSaved' => 5,
-        'totalBought' => 3
-      ],
-      'location' => [
-        'town' => 'Andreas Ave',
-        'city' => 'Maasdriel',
-        'country' => 'England'
-      ]
-    ],
-    [ 
-      'name' => 'Willard Bowman',
-      'products' => [
-        'totalSaved' => 0,
-        'totalBought' => 0
-      ],
-    ],
-    [
-      'name' => 'Tommy Mendoza',
-      'products' => [
-        'totalSaved' => 172,
-        'totalBought' => 54
-      ],
-    ],
-    [
-      'name' => 'Joshua Edwards',
-      'phone' => '(382)-450-8197'
-    ]
-  ];
-  // Insert all data.
-  $usersDB->insertMany( $users );
-  </pre>
-  The <span class="red-color">insertMany()</span> method will return the inserted object with the <span class="blue-color">_id</span> property which 
-  is generated by SleekDB.
-      </div>
-      
-      <div class="intro" id="block_fetch-data">
-        <h3><span class="black-badge">Fetch Data</span></h3>
-        <div class="pt5"></div>
-        <p>
-          To get data from the store we use the <span class="red-color">fetch()</span> method. Example:
-        </p>
-  <pre>
-
-  $usersDB->fetch();
-  </pre>
-        <p>
-          The above command would query into the "users" store to fetch all the data.
-        </p>
-        <p>
-          <span class="badge">Apply Filters and Conditions</span>
-        </p>
-        <h3 class="blue-color">where()</h3>
-        <p>
-          To filter data we use the <span class="red-color">where()</span> method.
-        </p>
-        <p>
-          The <span class="red-color">where()</span> method takes three arguments, those are:
-        </p>
-  <pre>
-
-  where( $fieldName, $condition, $value );
-  </pre>
-        <p>
-          <ol>
-            <li>
-              <strong>$fieldName</strong>
-              <p>
-                The field name argument is the property that we want to check in our data object.
-              </p>
-              <p>
-                  As our data object is basically a JSON document so it could have nested properties.
-              </p>
-              <p>
-                To target nested properties we use a single dot between the property/field name.
-              </p>
-              <p>
-                <strong>Example:</strong> From our above users object if we want to target the "country" property of a user, then we would 
-                pass <span class="blue-color">location.country</span> in this argument, because "location" is the parent property of the "country" property in 
-                our data object.
-              </p>
-            </li>
-            <li>
-              <strong>$condition</strong>
-              <p>
-                To apply the comparison filters we use this argument.
-              </p>
-              <p>
-                Allowed comparisonal conditions are:
-                <ul>
-                  <li>
-                    <strong class="blue-color">=</strong> <span class="small-font pl5">Match equal against data.</span>
-                  </li>
-                  <li>
-                    <strong class="blue-color">!=</strong> <span class="small-font pl5">Match not equal against data.</span>
-                  </li>
-                  <li>
-                    <strong class="blue-color">></strong> <span class="small-font pl5">Match greater than against data.</span>
-                  </li>
-                  <li>
-                    <strong class="blue-color">>=</strong> <span class="small-font pl5">Match greater equal against data.</span>
-                  </li>
-                  <li>
-                    <strong class="blue-color"><</strong> <span class="small-font pl5">Match less than against data.</span>
-                  </li>
-                  <li>
-                    <strong class="blue-color"><=</strong> <span class="small-font pl5">Match less equal against data.</span>
-                  </li>
-                </ul>
-              </p>
-            </li>
-            <li>
-              <strong>$value</strong>
-              <p>
-                Data to be used as against the property value of the JSON documents.
-              </p>
-            </li>
-          </ol>
-        </p>
-        <p>
-          <strong>Example of using where() to filter data</strong> <br>
-          To only get the user whose country is equal to "England" we would query like this:
-        </p>
-  <pre>
-
-  $user = $usersDB->where( 'name', '=', 'Joshua Edwards' )->fetch();
-  </pre> 
-        <p>
-          You can use multiple <span class="red-color">where()</span> conditions. Example:
-        </p>
-  <pre>
-
-  $user = $usersDB
-      ->where( 'products.totalSaved', '>', 10 )
-      ->where( 'products.totalBought', '>', 20 )
-      ->fetch();
-  </pre>
-
-  <h3 class="blue-color">orWhere()</h3>
-  <p>
-    <code>orWhere(...)</code> works as the <code>OR</code> condition of SQL. SleekDB supports multiple orWhere as object chain.
-  </p>
-  <p>
-    The orWhere() method takes three arguments same as where() condition, those are:
-  </p>
-  <pre>
-
-    orWhere( $fieldName, $condition, $value );
-  </pre>
-  <p>
-    <b>Example:</b>
-  </p>
-  <pre>
-
-    $user = $usersDB
-        ->where( 'products.totalSaved', '>', 10 )
-        ->orWhere( 'products.totalBought', '>', 20 )
-        ->fetch();
-  </pre>
-  <p>
-    <b>Multiple orWhere clause example:</b>
-  </p>
-  <pre>
-
-    $user = $usersDB->where( 'products.totalSaved', '>', 10 )
-        ->orWhere( 'products.totalBought', '>', 20 )
-        ->orWhere( 'products.shipped', '=', 1 )
-        ->fetch();
-  </pre>
-
-  <h3 class="blue-color">in()</h3>
-  <p>
-    <code>in(...)</code> works as the <code>IN</code> clause of SQL. SleekDB supports multiple IN as object chain for different fields.
-  </p>
-  <p>
-    The in() method takes two arguments, those are:
-  </p>
-  <pre>
-
-    in( $fieldName = '', $values = [] );
-  </pre>
-  <ol>
-    <li>
-      <strong>$fieldName</strong> <br/>
-      The field name argument is the property that we want to check in our data object.<br />
-      As our data object is basically a JSON document so it could have nested properties.
-    </li>
-    <li>
-      <strong>$values</strong> <br/>
-      This argument takes an array to match documents within its items.
-    </li>
-  </ol>
-  <p>
-    <b>Example:</b>
-  </p>
-  <pre>
-
-    $user = $usersDB->in('country', ['BD', 'CA', 'SE', 'NA'])->fetch();
-  </pre>
-  <p>
-    <b>Multiple in clause example with nested properties:</b>
-  </p>
-  <pre>
-
-    $user = $usersDB
-      ->in('country', ['BD', 'CA', 'SE', 'NA'])
-      ->in('products.totalSaved', [100, 150, 200])
-      ->fetch();
-  </pre>
-
-  <h3 class="blue-color">notIn()</h3>
-  <p>
-    <code>notIn(...)</code> works as the opposite of in() method.<br/>
-    It will filter out all documents that has particular data items from the given array.<br/>
-    SleekDB supports multiple notIn as object chain for different fields.
-  </p>
-  <p>
-    The notIn() method takes two arguments as in() method, those are:
-  </p>
-  <pre>
-
-    notIn( $fieldName = '', $values = [] );
-  </pre>
-  <p>
-    <b>Example:</b>
-  </p>
-  <pre>
-
-    $user = $usersDB->notIn('country', ['IN', 'KE', 'OP'])->fetch();
-  </pre>
-  <p>
-    <b>Multiple notIn clause example with nested properties:</b>
-  </p>
-  <pre>
-
-    $user = $usersDB
-      ->notIn('country', ['IN', 'KE', 'OP'])
-      ->notIn('products.totalSaved', [100, 150, 200])
-      ->fetch();
-  </pre>
-      </div>
-      
-      <div class="intro" id="block_edit-data">
-        <h3><span class="black-badge">Edit Data</span></h3>
-        <div class="pt5"></div>
-        <p>
-          To edit a data object we would use the <span class="red-color">update()</span> method.
-        </p>
-        <p>
-          The update method takes only one argument.
-        </p>
-  <pre>
-  update( $updateable );
-  </pre>
-        <p>
-          Lets update the "totalBought" value of a user whose name is "Joshua Edwards"
-        </p>
-  <pre>
-  $updateable = [
-    'products' => [
-      'totalBought' => 1
-    ]
-  ];
-  $usersDB->where( 'name', '=', 'Joshua Edwards' )->update( $updateable );
-  </pre>
-        <p>
-          You can use more than one where condition if required.
-        </p>
-      </div>
-  
-      <div class="intro" id="block_delete-data">
-        <h3><span class="black-badge">Delete Data</span></h3>
-        <div class="pt5"></div>
-        <p>
-            To delete a data object we would use the <span class="red-color">delete()</span> method. Example:
-          </p>
-          <p>
-            Lets delete the user whose name is "Joshua Edwards"
-          </p>
-  <pre>
-  $usersDB->where( 'name', '=', 'Joshua Edwards' )->delete();
-  </pre>
-        <p>
-          You can use more than one where condition if required.
-        </p>
-      </div>
-  
-      <div class="intro" id="block_skip-limit">
-        <h3><span class="black-badge">Skip and Limit Data</span></h3>
-        <div class="pt5"></div>
-        <p>
-          To skip a set of record we will use the <span class="red-color">skip()</span> method. Example:
-        </p>
-  <pre>
-  // Skip the first 5 users.
-  $users = $usersDB->skip( 5 )->fetch();
-  </pre>
-        <p>
-          To limit a set of record we will use the <span class="red-color">limit()</span> method. Example:
-        </p>
-  <pre>
-  // Fetch only 5 users.
-  $users = $usersDB->limit( 5 )->fetch();
-  </pre>
-        <p>
-          <span class="badge">Query Offset</span>
-        </p>
-        <p>
-          To obtain the query offset feature we can chain <span class="red-color">skip()</span> and <span class="red-color">limit()</span> 
-          into one query. Example:
-        </p>
-  <pre>
-  $users = $usersDB
-            ->where( 'age', '>=', 18 )
-            ->skip( 15 )
-            ->limit( 5 )
-          ->fetch();
-  </pre>
-        <p>
-          The above query will skip first 15 records and will limit to next 5 records of data objects. This way we can also perform paginate.
-        </p>
-      </div>
-      
-      <div class="intro" id="block_sort-data">
-        <h3><span class="black-badge">Sort Data</span></h3>
-        <div class="pt5"></div>
-          <p>
-            To sort data objects we would use the <span class="red-color">orderBy()</span> method.
-          </p>
-          <p>
-            The orderBy method takes two argument,
-          </p>
-  <pre>
-  orderBy( $order, $orderBy );
-  </pre>
-          <p>
-            <ol>
-              <li>
-                <strong>$order</strong> argument receives the order direction, "asc" or "desc".
-              </li>
-              <li>
-                <strong>$orderBy</strong> argument receives the property name on which we want to sort. Default is _id property.
-              </li>
-            </ol>
-          </p>
-          <p>
-            Lets sort the data based on total items bought by the user.
-          </p>
-  <pre>
-  $users = $usersDB
-            ->orderBy( 'desc', 'products.totalBought' )
-            ->limit( 20 )
-          ->fetch();
-  </pre>
-      </div>
-      
-      <div class="intro" id="block_search-data">
-        <h3><span class="black-badge">Search Data</span></h3>
-        <div class="pt5"></div>
-        <p>
-          We can search data using the <span class="red-color">search()</span> method. It utilizes the <a href="http://php.net/manual/en/function.similar-text.php" target="_blank">similar_text()</a> function and 
-          works better on medium length string.
-        </p>
-        <p>
-          The search method takes two argument,
-        </p>
-  <pre>
-  search( $field, $keyword );
-  </pre>
-        <p>
-          <ol>
-            <li>
-              <strong>$field</strong> argument receives the property name on which we want to perform the search.
-            </li>
-            <li>
-              <strong>$keyword</strong> is the search keyword.
-            </li>
-          </ol>
-        </p>
-        <p>
-          Lets search for users who lives in Canada.
-        </p>
-  <pre>
-  $users = $usersDB
-            ->search( 'location.country', 'Canada' )
-          ->fetch();
-  </pre>
-        <p>
-          To ensure proper search result we can search more than one property at a time. Example,
-        </p>
-  <pre>
-  $users = $usersDB
-            ->search( 'bio', 'Manufactured in Canada' )
-            ->search( 'location.country', 'Canada' )
-            ->where( 'active', '=', 1 )
-          ->fetch();
-  </pre>
-      </div>
-      
-      <div class="intro" id="block_use-cache">
-        <h3><span class="black-badge">Cache Management</span></h3>
-        <div class="pt5"></div>
-        <p>
-          The <span class="red-color">useCache()</span> method would return the data from the cache storage, if cache dosent exists then it 
-          would fetch the result then creates the cache for later use and return the data. Example,
-        </p>
-  <pre>
-  $user = $usersDB
-            ->where( 'active', '=', 1 )
-            ->where( 'location.country', '=', 'United States' )
-            ->search( 'bio', 'PHP developer' )
-            ->search( 'bio', 'SleekDB' )
-            ->orderBy( 'desc', 'rank' )
-            ->limit( 20 )
-            ->useCache() // Use the cache data.
-          ->fetch();
-  </pre>
-      </div>
-  
-      <div class="intro" id="block_regenerate-cache">
-        <h3><span class="black-badge">Re-generate Cache</span></h3>
-        <div class="pt5"></div>
-        <p>
-          To re-generate the cache for a query we would use the <span class="red-color">makeCache()</span> method. 
-        </p>
-        <p>
-          Its more like the 
-          <span class="red-color">useCache()</span> method but the only difference is that instead of looking for existing cache data 
-          it would replace the old cache by generating a new cache from fresh data fetched. Example,
-        </p>
-  <pre>
-  $user = $usersDB
-            ->search( 'bio', 'SleekDB' )
-            ->orderBy( 'desc', 'rank' )
-            ->skip( 80 )
-            ->limit( 20 )
-            ->makeCache() // Re-generate the cache data.
-          ->fetch();
-  </pre>
-      </div> 
-  
-      <div class="intro" id="block_delete-cache">
-        <h3><span class="black-badge">Delete Cache</span></h3>
-        <div class="pt5"></div>
-        <p>
-          To delete the cache of a query we would use the <span class="red-color">deleteCache()</span> method. Example,
-        </p>
-  <pre>
-  $user = $usersDB
-            ->search( 'bio', 'SleekDB' )
-            ->orderBy( 'desc', 'rank' )
-            ->skip( 80 )
-            ->limit( 20 )
-          ->deleteCache();
-  </pre>
-        <p>
-          Note that if you need to get the data please add the <span class="red-color">fetch()</span> method.
-        </p>
-      </div>
-  
-      <div class="intro bb0" id="block_delete-all-cache">
-        <h3><span class="black-badge">Delete All Cache</span></h3>
-        <div class="pt5"></div>
-        <p>
-          To delete all cache use the <span class="red-color">deleteAllCache()</span> method. Example,
-        </p>
-  <pre>
-  $usersDB->deleteAllCache();
-  </pre>
-      </div>
-
-      <div class="intro" id="block_contributing">
-        <h3><span class="black-badge">Contributing</span></h3>
-        <div class="pt5"></div>
-        <p>
-          <ol>
-            <li>Fork SleekDB</li>
-            <li>Create your feature branch <span class="blue-color">git checkout -b feature/my-new-feature</span></li>
-            <li>Commit your changes <span class="blue-color">git commit -am 'Added some feature'</span></li>
-            <li>Push to the branch <span class="blue-color">git push origin feature/my-new-feature</span></li>
-            <li>Create new Pull Request</li>
-          </ol>
-        </p>
-      </div>
-  
-
-      <div style="font-size: 14px;" class="intro" id="block_release-notes">
-        <h3><span class="black-badge">🎉 Release Notes</span></h3>
-        <div class="pt5"></div>
-        <p>
-            <strong>📢 Optimizations, new clause methods and more control</strong>
-        </p>
-        <p>
-            SleekDB <code>1.5.0</code> comes with few important optimizations and with other features that will make it more easier to manage data. This is a recommended update if you are using an older version of SleekDB.
-        </p>
-        <p style="font-size: 18px;">
-            ✌️ No breaking changes from 1.0.3 to 1.5.0
-        </p>
-        <ul>
-          <li>
-              💪 <strong>Improving document discovery process</strong><br/>
-              Starting from version 1.5.0 SleekDB will discover new documents without affecting the _id serializer, that means it will need to do a lot less work than before. That makes it more faster less memory hungry than ever before.
-          </li>
-          <li>
-              🐍 <strong><code>orWhere()</code> clause method</strong><br/>
-              It will work as the OR condition of SQL. SleekDB supports multiple orWhere as object chain.
-<pre>
-    $user = $usersDB->where( 'products.totalSaved', '>', 10 )
-      ->orWhere( 'products.totalBought', '>', 20 )
-      ->orWhere( 'products.shipped', '=', 1 )
-      ->fetch();
-</pre>
-          </li>
-          <li>
-              😍 <strong>in() clause method</strong><br/>
-              It work like the IN clause of SQL. SleekDB supports multiple in() as object chain for different fields.
-<pre>
-    $user = $usersDB
-      ->in('country', ['BD', 'CA', 'SE', 'NA'])
-      ->in('products.totalSaved', [100, 150, 200])
-      ->fetch();
-</pre>
-          </li>
-          <li>
-              😎 <strong>notIn() clause method</strong><br/>
-              It works as the opposite of in() method.<br/>
-              It will filter out all documents that has particular data items from the given array.
-              SleekDB supports multiple notIn as object chain for different fields.
-<pre>
-    $user = $usersDB
-      ->notIn('country', ['IN', 'KE', 'OP'])
-      ->notIn('products.totalSaved', [100, 150, 200])
-      ->fetch();
-</pre>
-          </li>
-          <li>
-              🤗 <strong>Keeping Query State</strong><br/>
-              If you want to keep the condition parameters for query and perform additional operations then you may want to use the keepConditions() method.<br/>
-              Here is an example showing how you may fetch data and then update on the discovered documents without running an additional query:
-<pre>
-    // Find documents.
-    $result = $usersDB
-        ->keepConditions() // Won't reset the active query state.
-        ->where('products.totalBought', '>', 0)
-        ->where('products.totalSaved', '>', 0);
-    
-    // Fetch data.
-    $result->fetch();
-    
-    // Update matched documents.
-    $result->update([
-        'someRandomData' => '123',
-    ]);
-</pre>
-          </li>
-        </ul>
-        <p>
-          Github release note: <a href="https://github.com/rakibtg/SleekDB/releases/tag/1.5.0" target="_blank">https://github.com/rakibtg/SleekDB/releases/tag/1.5.0</a>
-        </p>
-      </div>
-  
-      <div class="intro contact" id="block_contact">
-        <h3><span class="black-badge">About &amp; Contact</span></h3>
-        <p>
-          We would love to see how you are using the database, if you have implemented something or how it is working for you. <br>What 
-          changes will make you more interested. <br>
-          If you want to submit a bug feel free to create a new <a href="https://github.com/rakibtg/SleekDB/issues" target="_blank">issue</a> or email me @ rakibtg [-at-] gmail.
-        </p>
-        <span class="badge">About</span>
-        <p>
-          SleekDB is actively maintained by <a href="https://twitter.com/rakibtg">@rakibtg</a>(Twitter). <br/>
-          Let me know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.
-        </p>
-      </div>
-      
-      <div class="intro">
-        <p>
-          SleekDB is a open-source NoSQL database licensed under the MIT License. Source code on <a href="https://github.com/rakibtg/SleekDB" class="black-badge" target="_blank">GitHub</a> 
-        </p>
-        <p>
-          Website designed by <a href="https://twitter.com/rakibtg">@rakibtg</a> &bull; This website is also <a href="https://github.com/SleekDB/sleekdb.github.io" target="_blank">open-source</a>!
-        </p>
-        <p style="text-align: center; padding-top: 50px;">
-            <span style="font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 22px;">©</span> Copyright - SleekDB &bull; By <a href="https://twitter.com/rakibtg">@rakibtg</a>
-        </p>
-      </div>
-    </div>
+        <body>
+        
+        <div class="container">
+          <div class="header">
+            <div class="toggler" title="Toggle sidebar">
+  <ion-icon name="menu"></ion-icon>
+</div>
+<div class="left_header">
+  <div class="logo">
+    <a href="/">SLEEK<span>DB</span></a>
   </div>
 </div>
-<!-- <div id="firefox-issue" style="display: none;">
-  <img src="/assets/images/firefox.png">
-  <p>Notice
-  </p>
-</div> -->
+<div class="right_header header_menu">
+  <a
+    href="#/versions"
+    title="Find all versions of SleekDB"
+    class="menu gotoblock"
+    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 1.5.0</a
+  >
+  <a
+    class="menu"
+    href="https://github.com/rakibtg/SleekDB"
+    target="_blank"
+    title="SleekDB is open-source. See the source code in GitHub"
+    ><ion-icon name="logo-github"></ion-icon>
+    <span class="hide-sm">GitHub</span></a
+  >
+  <a
+    class="menu"
+    href="https://twitter.com/rakibtg"
+    target="_blank"
+    title="Follow me on twitter for SleekDB updates."
+    ><ion-icon name="logo-twitter"></ion-icon>
+    <span class="hide-sm">@rakibtg</span></a
+  >
+  <!-- <a
+    class="menu gotoblock"
+    href="/#/support"
+    target="_blank"
+    title="Learn more on supporting this open source database."
+    ><ion-icon name="heart"></ion-icon> <span class="hide-sm">Support</span></a
+  > -->
+</div>
 
-<script src="/assets/app.js"></script>
-</body>
-</html>
+          </div>
+          <div class="app">
+            <div class="left">
+              <div id="docs_menu_sidebar">
+  
+          <a class="gotoblock" href="#/home">
+            <ion-icon name="home"></ion-icon> 
+            Home
+        </a>
+          <a class="gotoblock" href="#/features">
+            <ion-icon name="filing"></ion-icon> 
+            Features
+        </a>
+          <a class="gotoblock" href="#/Installation">
+            <ion-icon name="play"></ion-icon> 
+            Installation
+        </a>
+          <a class="gotoblock" href="#/getting-started">
+            <ion-icon name="rocket"></ion-icon> 
+            Getting Started
+        </a>
+          <a class="gotoblock" href="#/configurations">
+            <ion-icon name="construct"></ion-icon> 
+            Configurations
+        </a>
+          <a class="gotoblock" href="#/managing-store">
+            <ion-icon name="cube"></ion-icon> 
+            Managing Store
+        </a>
+          <a class="gotoblock" href="#/insert-data">
+            <ion-icon name="create"></ion-icon> 
+            Insert Data
+        </a>
+          <a class="gotoblock" href="#/fetch-data">
+            <ion-icon name="book"></ion-icon> 
+            Fetch Data
+        </a>
+          <a class="gotoblock" href="#/edit-data">
+            <ion-icon name="hammer"></ion-icon> 
+            Edit Data
+        </a>
+          <a class="gotoblock" href="#/delete-data">
+            <ion-icon name="trash"></ion-icon> 
+            Delete Data
+        </a>
+          <a class="gotoblock" href="#/skip-limit">
+            <ion-icon name="git-pull-request"></ion-icon> 
+            Skip and Limit Data
+        </a>
+          <a class="gotoblock" href="#/sort-data">
+            <ion-icon name="switch"></ion-icon> 
+            Sort Data
+        </a>
+          <a class="gotoblock" href="#/search-data">
+            <ion-icon name="search"></ion-icon> 
+            Search Data
+        </a>
+          <a class="gotoblock" href="#/cache-management">
+            <ion-icon name="copy"></ion-icon> 
+            Cache Management
+        </a>
+          <a class="gotoblock" href="#/regenerate-cache">
+            <ion-icon name="sync"></ion-icon> 
+            Re-generate Cache
+        </a>
+          <a class="gotoblock" href="#/delete-cache">
+            <ion-icon name="refresh-circle"></ion-icon> 
+            Delete Cache
+        </a>
+          <a class="gotoblock" href="#/delete-all-cache">
+            <ion-icon name="save"></ion-icon> 
+            Delete All Cache
+        </a>
+          <a class="gotoblock" href="#/contributing">
+            <ion-icon name="heart"></ion-icon> 
+            Contributing
+        </a>
+          <a class="gotoblock" href="#/release-notes">
+            <ion-icon name="megaphone"></ion-icon> 
+            Release Notes
+        </a>
+          <a class="gotoblock" href="#/contact">
+            <ion-icon name="mail"></ion-icon> 
+            About & Contact
+        </a>
+          <a class="gotoblock" href="#/versions">
+            <ion-icon name="pricetag"></ion-icon> 
+            Versions
+        </a>
+</div>
+            </div>
+            <div class="right">
+              
+          <div class="intro" id="block_home">
+            <h1>SleekDB - A NoSQL Database made using PHP</h1>
+<p>SleekDB is a simple NoSQL database implementation using pure PHP that store data in plain JSON files.</p>
+<p>It is not designed to handle heavy-load IO operations, it is designed to have a simple solution where all we need a database for managing few gigabytes of data. You can think of it as a database for static websites.</p>
+<p>SleekDB works great as the database engine for low to medium traffic websites.</p>
+            <div class="editlink" 
+              file="home.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_features">
+            <h1>Features</h1>
+<h2>Installing SleekDB</h2>
+<ul>
+<li>
+<h1>Light-weight, faster</h1>
+<p>Stores data in plain-text utilizing JSON format, no binary conversion needed to store or fetch the data.</p>
+</li>
+<li>
+<h1>Schema free data storage</h1>
+<p>SleekDB does not require any schema meaning you can insert any types of data you want.</p>
+</li>
+<li>
+<h1>Query on nested properties</h1>
+<p>Supports filter and conditions on nested properties of the JSON documents!
+If you write this where clause:</p>
+<pre><code class="language-php">where( 'post.author.role' '=', 'admin' )</code></pre>
+<p>SleekDB will look for data at:</p>
+<pre><code class="language-json">{
+"post": {
+  "author": {
+    "role": "admin"
+  }
+}
+}</code></pre>
+</li>
+<li>
+<h1>Dependency free, only need PHP to run</h1>
+<p>Supports PHP 5.5+, PHP 7+. Requires no third-party plugins or softwares.</p>
+</li>
+<li>
+<h1>Default caching layer</h1>
+<p>SleekDB will serve data from cache by default and regenerate cache each time it creates, updates and deletes an object!</p>
+</li>
+<li>
+<h1>Filters: where, in, notIn, orWhere, sort, skip, limit and search</h1>
+<p>Use multiple conditional comparisons, text search, sorting on multiple properties and nested properties.</p>
+</li>
+<li>
+<h1>Runs every where</h1>
+<p>Runs perfectly on shared-servers or VPS too.</p>
+</li>
+<li>
+<h1>Easy to learn and implement</h1>
+<p>SleekDB provides a very simple elegant API to handle all of your data.</p>
+</li>
+<li>
+<h1>Actively maintained</h1>
+<p>SleekDB is actively maintained by <a href="https://twitter.com/rakibtg" target="_blank">@rakibtg</a>. For support and other requirements <a class="gotoblock" href="#contact">contact</a>.</p>
+</li>
+<li>
+<p>Easily import/export or backup data.</p>
+</li>
+</ul>
+            <div class="editlink" 
+              file="features.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_Installation">
+            <h1>Installation</h1>
+<p>To use SleekDB make sure that you have PHP up and running in your system, and SleekDB has write permission.</p>
+<h2>Using SleekDB in a PHP project</h2>
+<h3>Composer Installation (recommended)</h3>
+<p>To install SleekDB using composer, open a terminal, cd into your project root directory where &quot;composer.json&quot; file lives and run this:</p>
+<pre><code class="language-sh">composer require rakibtg/sleekdb</code></pre>
+<p>SleekDB should be auto loaded into your app using the composer.
+Find SleekDB on <strong><a href="https://packagist.org/packages/rakibtg/sleekdb" target="_blank">packagist</a></strong>.</p>
+<h3>Install Manually (without composer)</h3>
+<ul>
+<li><a href=" https://github.com/rakibtg/SleekDB/archive/master.zip">Download</a> the latest version and extract the ZIP file inside your project directory.</li>
+<li>
+<p>Import the SleekDB.php file where you want to use SleekDB.</p>
+<p>Example:</p>
+<pre><code class="language-php">require_once "../SleekDB/SleekDB.php";</code></pre>
+</li>
+</ul>
+<p>To download older versions please check the <a target="_blank" title="Click here to download old versions" href="https://github.com/rakibtg/SleekDB/releases">releases</a>.</p>
+            <div class="editlink" 
+              file="installation.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_getting-started">
+            <h1>Getting Started</h1>
+<p>Getting started with SleekDB is super easy. We keep data in a &quot;store&quot;, which is similar to MySQL &quot;table&quot; or MongoDB &quot;collection&quot;. To start working with data at first we create a new instance of SleekDB. Later, we create a &quot;store&quot; using the instantiated object to start working with data.</p>
+<ol>
+<li>To create the SleekDB instance we need a valid &quot;path&quot; where it can write data.</li>
+</ol>
+<pre><code class="language-php">$dataDir = "/Users/username/documents/mydb";</code></pre>
+<ol start="2">
+<li>Once we have the data directory lets create the SleekDB store, which can be treated as the &quot;table&quot; in SQL databases. If the store doesn't exist then it will be created automatically.</li>
+</ol>
+<pre><code class="language-php">$newsStore = \SleekDB\SleekDB::store('news', $dataDir);</code></pre>
+<p>Optionally you can pass a configuration array in the second parameter. Read more about <a class="gotoblock" href="#configurations">configurations</a>.</p>
+<ol start="3">
+<li>Let's insert a new item like a news article.</li>
+</ol>
+<pre><code class="language-php">// An array that we want to insert.
+$newsInsertable = [
+  "title" =&gt; "Google Pixel XL",
+  "about" =&gt; "The unlocked biggest Pixel 2..."
+];
+$results = $newsStore-&gt;insert( $newsInsertable );</code></pre>
+<p>The results variable would contain all the inserted data and with the <code>_id</code> property.</p>
+            <div class="editlink" 
+              file="getting-started.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_configurations">
+            <h1>Configurations</h1>
+<p>At this moment SleekDB only allows two configurations, which are &quot;auto_cache&quot; and &quot;timeout&quot;. Configurations should be passed as an array in the second parameter while instantiating SleekDB, store's created from this object will follow the configurations we have provided.</p>
+<h2>Using Custom Configuration</h2>
+<p>You should pass the configurations array in the second parameter, example:</p>
+<pre><code class="language-php">$newsStore = \SleekDB\SleekDB::store('news', $dataDir, [
+  'auto_cache' =&gt; true,
+  'timeout' =&gt; 120
+]);</code></pre>
+<p>Let's talk about what this configurations do.</p>
+<h3>auto_cache</h3>
+<p>The <code>auto_cache</code> is set to <code>true</code> by default!</p>
+<p>This tells SleekDB to cache the data of an unique database query and later re-use the cache for the same query.
+To keep the cached data synced with new data, SleekDB will delete all cache when we insert any new data to a store.</p>
+<p>To disable it update the value of <code>auto_cache</code> to <code>false</code> in the config array.</p>
+<p>Note that you can manually manage cache data with methods that SleekDB provides. Available caching method's are: <code>makeCache()</code>, <code>useCache()</code>, <code>deleteCache()</code> and <code>deleteAllCache()</code></p>
+<h3>timeOut</h3>
+<p>Set timeout value, default value is <code>120</code> second.</p>
+            <div class="editlink" 
+              file="configurations.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_managing-store">
+            <h1>Stores</h1>
+<p>Store is a simple directory where SleekDB will write all your data in JSON documents. &quot;Store&quot; is similar with the idea of &quot;Table&quot; in MySQL or &quot;Collection&quot; in MongoDB. You dont need to create a &quot;store&quot; manually, while you use the &quot;store&quot; method from the SleekDB object it will first check if the &quot;store&quot; directory exists or not, if not then it would be created instantly.</p>
+<p>At this moment you can not rename a store, but you can do it manually using the File Browser of your OS or using the terminal.</p>
+<h2>Your first store</h2>
+<p>To start working with a store, at first we need to create an object using the &quot;store&quot; static method.</p>
+<p>Later, we can use that object to work with data for that store.</p>
+<ul>
+<li>
+<p>Create an store</p>
+<pre><code class="language-php">$newsStore = \SleekDB\SleekDB::store('news', $dataDir);</code></pre>
+</li>
+<li>
+<p>Having multiple store; assuming we are working on a community site where need to have a users store.</p>
+<pre><code class="language-php">$userStore = \SleekDB\SleekDB::store('users', $dataDir);</code></pre>
+</li>
+<li>
+<p>Another store to keep all the posts shared by the user.</p>
+<pre><code class="language-php">$postStore = \SleekDB\SleekDB::store('posts', $dataDir);</code></pre>
+</li>
+<li>
+<p>Creating a new user</p>
+<pre><code class="language-php">$userStore-&gt;insert([
+'name' =&gt; 'Mike Doe',
+'email' =&gt; 'miked@example.com'
+]);</code></pre>
+</li>
+</ul>
+<p>In the above example we have created an user to understand the use case of a store in SleekDB. In this documentation later we will see more examples on this.</p>
+<h2>Deleting A Store</h2>
+<p>To delete a store use the <code>deleteStore()</code> method. It deletes a store and wipes all the data and cache it contains.</p>
+<p>Example:</p>
+<pre><code class="language-php">$userStore-&gt;deleteStore();</code></pre>
+<h2>Keeping Store Conditions</h2>
+<p>When you run a query and use a action method like <code>fetch</code>, <code>update</code> or <code>delete</code> the conditions you have added for the active query will be reset to default.</p>
+<p>But if you want to keep the condition parameters for query and perform additional operations then you may want to use the <code>keepConditions()</code> method.</p>
+<p>Here is an example showing how you may fetch data and then update on the discovered documents without running an additional query:</p>
+<pre><code class="language-php">// Find documents.
+$result = $usersDB
+  -&gt;keepConditions() // Won't reset the active query state.
+  -&gt;where('products.totalBought', '&gt;', 0)
+  -&gt;where('products.totalSaved', '&gt;', 0);
+
+// Fetch data.
+$result-&gt;fetch();
+
+// Update matched documents.
+$result-&gt;update([
+  'someRandomData' =&gt; '123',
+]);</code></pre>
+            <div class="editlink" 
+              file="stores.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_insert-data">
+            <h1>Insert Data</h1>
+<p>To insert data first you make a PHP array, and simply insert that array into a store.</p>
+<h2>Insert A Single Data Object</h2>
+<p>Using the <code>insert()</code> method we will insert a new data object. Example:</p>
+<pre><code class="language-php">// Prepare a PHP array to insert.
+$user = [
+    'name' =&gt; 'Kazi Hasan',
+    'products' =&gt; [
+        'totalSaved' =&gt; 19,
+        'totalBought' =&gt; 27
+    ],
+    'location' =&gt; [
+        'town' =&gt; 'Nagar',
+        'city' =&gt; 'Dhaka',
+        'country' =&gt; 'Bangladesh'
+    ]
+];
+// Insert the data.
+$user = $usersDB-&gt;insert( $user );</code></pre>
+<p>Here, the <code>insert()</code> method will return the inserted object with the <code>_id</code> property which is generated by SleekDB.</p>
+<h2>Insert Multiple Data Object</h2>
+<p>Using the <code>insertMany()</code> method you can insert more than one data object at a time, example:</p>
+<pre><code class="language-php">// Prepare users data.
+$users = [
+    [
+        'name' =&gt; 'Russell Newman',
+        'products' =&gt; [
+        'totalSaved' =&gt; 5,
+        'totalBought' =&gt; 3
+        ],
+        'location' =&gt; [
+        'town' =&gt; 'Andreas Ave',
+        'city' =&gt; 'Maasdriel',
+        'country' =&gt; 'England'
+        ]
+    ],
+    [
+        'name' =&gt; 'Willard Bowman',
+        'products' =&gt; [
+        'totalSaved' =&gt; 0,
+        'totalBought' =&gt; 0
+        ],
+    ],
+    [
+        'name' =&gt; 'Tommy Mendoza',
+        'products' =&gt; [
+        'totalSaved' =&gt; 172,
+        'totalBought' =&gt; 54
+        ],
+    ],
+    [
+        'name' =&gt; 'Joshua Edwards',
+        'phone' =&gt; '(382)-450-8197'
+    ]
+];
+// Insert all data.
+$usersDB-&gt;insertMany( $users );</code></pre>
+<p>The <code>insertMany()</code> method will return the inserted object with the <code>_id</code> property which is generated by SleekDB.</p>
+            <div class="editlink" 
+              file="insert-data.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_fetch-data">
+            <h1>Fetch Data</h1>
+<p>To get data from the store we use the <code>fetch()</code> method. Example:</p>
+<pre><code class="language-php">$usersDB-&gt;fetch();</code></pre>
+<p>The above command would query into the &quot;users&quot; store to fetch all the data.</p>
+<h2>Apply Filters and Conditions</h2>
+<h3>where()</h3>
+<p>To filter data we use the where() method.</p>
+<p>The where() method takes three arguments, those are:</p>
+<pre><code class="language-php">where( $fieldName, $condition, $value );</code></pre>
+<ol>
+<li>
+<h1>$fieldName</h1>
+<p>The field name argument is the property that we want to check in our data object.</p>
+<p>As our data object is basically a JSON document so it could have nested properties.</p>
+<p>To target nested properties we use a single dot between the property/field name.</p>
+<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
+</li>
+<li>
+<h1>$condition</h1>
+<p>To apply the comparison filters we use this argument.</p>
+<p>Allowed comparisonal conditions are:</p>
+<ul>
+<li><code>=</code> Match equal against data.</li>
+<li><code>!=</code> Match not equal against data.</li>
+<li><code>&gt;</code> Match greater than against data.</li>
+<li><code>&gt;=</code> Match greater equal against data.</li>
+<li><code>&lt;</code> Match less than against data.</li>
+<li><code>&lt;=</code> Match less equal against data.</li>
+</ul>
+</li>
+<li>
+<h1>$value</h1>
+<p>Data to be used as against the property value of the JSON documents.</p>
+</li>
+</ol>
+<h3>Example of using where() to filter data</h3>
+<p>To only get the user whose country is equal to &quot;England&quot; we would query like this:</p>
+<pre><code class="language-php">$user = $usersDB-&gt;where( 'name', '=', 'Joshua Edwards' )-&gt;fetch();</code></pre>
+<p>You can use multiple <code>where()</code> conditions. Example:</p>
+<pre><code class="language-php">$user = $usersDB
+    -&gt;where( 'products.totalSaved', '&gt;', 10 )
+    -&gt;where( 'products.totalBought', '&gt;', 20 )
+    -&gt;fetch();</code></pre>
+<h3>orWhere()</h3>
+<p><code>orWhere(...)</code> works as the OR condition of SQL. SleekDB supports multiple orWhere as object chain.</p>
+<p>The <code>orWhere()</code> method takes three arguments same as <code>where()</code> condition, those are:</p>
+<pre><code class="language-php">orWhere( $fieldName, $condition, $value );</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="language-php">$user = $usersDB
+    -&gt;where( 'products.totalSaved', '&gt;', 10 )
+    -&gt;orWhere( 'products.totalBought', '&gt;', 20 )
+    -&gt;fetch();</code></pre>
+<p><strong>Multiple orWhere clause example:</strong></p>
+<pre><code class="language-php">$user = $usersDB-&gt;where( 'products.totalSaved', '&gt;', 10 )
+    -&gt;orWhere( 'products.totalBought', '&gt;', 20 )
+    -&gt;orWhere( 'products.shipped', '=', 1 )
+    -&gt;fetch();</code></pre>
+<h3>in()</h3>
+<p>in(...) works as the IN clause of SQL. SleekDB supports multiple IN as object chain for different fields.</p>
+<p>The in() method takes two arguments, those are:</p>
+<pre><code class="language-php">in($fieldName = '', $values = []);</code></pre>
+<ol>
+<li>
+<h1>$fieldName</h1>
+<p>The field name argument is the property that we want to check in our data object.</p>
+<p>As our data object is basically a JSON document so it could have nested properties.</p>
+</li>
+<li>
+<h1>$values</h1>
+<p>This argument takes an array to match documents within its items.</p>
+</li>
+</ol>
+<p><strong>Example:</strong></p>
+<pre><code class="language-php">$user = $usersDB-&gt;in('country', ['BD', 'CA', 'SE', 'NA'])-&gt;fetch();</code></pre>
+<h3>notIn()</h3>
+<p>notIn(...) works as the opposite of in() method.</p>
+<p>It will filter out all documents that has particular data items from the given array.
+SleekDB supports multiple notIn as object chain for different fields.</p>
+<p>The notIn() method takes two arguments as in() method, those are:</p>
+<pre><code class="language-php">notIn($fieldName = '', $values = []);</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="language-php">$user = $usersDB-&gt;notIn('country', ['IN', 'KE', 'OP'])-&gt;fetch();</code></pre>
+<p><strong>Multiple notIn clause example with nested properties:</strong></p>
+<pre><code class="language-php">$user = $usersDB
+    -&gt;notIn('country', ['IN', 'KE', 'OP'])
+    -&gt;notIn('products.totalSaved', [100, 150, 200])
+    -&gt;fetch();</code></pre>
+            <div class="editlink" 
+              file="fetch-data.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_edit-data">
+            <h1>Edit Data</h1>
+<p>To edit a data object we would use the <code>update()</code> method.</p>
+<p>The update method takes only one argument.</p>
+<pre><code class="language-php">update($updateable);</code></pre>
+<p>Lets update the &quot;totalBought&quot; value of a user whose name is &quot;Joshua Edwards&quot;</p>
+<pre><code class="language-php">$updateable = [
+    'products' =&gt; [
+        'totalBought' =&gt; 1
+    ]
+];
+$usersDB-&gt;where( 'name', '=', 'Joshua Edwards' )-&gt;update( $updateable );</code></pre>
+<p>You can use more than one where condition if required.</p>
+            <div class="editlink" 
+              file="edit-data.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_delete-data">
+            <h1>Delete Data</h1>
+<p>To delete a data object we would use the <code>delete()</code> method. Example:</p>
+<p>Lets delete the user whose name is &quot;Joshua Edwards&quot;</p>
+<pre><code class="language-php">$usersDB-&gt;where( 'name', '=', 'Joshua Edwards' )-&gt;delete();</code></pre>
+<p>You can use more than one where condition if required.</p>
+            <div class="editlink" 
+              file="delete-data.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_skip-limit">
+            <h1>Skip and Limit</h1>
+<p>To skip a set of record we will use the <code>skip()</code> method. Example:</p>
+<pre><code class="language-php">// Skip the first 5 users.
+$users = $usersDB-&gt;skip( 5 )-&gt;fetch();</code></pre>
+<p>To limit a set of record we will use the <code>limit()</code> method. Example:</p>
+<pre><code class="language-php">// Fetch only 5 users.
+$users = $usersDB-&gt;limit( 5 )-&gt;fetch();</code></pre>
+<h2>Query Offset</h2>
+<p>To obtain the query offset feature we can chain skip() and limit() into one query. Example:</p>
+<pre><code class="language-php">$users = $usersDB
+    -&gt;where( 'age', '&gt;=', 18 )
+    -&gt;skip( 15 )
+    -&gt;limit( 5 )
+    -&gt;fetch();</code></pre>
+<p>The above query will skip first 15 records and will limit to next 5 records of data objects. This way we can also perform paginate.</p>
+            <div class="editlink" 
+              file="skip-limit.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_sort-data">
+            <h1>Sort Data</h1>
+<p>To sort data objects we would use the <code>orderBy()</code> method.</p>
+<p>The orderBy method takes two argument</p>
+<pre><code class="language-php">orderBy($order, $orderBy);</code></pre>
+            <div class="editlink" 
+              file="sort-data.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_search-data">
+            <h1>Search Data</h1>
+<p>We can search data using the search() method. It utilizes the <a href="http://php.net/manual/en/function.similar-text.php" target="_blank">similar_text()</a> function and works better on medium length string.</p>
+<p>The search method takes two argument,</p>
+<pre><code class="language-php">search($field, $keyword);</code></pre>
+<ol>
+<li><strong>$field</strong> argument receives the property name on which we want to perform the search.</li>
+<li><strong>$keyword</strong> is the search keyword.</li>
+</ol>
+<p>Lets search for users who lives in Canada.</p>
+<pre><code class="language-php">$users = $usersDB
+    -&gt;search( 'location.country', 'Canada' )
+    -&gt;fetch();</code></pre>
+<p>To ensure proper search result we can search more than one property at a time. Example,</p>
+<pre><code class="language-php">$users = $usersDB
+    -&gt;search( 'bio', 'Manufactured in Canada' )
+    -&gt;search( 'location.country', 'Canada' )
+    -&gt;where( 'active', '=', 1 )
+    -&gt;fetch();</code></pre>
+            <div class="editlink" 
+              file="search-data.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_cache-management">
+            <h1>Cache Management</h1>
+<p>The <code>useCache()</code> method would return the data from the cache storage, if cache dosent exists then it would fetch the result then creates the cache for later use and return the data. Example,</p>
+<pre><code class="language-php">$user = $usersDB
+    -&gt;where( 'active', '=', 1 )
+    -&gt;where( 'location.country', '=', 'United States' )
+    -&gt;search( 'bio', 'PHP developer' )
+    -&gt;search( 'bio', 'SleekDB' )
+    -&gt;orderBy( 'desc', 'rank' )
+    -&gt;limit( 20 )
+    -&gt;useCache() // Use the cache data.
+    -&gt;fetch();</code></pre>
+            <div class="editlink" 
+              file="cache-management.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_regenerate-cache">
+            <h1>Re-generate Cache</h1>
+<p>To re-generate the cache for a query we would use the <code>makeCache()</code> method.</p>
+<p>Its more like the <code>useCache()</code> method but the only difference is that instead of looking for existing cache data it would replace the old cache by generating a new cache from fresh data fetched. Example,</p>
+<pre><code class="language-php">$user = $usersDB
+    -&gt;search( 'bio', 'SleekDB' )
+    -&gt;orderBy( 'desc', 'rank' )
+    -&gt;skip( 80 )
+    -&gt;limit( 20 )
+    -&gt;makeCache() // Re-generate the cache data.
+    -&gt;fetch();</code></pre>
+            <div class="editlink" 
+              file="regenerate-cache.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_delete-cache">
+            <h1>Delete Cache</h1>
+<p>To delete the cache of a query we would use the deleteCache() method. Example,</p>
+<pre><code class="language-php">$user = $usersDB
+    -&gt;search( 'bio', 'SleekDB' )
+    -&gt;orderBy( 'desc', 'rank' )
+    -&gt;skip( 80 )
+    -&gt;limit( 20 )
+    -&gt;deleteCache();</code></pre>
+<p>Note that if you need to get the data please add the fetch() method.</p>
+            <div class="editlink" 
+              file="delete-cache.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_delete-all-cache">
+            <h1>Delete All Cache</h1>
+<p>To delete all cache use the deleteAllCache() method. Example,</p>
+<pre><code class="language-php">$usersDB-&gt;deleteAllCache();</code></pre>
+            <div class="editlink" 
+              file="delete-all-cache.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_contributing">
+            <h1>Contributing</h1>
+<ul>
+<li>Fork SleekDB</li>
+<li>Create your feature branch <code>git checkout -b feature/my-new-feature</code></li>
+<li>Commit your changes <code>git commit -am 'Added some feature'</code></li>
+<li>Push to the branch <code>git push origin feature/my-new-feature</code></li>
+<li>Create new Pull Request</li>
+</ul>
+            <div class="editlink" 
+              file="contributing.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_release-notes">
+            <h1>🎉 Release Notes</h1>
+<h2>📢 Optimizations, new clause methods and more control</h2>
+<p>SleekDB 1.5.0 comes with few important optimizations and with other features that will make it more easier to manage data. This is a recommended update if you are using an older version of SleekDB.</p>
+<h3>No breaking changes from 1.0.3 to 1.5.0</h3>
+<ul>
+<li>
+<h1>💪 Improving document discovery process</h1>
+<p>Starting from version 1.5.0 SleekDB will discover new documents without affecting the _id serializer, that means it will need to do a lot less work than before. That makes it more faster less memory hungry than ever before.</p>
+</li>
+<li>
+<h1>🐍 orWhere() clause method</h1>
+<p>It will work as the OR condition of SQL. SleekDB supports multiple orWhere as object chain.</p>
+<pre><code class="language-php">$user = $usersDB-&gt;where( 'products.totalSaved', '&gt;', 10 )
+  -&gt;orWhere( 'products.totalBought', '&gt;', 20 )
+  -&gt;orWhere( 'products.shipped', '=', 1 )
+  -&gt;fetch();</code></pre>
+</li>
+<li>
+<h1>😍 in() clause method</h1>
+<p>It work like the IN clause of SQL. SleekDB supports multiple in() as object chain for different fields.</p>
+<pre><code class="language-php">$user = $usersDB
+  -&gt;in('country', ['BD', 'CA', 'SE', 'NA'])
+  -&gt;in('products.totalSaved', [100, 150, 200])
+  -&gt;fetch();</code></pre>
+</li>
+<li>
+<h1>😎 notIn() clause method</h1>
+<p>It works as the opposite of in() method.</p>
+<p>It will filter out all documents that has particular data items from the given array. SleekDB supports multiple notIn as object chain for different fields.</p>
+<pre><code class="language-php">$user = $usersDB
+  -&gt;notIn('country', ['IN', 'KE', 'OP'])
+  -&gt;notIn('products.totalSaved', [100, 150, 200])
+  -&gt;fetch();</code></pre>
+</li>
+<li>
+<h1>🤗 Keeping Query State</h1>
+<p>If you want to keep the condition parameters for query and perform additional operations then you may want to use the keepConditions() method.</p>
+<p>Here is an example showing how you may fetch data and then update on the discovered documents without running an additional query:</p>
+<pre><code class="language-php">// Find documents.
+$result = $usersDB
+  -&gt;keepConditions() // Won't reset the active query state.
+  -&gt;where('products.totalBought', '&gt;', 0)
+  -&gt;where('products.totalSaved', '&gt;', 0);
+
+// Fetch data.
+$result-&gt;fetch();
+
+// Update matched documents.
+$result-&gt;update([
+  'someRandomData' =&gt; '123',
+]);</code></pre>
+</li>
+</ul>
+<p>Github release note: <a href="https://github.com/rakibtg/SleekDB/releases/tag/1.5.0" target="_blank"><a href="https://github.com/rakibtg/SleekDB/releases/tag/1.5.0">https://github.com/rakibtg/SleekDB/releases/tag/1.5.0</a></a></p>
+            <div class="editlink" 
+              file="release-notes.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_contact">
+            <h1>About &amp; Contact</h1>
+<p>We would love to see how you are using the database, if you have implemented something or how it is working for you.</p>
+<p>What changes will make you more interested.</p>
+<p>If you want to submit a bug feel free to create a new <a href="https://github.com/rakibtg/SleekDB/issues" target="_blank">issue</a> or email me @ rakibtg [-at-] gmail.</p>
+<h2>About</h2>
+<p>SleekDB is actively maintained by @rakibtg(Twitter).
+Let me know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.</p>
+            <div class="editlink" 
+              file="contact.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_versions">
+            <h1>Versions</h1>
+<ul>
+<li><a href="/">2.0</a> (Upcoming Version)</li>
+<li><strong><a href="/versions/1.5.0/">1.5.0</a> (Bug Fixes Only)</strong></li>
+</ul>
+            <div class="editlink" 
+              file="versions.md" 
+              version="1.5.0">
+            </div>
+          </div>
+        
+            </div>
+          </div>
+        </div>
+        
+        <script src="/assets/app.js"></script>
+        </body>
+        </html>
+      

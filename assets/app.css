@@ -5,9 +5,9 @@ body {
   height: 100%;
   width: 100%;
   font-size: 14px;
-  line-height: 26px;
+  line-height: 22px;
   background-color: #27272b;
-  color: #bbbbc9;
+  color: #d7d7d8;
 }
 
 * {
@@ -24,12 +24,67 @@ a:hover {
   text-decoration: none;
 }
 
+p {
+  margin: 0px 0px 15px 0px;
+}
+
 li {
   line-height: 26px;
 }
 
+h1 {
+  color: #988cca;
+  text-shadow: 0px 2px 3px #1b1c1f;
+  font-size: 22px;
+  margin: 20px 0px 15px 0px;
+}
+
+h2 {
+  font-size: 19px;
+  font-weight: bold;
+  color: #c19c90;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
 h3 {
-  color: #5fa8b1;
+  color: #c9ac57;
+  font-size: 15px;
+}
+
+h4 {
+  font-size: 13px;
+}
+
+h5 {
+  font-size: 13px;
+  font-weight: normal;
+}
+
+li h1 {
+  font-size: 17px;
+  margin-bottom: 0px;
+  color: rgb(190, 190, 229);
+}
+
+li p {
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+
+h3,
+h4,
+h5 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+code {
+  color: rgb(233, 85, 59);
+}
+
+pre code {
+  color: unset;
 }
 
 .header {
@@ -71,15 +126,19 @@ div.right {
 pre.hljs {
   background-color: #2c2c31;
   border-radius: 5px;
-  padding: 20px;
-  font-size: 16px;
+  padding: 15px 20px;
+  font-size: 14.5px;
+  font-weight: normal;
+  border: 1px solid #1b1b20;
+  letter-spacing: 0.4px;
 }
 
 div#docs_menu_sidebar {
   background-color: #2c2c31;
   overflow: auto;
-  height: calc(100vh - 68px);
+  height: calc(100vh - 60px);
   overflow-x: hidden;
+  border-right: 1px solid #1b1b20;
 }
 
 div#docs_menu_sidebar a {
@@ -117,13 +176,10 @@ div#docs_menu_sidebar a.visited ion-icon {
   background-color: #36363a !important;
 }
 
-h3 {
-  font-size: 20px;
-}
-
 .intro {
   max-width: 1000px;
   margin: 0px 30px;
+  margin-top: 25px;
   padding-bottom: 100px;
 }
 

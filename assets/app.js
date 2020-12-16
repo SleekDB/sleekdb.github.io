@@ -28,27 +28,30 @@ window.onload = function () {
   }
 };
 
+function syncTitle(el) {
+  const title = el.querySelector("h1").innerText;
+  document.title = title || "SleekDB"
+}
+
 function goToBlock(event) {
   event.preventDefault();
-  var id = event.target.href.split("#")[1];
-  history.pushState(null, "", "/#/" + id);
-  // change bg menu.
+  var blockName = event.target.hash.replace("#/", "");
+  history.pushState(null, "", `${event.target.pathname}${event.target.hash}`);
   for (let index = 0; index < menulinks.length; index++) {
     menulinks[index].classList.remove("visited");
   }
   event.target.classList.add("visited");
-
   var intros = document.getElementsByClassName("intro");
   for (let index = 0; index < intros.length; index++) {
     const element = intros[index];
-    if (element.id === "block_" + id) {
+    if (element.id === "block_" + blockName) {
       element.classList.remove("hide");
-      document.title = element.querySelector("h3").innerText;
+      syncTitle(element);
     } else {
       element.classList.add("hide");
     }
   }
-  // rightTop()
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function resetHome(event) {
@@ -79,7 +82,7 @@ function checkPage() {
       const element = intros[index];
       if (element.id === "block_" + id) {
         element.classList.remove("hide");
-        document.title = element.querySelector("h3").innerText;
+        syncTitle(element);
       } else {
         element.classList.add("hide");
       }
