@@ -61,6 +61,16 @@ h5 {
   font-weight: normal;
 }
 
+blockquote {
+  background-color: #2b2c2f;
+  padding: 20px;
+  border-left: 10px solid #36363a;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0px;
+}
+
 li h1 {
   font-size: 17px;
   margin-bottom: 0px;
@@ -180,7 +190,7 @@ div#docs_menu_sidebar a.visited ion-icon {
   max-width: 1000px;
   margin: 0px 30px;
   margin-top: 25px;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 }
 
 .full-height {
