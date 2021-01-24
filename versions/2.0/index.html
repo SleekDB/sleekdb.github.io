@@ -132,33 +132,37 @@
             <ion-icon name="trash"></ion-icon> 
             Delete Data
         </a>
-          <a class="gotoblock" href="#/query">
-            <ion-icon name="flash"></ion-icon> 
-            Query
-        </a>
           <a class="gotoblock" href="#/query-builder">
             <ion-icon name="build"></ion-icon> 
             QueryBuilder
-        </a>
-          <a class="gotoblock" href="#/join-stores">
-            <ion-icon name="git-merge"></ion-icon> 
-            Join Stores
-        </a>
-          <a class="gotoblock" href="#/cache">
-            <ion-icon name="logo-buffer"></ion-icon> 
-            Cache
         </a>
           <a class="gotoblock" href="#/cache-management">
             <ion-icon name="copy"></ion-icon> 
             Cache Management
         </a>
+          <a class="gotoblock" href="#/join-stores">
+            <ion-icon name="git-merge"></ion-icon> 
+            Join Stores
+        </a>
+          <a class="gotoblock" href="#/query">
+            <ion-icon name="flash"></ion-icon> 
+            Query
+        </a>
           <a class="gotoblock" href="#/advanced">
             <ion-icon name="flame"></ion-icon> 
             Advanced
         </a>
+          <a class="gotoblock" href="#/cache">
+            <ion-icon name="logo-buffer"></ion-icon> 
+            Cache
+        </a>
           <a class="gotoblock" href="#/reference">
             <ion-icon name="albums"></ion-icon> 
             Reference
+        </a>
+          <a class="gotoblock" href="#/release-notes">
+            <ion-icon name="megaphone"></ion-icon> 
+            Release Notes
         </a>
           <a class="gotoblock" href="#/contributing">
             <ion-icon name="heart"></ion-icon> 
@@ -171,10 +175,6 @@
           <a class="gotoblock" href="#/versions">
             <ion-icon name="pricetag"></ion-icon> 
             Versions
-        </a>
-          <a class="gotoblock" href="#/release-notes">
-            <ion-icon name="megaphone"></ion-icon> 
-            Release Notes
         </a>
 </div>
             </div>
@@ -299,9 +299,6 @@
 <p>SleekDB should be auto loaded into your app using the composer.
 Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/packages/rakibtg/sleekdb" target="_blank">packagist</a></strong>.</p>
 <h2>Install Manually (without composer)</h2>
-<blockquote>
-<p>Using SleekDB without composer is <strong>deprecated</strong> since version 2.0 and will be removed in future releases.</p>
-</blockquote>
 <ul>
 <li><a rel="noopener nofollow" href=" https://github.com/rakibtg/SleekDB/archive/master.zip">Download</a> the latest version and extract the ZIP file inside your project directory.</li>
 <li>
@@ -804,138 +801,6 @@ $userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RE
             </div>
           </div>
         
-          <div class="intro" id="block_query">
-            <h1>Query</h1>
-<p>With the Query object you can execute a query.</p>
-<p>To get the Query object use the <code>getQuery</code> method of the <a class="gotoblock" href="/#/query-builder">QueryBuilder</a> class:</p>
-<pre><code class="language-php">$userQuery = $userQueryBuilder-&gt;getQuery();</code></pre>
-<h2>Summary</h2>
-<ul>
-<li>fetch</li>
-<li>first</li>
-<li>exists</li>
-<li>update</li>
-<li>delete</li>
-</ul>
-<h2>fetch()</h2>
-<p>Execute a query and retrieve an array containing all documents found.</p>
-<pre><code class="language-php">function fetch(): array</code></pre>
-<h3>Return value</h3>
-<p>An array containing all documents found or an empty array.</p>
-<h3>Example</h3>
-<p>Retrieve all users that are located in london.</p>
-<pre><code class="language-php">$user = $userQueryBuilder
-  -&gt;where([ "city", "=", "london" ])
-  -&gt;getQuery()
-  -&gt;fetch();</code></pre>
-<h4>Result</h4>
-<pre><code>[
-    [
-        "_id" =&gt; 1,
-        "name" =&gt; "John",
-        "city" =&gt; "london"
-    ],
-    [
-        "_id" =&gt; 4,
-        "name" =&gt; "Max",
-        "city" =&gt; "london"
-    ],
-    ...
-]</code></pre>
-<h2>first()</h2>
-<p>It is more efficient than <code>fetch</code> but one caveat is that the <code>orderBy</code> will not work when using this method to get the very first item.</p>
-<pre><code class="language-php">function first(): array</code></pre>
-<h3>Return value</h3>
-<p>Returns the very first document discovered or an empty array if nothing found.</p>
-<h3>Examples</h3>
-<pre><code class="language-php">$user = $userQueryBuilder
-  -&gt;where([ "email", "=", "foo@bar.com" ])
-  -&gt;getQuery()
-  -&gt;first();</code></pre>
-<h4>Result</h4>
-<pre><code>[
-    "_id" =&gt; 1,
-    "name" =&gt; "John",
-    "email" =&gt; "foo@bar.com"
-]</code></pre>
-<h2>exists()</h2>
-<p>It is more efficient than using <code>fetch</code> to check if some data exists or not. For example, you may use exists method to check if a username or email address already exists or not.</p>
-<pre><code class="language-php">function exists(): bool</code></pre>
-<h3>Return value</h3>
-<p>Returns <code>true</code> if a document exists and <code>false</code> if no document found.</p>
-<h3>Example</h3>
-<pre><code class="language-php">$userNameExists = $userQueryBuilder
-  -&gt;where([ "username", "=", "foobar" ])
-  -&gt;getQuery()
-  -&gt;exists();</code></pre>
-<h2>update()</h2>
-<p>Update one or multiple documents based on a given query.</p>
-<pre><code class="language-php">function update(array $updatable): bool</code></pre>
-<h3>Parameters</h3>
-<ol>
-<li>
-<h1>$updatable: array</h1>
-<p>An array containing the properties to update.</p>
-</li>
-</ol>
-<h3>Return value</h3>
-<p>Returns <code>true</code> on success and <code>false</code> if no documents found to update.</p>
-<h3>Example</h3>
-<p>Set the status of all users that are located in london to VIP.</p>
-<pre><code class="language-php">$userStore
-  -&gt;createQueryBuilder()
-  -&gt;where([ "city", "=", "london" ])
-  -&gt;getQuery()
-  -&gt;update([ "status" =&gt; "VIP" ]);</code></pre>
-<h2>delete()</h2>
-<p>Delete one or multiple documents based on a given query.</p>
-<pre><code class="language-php">function delete(int $returnOption = Query::DELETE_RETURN_BOOL)</code></pre>
-<h3>Parameters</h3>
-<ol>
-<li>
-<h1>$returnOption: int</h1>
-<p>Different return options provided with constants of the <code>Query</code> class</p>
-<ul>
-<li><code>Query::DELETE_RETURN_BOOL</code> (Default)<br/>Return true or false</li>
-<li><code>Query::DELETE_RETURN_RESULTS</code><br/>Retrieve deleted files as an array</li>
-<li><code>Query::DELETE_RETURN_COUNT</code><br/>Returns the amount of deleted documents</li>
-</ul>
-</li>
-</ol>
-<h3>Return value</h3>
-<p>This method returns based on the given return option either <code>boolean</code>, <code>int</code> or <code>array</code>.</p>
-<h3>Example</h3>
-<p>Delete all users that are not active.</p>
-<pre><code class="language-php">$result = $userStore
-  -&gt;createQueryBuilder()
-  -&gt;where([ "active", "=", false ])
-  -&gt;getQuery()
-  -&gt;delete();
-// output: true</code></pre>
-<p>Delete all users that are not active and retrieve the amount of deleted users.</p>
-<pre><code class="language-php">use SleekDB\Query;
-
-$result = $userStore
-  -&gt;createQueryBuilder()
-  -&gt;where([ "active", "=", false ])
-  -&gt;getQuery()
-  -&gt;delete(Query::DELETE_RETURN_COUNT);
-// output: 14</code></pre>
-<p>Delete all users that are not active and retrieve the deleted users.</p>
-<pre><code class="language-php">use SleekDB\Query;
-
-$result = $userStore
-  -&gt;createQueryBuilder()
-  -&gt;where([ "active", "=", false ])
-  -&gt;getQuery()
-  -&gt;delete(Query::DELETE_RETURN_RESULT);
-// output: [ ["_id" =&gt; 1, "name" =&gt; "Max"], ["_id" =&gt; 4, "name" =&gt; "John"], ... ]</code></pre>
-            <div class="editlink" 
-              file="query.md" 
-              version="2.0">
-            </div>
-          </div>
-        
           <div class="intro" id="block_query-builder">
             <h1>QueryBuilder</h1>
 <p>The QueryBuilder is used to <strong>prepare more complex queries</strong>, <strong><code>not to execute the query!</code></strong>. You can create a QueryBuilder with the <code>createQueryBuilder()</code> method of the <code>Store</code> class.</p>
@@ -1407,6 +1272,119 @@ Value that will be searched by.</li>
             </div>
           </div>
         
+          <div class="intro" id="block_cache-management">
+            <h1>Cache Management</h1>
+<p>The <code>QueryBuilder</code> class does provide a couple of methods to <code>manage caching on a query by query bases</code>.</p>
+<p>By default caching is enabled store wide and does not need to be enabled on a query by query bases. For more information please look into the store <a class="gotoblock" href="/#/configurations">configurations</a>.</p>
+<p>Create a QueryBuilder:</p>
+<pre><code class="language-php">$userQueryBuilder = $userStore-&gt;createQueryBuilder();</code></pre>
+<h2>Summary</h2>
+<ul>
+<li>useCache</li>
+<li>disableCache</li>
+<li>regenerateCache</li>
+</ul>
+<h2>useCache()</h2>
+<p>With the useCache method you can <code>activate caching</code> and define the <code>cache lifetime</code> on a query by query bases.</p>
+<pre><code class="language-php">function useCache(int $lifetime = null): QueryBuilder</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$lifetime: int|null</h1>
+<p>The lifetime of the cache.</p>
+</li>
+</ol>
+<ul>
+<li><code>null</code> (Default)<br/>
+Cache will not have a lifetime and will be regenerated on every update, delete and insert.</li>
+<li><code>int</code><br/>
+Cache lifetime in seconds. <code>0</code> means infinite lifetime.</li>
+</ul>
+<h3>Examples</h3>
+<p>Retrieve and cache 20 users that are active.</p>
+<p>The results in this example will use caching untill any documents gets updated/ deleted or inserted.</p>
+<pre><code class="language-php">// fetch and insert in cache
+$users = $userQueryBuilder
+    -&gt;where( ['active', '=', 1] )
+    -&gt;limit( 20 )
+    -&gt;useCache() // Use caching with lifetime = null
+    -&gt;getQuery()
+    -&gt;fetch();
+
+// retrieve from cache
+$users = $userQueryBuilder
+    -&gt;where( ['active', '=', 1] )
+    -&gt;limit( 20 )
+    -&gt;useCache()
+    -&gt;getQuery()
+    -&gt;fetch();
+
+// insert a new user (cache with no lifetime will be deleted)
+$newUser = ["name" =&gt; "Max", "active" =&gt; 0];
+$userStore-&gt;insert($newUser);
+
+// fetch and insert in cache
+$users = $userQueryBuilder
+    -&gt;where( ['active', '=', 1] )
+    -&gt;limit( 20 )
+    -&gt;useCache()
+    -&gt;getQuery()
+    -&gt;fetch();</code></pre>
+<p>Retrieve and cache result for 2 minutes, 20 users that are active.</p>
+<pre><code class="language-php">// fetch and insert in cache
+$users = $userQueryBuilder
+    -&gt;where( ['active', '=', 1] )
+    -&gt;limit( 20 )
+    -&gt;useCache(120) // 2 minutes = 120 seconds
+    -&gt;getQuery()
+    -&gt;fetch();</code></pre>
+<p>Retrieve and cache result forever, 20 users that are active.</p>
+<pre><code class="language-php">// fetch and insert in cache
+$users = $userQueryBuilder
+    -&gt;where( ['active', '=', 1] )
+    -&gt;limit( 20 )
+    -&gt;useCache(0) // 0 means infinite caching
+    -&gt;getQuery()
+    -&gt;fetch();</code></pre>
+<h2>disableCache()</h2>
+<p>Disable the build in caching solution on a query by query bases.<br/>
+By default caching is enabled store wide. If you want to disable caching store instead of disabling it on a query by query bases visit the store <a class="gotoblock" href="/#/configurations">configurations</a> page.</p>
+<pre><code class="language-php">function disableCache(): QueryBuilder</code></pre>
+<h3>Example</h3>
+<p>Retrieve 20 users that are active and do not use caching.</p>
+<pre><code class="language-php">// fetch and insert in cache
+$users = $userQueryBuilder
+    -&gt;where( ['active', '=', 1] )
+    -&gt;limit( 20 )
+    -&gt;disableCache()
+    -&gt;getQuery()
+    -&gt;fetch();</code></pre>
+<h2>regenerateCache()</h2>
+<p>Regenerate the cache of a query regardless of its lifetime.</p>
+<pre><code class="language-php">function regenerateCache(): QueryBuilder</code></pre>
+<h3>Examples</h3>
+<pre><code class="language-php">// cache with infinite lifetime
+$users = $userQueryBuilder
+    -&gt;where( ['active', '=', 1] )
+    -&gt;limit( 20 )
+    -&gt;useCache(0)
+    -&gt;getQuery()
+    -&gt;fetch();
+
+// returns documents not from cache and caches results for 20 seconds
+$users = $userQueryBuilder
+    -&gt;where( ['active', '=', 1] )
+    -&gt;limit( 20 )
+    -&gt;useCache(20)
+    -&gt;regenerateCache()
+    -&gt;getQuery()
+    -&gt;fetch();</code></pre>
+            <div class="editlink" 
+              file="cache-management.md" 
+              version="2.0">
+            </div>
+          </div>
+        
           <div class="intro" id="block_join-stores">
             <h1>Join Stores</h1>
 <p>With SleekDB it is easy to join multiple stores. You can add more than one <code>join</code> as well as nested <code>join</code> methods are also supported!</p>
@@ -1527,10 +1505,190 @@ $users = $userStore
             </div>
           </div>
         
+          <div class="intro" id="block_query">
+            <h1>Query</h1>
+<p>With the Query object you can execute a query.</p>
+<p>To get the Query object use the <code>getQuery</code> method of the <a class="gotoblock" href="/#/query-builder">QueryBuilder</a> class:</p>
+<pre><code class="language-php">$userQuery = $userQueryBuilder-&gt;getQuery();</code></pre>
+<h2>Summary</h2>
+<ul>
+<li>fetch</li>
+<li>first</li>
+<li>exists</li>
+<li>update</li>
+<li>delete</li>
+</ul>
+<h2>fetch()</h2>
+<p>Execute a query and retrieve an array containing all documents found.</p>
+<pre><code class="language-php">function fetch(): array</code></pre>
+<h3>Return value</h3>
+<p>An array containing all documents found or an empty array.</p>
+<h3>Example</h3>
+<p>Retrieve all users that are located in london.</p>
+<pre><code class="language-php">$user = $userQueryBuilder
+  -&gt;where([ "city", "=", "london" ])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code>[
+    [
+        "_id" =&gt; 1,
+        "name" =&gt; "John",
+        "city" =&gt; "london"
+    ],
+    [
+        "_id" =&gt; 4,
+        "name" =&gt; "Max",
+        "city" =&gt; "london"
+    ],
+    ...
+]</code></pre>
+<h2>first()</h2>
+<p>It is more efficient than <code>fetch</code> but one caveat is that the <code>orderBy</code> will not work when using this method to get the very first item.</p>
+<pre><code class="language-php">function first(): array</code></pre>
+<h3>Return value</h3>
+<p>Returns the very first document discovered or an empty array if nothing found.</p>
+<h3>Examples</h3>
+<pre><code class="language-php">$user = $userQueryBuilder
+  -&gt;where([ "email", "=", "foo@bar.com" ])
+  -&gt;getQuery()
+  -&gt;first();</code></pre>
+<h4>Result</h4>
+<pre><code>[
+    "_id" =&gt; 1,
+    "name" =&gt; "John",
+    "email" =&gt; "foo@bar.com"
+]</code></pre>
+<h2>exists()</h2>
+<p>It is more efficient than using <code>fetch</code> to check if some data exists or not. For example, you may use exists method to check if a username or email address already exists or not.</p>
+<pre><code class="language-php">function exists(): bool</code></pre>
+<h3>Return value</h3>
+<p>Returns <code>true</code> if a document exists and <code>false</code> if no document found.</p>
+<h3>Example</h3>
+<pre><code class="language-php">$userNameExists = $userQueryBuilder
+  -&gt;where([ "username", "=", "foobar" ])
+  -&gt;getQuery()
+  -&gt;exists();</code></pre>
+<h2>update()</h2>
+<p>Update one or multiple documents based on a given query.</p>
+<pre><code class="language-php">function update(array $updatable): bool</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$updatable: array</h1>
+<p>An array containing the properties to update.</p>
+</li>
+</ol>
+<h3>Return value</h3>
+<p>Returns <code>true</code> on success and <code>false</code> if no documents found to update.</p>
+<h3>Example</h3>
+<p>Set the status of all users that are located in london to VIP.</p>
+<pre><code class="language-php">$userStore
+  -&gt;createQueryBuilder()
+  -&gt;where([ "city", "=", "london" ])
+  -&gt;getQuery()
+  -&gt;update([ "status" =&gt; "VIP" ]);</code></pre>
+<h2>delete()</h2>
+<p>Delete one or multiple documents based on a given query.</p>
+<pre><code class="language-php">function delete(int $returnOption = Query::DELETE_RETURN_BOOL)</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$returnOption: int</h1>
+<p>Different return options provided with constants of the <code>Query</code> class</p>
+<ul>
+<li><code>Query::DELETE_RETURN_BOOL</code> (Default)<br/>Return true or false</li>
+<li><code>Query::DELETE_RETURN_RESULTS</code><br/>Retrieve deleted files as an array</li>
+<li><code>Query::DELETE_RETURN_COUNT</code><br/>Returns the amount of deleted documents</li>
+</ul>
+</li>
+</ol>
+<h3>Return value</h3>
+<p>This method returns based on the given return option either <code>boolean</code>, <code>int</code> or <code>array</code>.</p>
+<h3>Example</h3>
+<p>Delete all users that are not active.</p>
+<pre><code class="language-php">$result = $userStore
+  -&gt;createQueryBuilder()
+  -&gt;where([ "active", "=", false ])
+  -&gt;getQuery()
+  -&gt;delete();
+// output: true</code></pre>
+<p>Delete all users that are not active and retrieve the amount of deleted users.</p>
+<pre><code class="language-php">use SleekDB\Query;
+
+$result = $userStore
+  -&gt;createQueryBuilder()
+  -&gt;where([ "active", "=", false ])
+  -&gt;getQuery()
+  -&gt;delete(Query::DELETE_RETURN_COUNT);
+// output: 14</code></pre>
+<p>Delete all users that are not active and retrieve the deleted users.</p>
+<pre><code class="language-php">use SleekDB\Query;
+
+$result = $userStore
+  -&gt;createQueryBuilder()
+  -&gt;where([ "active", "=", false ])
+  -&gt;getQuery()
+  -&gt;delete(Query::DELETE_RETURN_RESULT);
+// output: [ ["_id" =&gt; 1, "name" =&gt; "Max"], ["_id" =&gt; 4, "name" =&gt; "John"], ... ]</code></pre>
+            <div class="editlink" 
+              file="query.md" 
+              version="2.0">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_advanced">
+            <h1>Advanced</h1>
+<h2>Keeping QueryBuilder object</h2>
+<p>When you use the <code>createQueryBuilder()</code> method you get a new QueryBuilder object, that means your conditions are reset to default.</p>
+<p>You can keep the QueryBuilder object and reuse it to add new conditions.</p>
+<h3>Example</h3>
+<pre><code class="language-php">$userQueryBuilder = $userStore-&gt;createQueryBuilder();
+
+$userQueryBuilder-&gt;where([ 'products.totalBought', '&gt;', 0 ]);
+
+$userQueryBuilder-&gt;where([ 'products.totalSaved', '&gt;', 0 ]);
+
+// fetch all users that have totalBought &gt; 0 and totalSaved &gt; 0
+$users = $userQueryBuilder-&gt;getQuery()-&gt;fetch();
+
+// add new condition
+$userQueryBuilder-&gt;where([ 'active', '=', true ]);
+
+// fetch all users that have totalBought &gt; 0, totalSaved &gt; 0 and are active
+$usersActive = $userQueryBuilder-&gt;getQuery()-&gt;fetch();</code></pre>
+<h2>Keeping Query object</h2>
+<p>If you want to keep the conditions and perform additional operations then you may want to keep the Query object.</p>
+<p>Here is an example showing how you may fetch data and then update on the discovered documents without running an additional query:</p>
+<h3>Example</h3>
+<pre><code class="language-php">$userQuery = $userStore-&gt;createQueryBuilder()
+  -&gt;where('products.totalBought', '&gt;', 0)
+  -&gt;where('products.totalSaved', '&gt;', 0)
+  -&gt;getQuery();
+
+// Fetch data.
+$users = $userQuery-&gt;fetch();
+
+// Update matched documents.
+$userQuery-&gt;update([
+  'someRandomData' =&gt; '123',
+]);
+
+// Fetch data again.
+$usersUpdated = $userQuery-&gt;fetch();</code></pre>
+            <div class="editlink" 
+              file="advanced.md" 
+              version="2.0">
+            </div>
+          </div>
+        
           <div class="intro" id="block_cache">
             <h1>Cache</h1>
 <p>With the Cache class you can control Caching in a deeper way.</p>
-<p>That said, this class is <code>mainly for internal use</code> and normally that kind of deep cache control is not needed.</p>
+<p>That said, this class is <strong><code>mainly for internal use</code></strong> and normally that kind of deep cache control is not needed.</p>
+<blockquote>
+<p>⚠️️ Be careful when using the <code>Cache</code> object.</p>
+</blockquote>
 <p>To retrieve the Cache object use the <code>getCache</code> method of the <code>Query</code> class.</p>
 <pre><code class="language-php">$cache = $userQuery-&gt;getCache();</code></pre>
 <h2>Summary</h2>
@@ -1598,164 +1756,6 @@ $users = $userStore
 <p>Either <code>int</code> &gt;= 0 in seconds, where <code>0</code> means infinite, or <code>null</code>.</p>
             <div class="editlink" 
               file="cache.md" 
-              version="2.0">
-            </div>
-          </div>
-        
-          <div class="intro" id="block_cache-management">
-            <h1>Cache Management</h1>
-<p>The <code>QueryBuilder</code> class does provide a couple of methods to <code>manage caching on a query by query bases</code>.</p>
-<p>By default caching is enabled store wide and does not need to be enabled on a query by query bases. For more information please look into the store <a class="gotoblock" href="/#/configurations">configurations</a>.</p>
-<p>Create a QueryBuilder:</p>
-<pre><code class="language-php">$userQueryBuilder = $userStore-&gt;createQueryBuilder();</code></pre>
-<h2>Summary</h2>
-<ul>
-<li>useCache</li>
-<li>disableCache</li>
-<li>regenerateCache</li>
-</ul>
-<h2>useCache()</h2>
-<p>With the useCache method you can <code>activate caching</code> and define the <code>cache lifetime</code> on a query by query bases.</p>
-<pre><code class="language-php">function useCache(int $lifetime = null): QueryBuilder</code></pre>
-<h3>Parameters</h3>
-<ol>
-<li>
-<h1>$lifetime: int|null</h1>
-<p>The lifetime of the cache.</p>
-</li>
-</ol>
-<ul>
-<li><code>null</code> (Default)<br/>
-Cache will not have a lifetime and will be regenerated on every update, delete and insert.</li>
-<li><code>int</code><br/>
-Cache lifetime in seconds. <code>0</code> means infinite lifetime.</li>
-</ul>
-<h3>Examples</h3>
-<p>Retrieve and cache 20 users that are active.</p>
-<p>The results in this example will use caching untill any documents gets updated/ deleted or inserted.</p>
-<pre><code class="language-php">// fetch and insert in cache
-$users = $userQueryBuilder
-    -&gt;where( ['active', '=', 1] )
-    -&gt;limit( 20 )
-    -&gt;useCache() // Use caching with lifetime = null
-    -&gt;getQuery()
-    -&gt;fetch();
-
-// retrieve from cache
-$users = $userQueryBuilder
-    -&gt;where( ['active', '=', 1] )
-    -&gt;limit( 20 )
-    -&gt;useCache()
-    -&gt;getQuery()
-    -&gt;fetch();
-
-// insert a new user (cache with no lifetime will be deleted)
-$newUser = ["name" =&gt; "Max", "active" =&gt; 0];
-$userStore-&gt;insert($newUser);
-
-// fetch and insert in cache
-$users = $userQueryBuilder
-    -&gt;where( ['active', '=', 1] )
-    -&gt;limit( 20 )
-    -&gt;useCache()
-    -&gt;getQuery()
-    -&gt;fetch();</code></pre>
-<p>Retrieve and cache result for 2 minutes, 20 users that are active.</p>
-<pre><code class="language-php">// fetch and insert in cache
-$users = $userQueryBuilder
-    -&gt;where( ['active', '=', 1] )
-    -&gt;limit( 20 )
-    -&gt;useCache(120) // 2 minutes = 120 seconds
-    -&gt;getQuery()
-    -&gt;fetch();</code></pre>
-<p>Retrieve and cache result forever, 20 users that are active.</p>
-<pre><code class="language-php">// fetch and insert in cache
-$users = $userQueryBuilder
-    -&gt;where( ['active', '=', 1] )
-    -&gt;limit( 20 )
-    -&gt;useCache(0) // 0 means infinite caching
-    -&gt;getQuery()
-    -&gt;fetch();</code></pre>
-<h2>disableCache()</h2>
-<p>Disable the build in caching solution on a query by query bases.<br/>
-By default caching is enabled store wide. If you want to disable caching store instead of disabling it on a query by query bases visit the store <a class="gotoblock" href="/#/configurations">configurations</a> page.</p>
-<pre><code class="language-php">function disableCache(): QueryBuilder</code></pre>
-<h3>Example</h3>
-<p>Retrieve 20 users that are active and do not use caching.</p>
-<pre><code class="language-php">// fetch and insert in cache
-$users = $userQueryBuilder
-    -&gt;where( ['active', '=', 1] )
-    -&gt;limit( 20 )
-    -&gt;disableCache()
-    -&gt;getQuery()
-    -&gt;fetch();</code></pre>
-<h2>regenerateCache()</h2>
-<p>Regenerate the cache of a query regardless of its lifetime.</p>
-<pre><code class="language-php">function regenerateCache(): QueryBuilder</code></pre>
-<h3>Examples</h3>
-<pre><code class="language-php">// cache with infinite lifetime
-$users = $userQueryBuilder
-    -&gt;where( ['active', '=', 1] )
-    -&gt;limit( 20 )
-    -&gt;useCache(0)
-    -&gt;getQuery()
-    -&gt;fetch();
-
-// returns documents not from cache and caches results for 20 seconds
-$users = $userQueryBuilder
-    -&gt;where( ['active', '=', 1] )
-    -&gt;limit( 20 )
-    -&gt;useCache(20)
-    -&gt;regenerateCache()
-    -&gt;getQuery()
-    -&gt;fetch();</code></pre>
-            <div class="editlink" 
-              file="cache-management.md" 
-              version="2.0">
-            </div>
-          </div>
-        
-          <div class="intro" id="block_advanced">
-            <h1>Advanced</h1>
-<h2>Keeping QueryBuilder object</h2>
-<p>When you use the <code>createQueryBuilder()</code> method you get a new QueryBuilder object, that means your conditions are reset to default.</p>
-<p>You can keep the QueryBuilder object and reuse it to add new conditions.</p>
-<h3>Example</h3>
-<pre><code class="language-php">$userQueryBuilder = $userStore-&gt;createQueryBuilder();
-
-$userQueryBuilder-&gt;where([ 'products.totalBought', '&gt;', 0 ]);
-
-$userQueryBuilder-&gt;where([ 'products.totalSaved', '&gt;', 0 ]);
-
-// fetch all users that have totalBought &gt; 0 and totalSaved &gt; 0
-$users = $userQueryBuilder-&gt;getQuery()-&gt;fetch();
-
-// add new condition
-$userQueryBuilder-&gt;where([ 'active', '=', true ]);
-
-// fetch all users that have totalBought &gt; 0, totalSaved &gt; 0 and are active
-$usersActive = $userQueryBuilder-&gt;getQuery()-&gt;fetch();</code></pre>
-<h2>Keeping Query object</h2>
-<p>If you want to keep the conditions and perform additional operations then you may want to keep the Query object.</p>
-<p>Here is an example showing how you may fetch data and then update on the discovered documents without running an additional query:</p>
-<h3>Example</h3>
-<pre><code class="language-php">$userQuery = $userStore-&gt;createQueryBuilder()
-  -&gt;where('products.totalBought', '&gt;', 0)
-  -&gt;where('products.totalSaved', '&gt;', 0)
-  -&gt;getQuery();
-
-// Fetch data.
-$users = $userQuery-&gt;fetch();
-
-// Update matched documents.
-$userQuery-&gt;update([
-  'someRandomData' =&gt; '123',
-]);
-
-// Fetch data again.
-$usersUpdated = $userQuery-&gt;fetch();</code></pre>
-            <div class="editlink" 
-              file="advanced.md" 
               version="2.0">
             </div>
           </div>
@@ -1889,6 +1889,92 @@ Returns the inserted documents with their new and unique _id.</p>
             </div>
           </div>
         
+          <div class="intro" id="block_release-notes">
+            <h1>🎉 Release Notes</h1>
+<h2>📢 Optimizations, new query methods and more control</h2>
+<p>SleekDB 2.0 comes with so many important optimizations and other features that make it faster and more mature. This is the recommended SleekDB release version for new projects, and if you are using an older version consider upgrading as soon as possible.</p>
+<h3>Changes from 1.5 to 2.0</h3>
+<ul>
+<li>
+<h1>🔎 Improving document discovery process</h1>
+<p>Added better file locking support with reduced nested loops for finding documents. Added methods that can be used to easily find a document without searching for entire available JSON files of a store.</p>
+</li>
+<li>
+<h1>Support for PHP &gt;= 7.0</h1>
+<p>The support of PHP 5 is dropped to provide more modern features.</p>
+</li>
+<li>
+<h1>✨ New query methods</h1>
+<ul>
+<li><code>first()</code></li>
+<li><code>exists()</code></li>
+<li><code>select()</code></li>
+<li><code>except()</code></li>
+<li><code>distinct()</code></li>
+<li><code>join()</code></li>
+<li><code>findAll()</code></li>
+<li><code>findById()</code></li>
+<li><code>findBy()</code></li>
+<li><code>findOneBy()</code></li>
+<li><code>updateBy()</code></li>
+<li><code>deleteBy()</code></li>
+<li><code>deleteById()</code></li>
+</ul>
+</li>
+<li>
+<h1>Improved Code Quality</h1>
+<p>We isolated most of the existing logics into different classes to make the codebase easy to understand and easy to maintain.</p>
+</li>
+<li>
+<h1>Unit Testing</h1>
+<p>There was some concern among developers as it was lacking UNIT Testing, now its added!</p>
+</li>
+<li>
+<h1>SleekDB class now deprecated</h1>
+<p>We beliefe that downwards compatibility is very important.</p>
+<p>That's why we always try our best to keep SleekDB as downwards compatible as possible and avoid breaking changes.</p>
+<p>Unfortunatelly we had to refactor and rewrite the whole SleekDB project to make it future proof and keep it maintainable. As a consequence the SleekDB class is now deprecated with version 2.0 and will be removed with version 3.0.</p>
+<h3>A new era for SleekDB begins!</h3>
+</li>
+<li>
+<h1>Better Caching Solution</h1>
+<p>Data caching has been improved significantly.</p>
+<ul>
+<li>Add custom expiry of a cache file with lifetime.</li>
+<li>Ability of query specific caching rules.</li>
+</ul>
+</li>
+</ul>
+<h2>Issues</h2>
+<ul>
+<li>Deprecate SleekDB Class (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/84" target="_blank">#84</a>)</li>
+<li>first and exists methods does not use cache (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/82" target="_blank">#82</a>)</li>
+<li>Make where and orWhere just accept one array (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/80" target="_blank">#80</a>)</li>
+<li>Make dataDir required (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/79" target="_blank">#79</a>)</li>
+<li>Add update &amp; delete to Store class <a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/78" target="_blank">#78</a>)</li>
+<li>Change delete method of Query class to accept return options (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/77" target="_blank">#77</a>)</li>
+<li>Add find methods to new Store class to make the QueryBuilder optional for simple queries. (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/75" target="_blank">#75</a>)</li>
+<li>Allow to query on read-only file system (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/67" target="_blank">#67</a>)</li>
+<li>Use &quot;results&quot; property instead of returning data from methods (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/59" target="_blank">#59</a>)</li>
+<li>Return the first item only (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/56" target="_blank">#56</a>)</li>
+<li>Check if data exists (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/54" target="_blank">#54</a>)</li>
+<li>update return value (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/51" target="_blank">#51</a>)</li>
+<li>delete status (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/48" target="_blank">#48</a>)</li>
+<li>Extend not possible due to private helper methods (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/44" target="_blank">#44</a>)</li>
+<li>JOIN feature (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/42" target="_blank">#42</a>)</li>
+<li>Return distincted value (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/41" target="_blank">#41</a>)</li>
+<li>Suppress Key on fetch (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/38" target="_blank">#38</a>)</li>
+<li>Like Condition (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/34" target="_blank">#34</a>)</li>
+<li>Better code base (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/32" target="_blank">#32</a>)</li>
+<li>OR Condition Query (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/31" target="_blank">#31</a>)</li>
+<li>Possibility of duplicate ID’s (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/30" target="_blank">#30</a>)</li>
+</ul>
+            <div class="editlink" 
+              file="release-notes.md" 
+              version="2.0">
+            </div>
+          </div>
+        
           <div class="intro" id="block_contributing">
             <h1>Contributing</h1>
 <ul>
@@ -1922,82 +2008,10 @@ Returns the inserted documents with their new and unique _id.</p>
             <h1>Versions</h1>
 <ul>
 <li><strong><a href="/">2.0</a> (Actively Maintained Version)</strong></li>
-<li><strong><a href="/versions/1.5.0/">1.5.0</a> (Bug Fixes Only)</strong></li>
+<li><strong><a href="/versions/1.5/">1.5</a> (Bug Fixes Only)</strong></li>
 </ul>
             <div class="editlink" 
               file="versions.md" 
-              version="2.0">
-            </div>
-          </div>
-        
-          <div class="intro" id="block_release-notes">
-            <h1>🎉 Release Notes</h1>
-<h2>📢 Optimizations, new query methods and more control</h2>
-<p>SleekDB 2.0 comes with so many important optimizations and with other features that makes it faster and more mature. This is a recommended release if you are using an older version of SleekDB.</p>
-<h3>Breaking changes from 1.5 to 2.0</h3>
-<ul>
-<li>
-<h1>Improving document discovery process</h1>
-<p>Added better file locking support with reduced nested loops for finding documents. Added methods that can be used to easily find a document without searching for entire available JSON files of a store.</p>
-</li>
-<li>
-<h1>Added new query methods</h1>
-<ul>
-<li><code>first()</code></li>
-<li><code>exists()</code></li>
-<li><code>select()</code></li>
-<li><code>except()</code></li>
-<li><code>distinct()</code></li>
-<li><code>join()</code></li>
-</ul>
-</li>
-<li>
-<h1>Improved Code Quality</h1>
-<p>We isolated most of the existing logics into different classes to make the codebase easy to understand and easy to maintain.</p>
-</li>
-<li>
-<h1>Unit Testing</h1>
-<p>There was some concern among developers as it was lacking UNIT Testing, now its added!</p>
-</li>
-<li>
-<h1>SleekDB class now deprecated</h1>
-<p>Although, we are providing downwards compatibility in this version, but will remove the old SleekDB object with version 3.0.</p>
-</li>
-<li>
-<h1>Better Caching Support</h1>
-<p>Data caching has been improved,</p>
-<ul>
-<li>Added custom expiry of a cache file.</li>
-<li>Allows query specific caching rules.</li>
-</ul>
-</li>
-</ul>
-<h2>Issues</h2>
-<ul>
-<li>Deprecate SleekDB Class (#84)</li>
-<li>first and exists methods does not use cache (#82)</li>
-<li>Make where and orWhere just accept one array (#80)</li>
-<li>Make dataDir required (#79)</li>
-<li>Add update &amp; delete to Store class (#78)</li>
-<li>Change delete method of Query class to accept return options (#77)</li>
-<li>Add find methods to new Store class to make the QueryBuilder optional for simple queries. (#75)</li>
-<li>Allow to query on read-only file system (#67)</li>
-<li>Use &quot;results&quot; property instead of returning data from methods (#59)</li>
-<li>Return the first item only (#56)</li>
-<li>Check if data exists (#54)</li>
-<li>update return value (#51)</li>
-<li>delete status (#48)</li>
-<li>Extend not possible due to private helper methods (#44)</li>
-<li>JOIN feature (#42)</li>
-<li>Return distincted value (#41)</li>
-<li>Suppress Key on fetch (#38)</li>
-<li>Like Condition (#34)</li>
-<li>Better code base (#32)</li>
-<li>OR Condition Query (#31)</li>
-<li>Possibility of duplicate ID’s (#30)</li>
-</ul>
-            <div class="editlink" 
-              file="release-notes.md" 
               version="2.0">
             </div>
           </div>
