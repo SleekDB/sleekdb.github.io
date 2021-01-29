@@ -5,40 +5,40 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SleekDB - PHP NoSQL Document Database</title>
+  <title>SleekDB - PHP NoSQL Flat File Database</title>
   <link rel="stylesheet" type="text/css" href="/assets/app.css" />
   <link rel="stylesheet" type="text/css" href="/assets/normalize.css" />
   <link rel="stylesheet" href="/assets/highlighter/styles/darcula.css" />
   <script src="/assets/highlighter/highlight.pack.js"></script>
   <script src="https://unpkg.com/ionicons@4.3.0/dist/ionicons.js"></script>
   <!-- Search Engine -->
-  <meta name="description" content="SleekDB is a simple NoSQL database implemented in PHP without third-party dependencies that store data in plain JSON files." />
+  <meta name="description" content="SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files." />
   <meta
     name="image"
     content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png"
   />
   <!-- Schema.org for Google -->
-  <meta itemprop="name" content="SleekDB - PHP NoSQL Document Database" />
-  <meta itemprop="description" content="SleekDB is a simple NoSQL database implemented in PHP without third-party dependencies that store data in plain JSON files." />
+  <meta itemprop="name" content="SleekDB - PHP NoSQL Flat File Database" />
+  <meta itemprop="description" content="SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files." />
   <meta
     itemprop="image"
     content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png"
   />
   <!-- Twitter -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="SleekDB - PHP NoSQL Document Database" />
-  <meta name="twitter:description" content="SleekDB is a simple NoSQL database implemented in PHP without third-party dependencies that store data in plain JSON files." />
+  <meta name="twitter:title" content="SleekDB - PHP NoSQL Flat File Database" />
+  <meta name="twitter:description" content="SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files." />
   <meta name="twitter:site" content="@rakibtg" />
   <meta name="twitter:creator" content="@rakibtg" />
   <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-  <meta name="og:title" content="SleekDB - PHP NoSQL Document Database" />
-  <meta name="og:description" content="SleekDB is a simple NoSQL database implemented in PHP without third-party dependencies that store data in plain JSON files." />
+  <meta name="og:title" content="SleekDB - PHP NoSQL Flat File Database" />
+  <meta name="og:description" content="SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files." />
   <meta
     name="og:image"
     content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png"
   />
   <meta name="og:url" content="https://sleekdb.github.io/" />
-  <meta name="og:site_name" content="SleekDB - PHP NoSQL Document Database" />
+  <meta name="og:site_name" content="SleekDB - PHP NoSQL Flat File Database" />
   <meta name="og:locale" content="en_US" />
   <meta name="og:type" content="website" />
 </head>
@@ -182,16 +182,16 @@
               
           <div class="intro" id="block_home">
             <h1>SleekDB - A NoSQL Database made using PHP</h1>
-<p>SleekDB is a simple NoSQL database implemented in PHP without third-party dependencies that store data in plain JSON files.</p>
-<p>It is not designed to handle heavy-load IO operations, it is designed to have a simple solution where all we need a database for is managing a few gigabytes of data. You can think of it as a database for low to medium operation loads.</p>
+<p>SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files.</p>
+<p>It is not designed to handle heavy-load IO operations, it is designed to have a simple solution where all we need a database for managing a few gigabytes of data. You can think of it as a database for low to medium operation loads.</p>
 <h2>😎 Manage Static Data With Ease</h2>
-<p>SleekDB works great as the database engine for low to medium traffic websites.</p>
+<p>SleekDB works great as the database engine for low to medium traffic websites. It makes simple database effortless.</p>
 <h2>📝 Your Dynamic Website Become Static</h2>
 <p>SleekDB will cache all query data by default, in a way that would make any dynamic site as fast as static sites.</p>
 <h2>🗄 Flat File Database</h2>
-<p>SleekDB is also a flat file database, but instead of a single file it stores data in multiple JSON files. That allows it to have a better concurrency support comparing to a FlatFile database system. SleekDB can be compared with other flat file database systems because the final query output will be cached and later reused from a single file instead of traversing all the available files. So, it's a PHP flat file database as well.</p>
+<p>SleekDB is also a flat file database, but instead of a single file it stores data in multiple JSON files. That allows it to have a better concurrency support comparing to a FlatFile database system. SleekDB can be compared with other flat file database systems because the final query output will be cached and later reused from a single file instead of traversing all the available files.</p>
 <h2>🥳 You Are Not Alone!</h2>
-<p>SleekDB is being used with many websites and applications which are in production. The core team consists of two developer who are actively contributing to the development of SleekDB Database.</p>
+<p>SleekDB is being used with many websites and applications which are in production right now. The core team consists of two developer, they are actively contributing to the development of SleekDB Database.</p>
 <h2>👋 Say Hi!</h2>
 <p>Join our <a href="https://discord.gg/WJGqUFPtZw" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Discord</a> channel. We would love to know about you and your feedbacks.</p>
             <div class="editlink" 
@@ -232,27 +232,47 @@
 </li>
 <li>
 <h1>Default caching layer</h1>
-<p>SleekDB will serve data from cache by default and regenerate cache automatically! Query results will be cached and later reused from a single file instead of travarsing all the available files.</p>
+<p>SleekDB will serve data from cache by default and regenerate cache automatically! Query results will be cached and later reused from a single file instead of traversing all the available files.</p>
 </li>
 <li>
 <h1>Rich Conditions and Filters</h1>
 <p>Use multiple conditional comparisons, text search, sorting on multiple properties and nested properties. Some useful methods are:</p>
-<ul>
-<li>where</li>
-<li>join</li>
-<li>in</li>
-<li>notIn</li>
-<li>like</li>
-<li>orWhere</li>
-<li>sort</li>
-<li>skip</li>
-<li>limit</li>
-<li>search</li>
-<li>distinct</li>
-<li>exists</li>
-<li>first</li>
-<li>...</li>
-</ul>
+<table>
+<tbody>
+  <tr>
+    <td valign="top">
+      <ul>
+        <li>where</li>
+        <li>orWhere</li>
+        <li>select</li>
+        <li>except</li>
+        <li>in</li>
+        <li>notIn</li>
+      </ul>
+    </td>
+    <td valign="top">
+      <ul>
+        <li>join</li>
+        <li>like</li>
+        <li>sort</li>
+        <li>skip</li>
+        <li>orderBy</li>
+        <li>update</li>
+      </ul>
+    </td>
+    <td valign="top">
+      <ul>
+        <li>limit</li>
+        <li>search</li>
+        <li>distinct</li>
+        <li>exists</li>
+        <li>first</li>
+        <li>delete</li>
+      </ul>
+    </td>
+  </tr>
+</tbody>
+</table>
 </li>
 <li>
 <h1>Process data on demand</h1>
@@ -2007,7 +2027,8 @@ Returns the inserted documents with their new and unique _id.</p>
           <div class="intro" id="block_versions">
             <h1>Versions</h1>
 <ul>
-<li><strong><a href="/">2.0</a> (Actively Maintained Version)</strong></li>
+<li><strong><a href="/">2.1</a> (Actively Maintained Version)</strong></li>
+<li><strong><a href="/versions/2.0/">2.0</a></strong></li>
 <li><strong><a href="/versions/1.5/">1.5</a> (Bug Fixes Only)</strong></li>
 </ul>
             <div class="editlink" 
