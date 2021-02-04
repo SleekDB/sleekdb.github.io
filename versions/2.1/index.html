@@ -385,8 +385,8 @@ Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/p
  "title" =&gt; "Google Pixel XL",
  "about" =&gt; "Google announced a new Pixel!",
  "author" =&gt; [
-   "avatar": "profile-12.jpg",
-   "name" : "Foo Bar"
+   "avatar" =&gt; "profile-12.jpg",
+   "name" =&gt; "Foo Bar"
  ]
 ];
 $results = $newsStore-&gt;insert($article);</code></pre>
@@ -951,7 +951,7 @@ Example: c[a-b]t finds cat and cbt</li>
 <pre><code class="language-php">// inline
 $users = $userStore
   -&gt;createQueryBuilder()
-  -&gt;where( "name", "=", "Joshua Edwards" )
+  -&gt;where( [ "name", "=", "Joshua Edwards" ] )
   -&gt;getQuery()
   -&gt;fetch();
 
@@ -959,7 +959,7 @@ $users = $userStore
 $userQueryBuilder = $userStore-&gt;createQueryBuilder();
 
 // preparing the query with the QueryBuilder
-$userQueryBuilder-&gt;where( "name", "=", "Joshua Edwards" );
+$userQueryBuilder-&gt;where( [ "name", "=", "Joshua Edwards" ] );
 
 // executing the query
 $users = $userQueryBuilder-&gt;getQuery()-&gt;fetch();</code></pre>
