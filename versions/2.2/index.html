@@ -60,7 +60,7 @@
     href="#/versions"
     title="Find all versions of SleekDB"
     class="menu gotoblock"
-    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.0</a
+    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.2</a
   >
   <a
     class="menu"
@@ -196,12 +196,13 @@
 <p>Join our <a href="https://discord.gg/WJGqUFPtZw" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Discord</a> channel. We would love to know about you and your feedbacks.</p>
             <div class="editlink" 
               file="home.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
           <div class="intro" id="block_features">
             <h1>Features</h1>
+<h2>Installing SleekDB</h2>
 <ul>
 <li>
 <h1>Lightweight, faster</h1>
@@ -300,7 +301,7 @@
 </ul>
             <div class="editlink" 
               file="features.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -332,7 +333,7 @@ Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/p
 <pre><code class="language-sh">composer require rakibtg/sleekdb dev-dev</code></pre>
             <div class="editlink" 
               file="installation.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -403,7 +404,7 @@ print_r($allNews);</code></pre>
 </blockquote>
             <div class="editlink" 
               file="getting-started.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -446,7 +447,7 @@ $newsStore = new Store('news', $dataDir);</code></pre>
 <pre><code class="language-php">$userStore-&gt;deleteStore();</code></pre>
             <div class="editlink" 
               file="managing-store.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -457,6 +458,7 @@ $newsStore = new Store('news', $dataDir);</code></pre>
 <li>auto_cache</li>
 <li>cache_lifetime</li>
 <li>timeout</li>
+<li>primary_key</li>
 </ul>
 <p>They are store wide, which means they will be used on every query, if not changed on a query by query base.</p>
 <h2>Using Custom Configuration</h2>
@@ -464,7 +466,8 @@ $newsStore = new Store('news', $dataDir);</code></pre>
 <pre><code class="language-php">$configuration = [
   "auto_cache" =&gt; true,
   "cache_lifetime" =&gt; null,
-  "timeout" =&gt; 120
+  "timeout" =&gt; 120,
+  "primary_key" =&gt; "_id"
 ];
 $newsStore = new \SleekDB\Store("news", $dataDir, $configuration);</code></pre>
 <p>Let's get familiar with the available configuration options.</p>
@@ -496,9 +499,12 @@ Available caching method's are:</p>
 </blockquote>
 <h3>timeOut</h3>
 <p>Set timeout value. Default value is <code>120</code> seconds.</p>
+<h3>primary_key</h3>
+<p>Set the primary key into any string you want.<br/>
+SleekDB will then use that key instead of the default <code>_id</code> key.</p>
             <div class="editlink" 
               file="configurations.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -593,7 +599,7 @@ $users = [
 $users = $userStore-&gt;insertMany($users);</code></pre>
             <div class="editlink" 
               file="insert-data.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -690,7 +696,7 @@ $users = $userStore-&gt;insertMany($users);</code></pre>
 <pre><code>["_id" =&gt; 18, "title" =&gt; "SleekDB is super fast", "author" =&gt; "Mike"]</code></pre>
             <div class="editlink" 
               file="fetch-data.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -751,7 +757,7 @@ foreach($users as $key =&gt; $user){
 $userStore-&gt;update( $users );</code></pre>
             <div class="editlink" 
               file="edit-data.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -816,7 +822,7 @@ $userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RE
 // Returns true</code></pre>
             <div class="editlink" 
               file="delete-data.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -829,6 +835,7 @@ $userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RE
 <li>getQuery</li>
 <li>where</li>
 <li>orWhere</li>
+<li>nestedWhere</li>
 <li>in</li>
 <li>notIn</li>
 <li>select</li>
@@ -885,42 +892,24 @@ $userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RE
 <ul>
 <li>
 <h1>$fieldName: string</h1>
-</li>
-</ul>
 <p>The field name argument is the property that we want to check in our data object.</p>
 <p>As our data object is basically a JSON document so it could have nested properties.</p>
 <p>To target nested properties we use a single dot between the property/field name.</p>
 <p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
-<ul>
+</li>
 <li>
 <h1>$condition: string</h1>
-</li>
-</ul>
 <p>To apply the comparison filters we use this argument.</p>
 <p>Allowed conditional operators are:</p>
 <ul>
-<li>
-<p><code>=</code> Match equal against data.</p>
-</li>
-<li>
-<p><code>!=</code> Match not equal against data.</p>
-</li>
-<li>
-<p><code>&gt;</code> Match greater than against data.</p>
-</li>
-<li>
-<p><code>&gt;=</code> Match greater equal against data.</p>
-</li>
-<li>
-<p><code>&lt;</code> Match less than against data.</p>
-</li>
-<li>
-<p><code>&lt;=</code> Match less equal against data.</p>
-</li>
-<li>
-<p><code>like</code> Match using wildcards. \
-Supported wildcards:</p>
-<ul>
+<li><code>=</code> Match equal against data.</li>
+<li><code>!=</code> Match not equal against data.</li>
+<li><code>&gt;</code> Match greater than against data.</li>
+<li><code>&gt;=</code> Match greater equal against data.</li>
+<li><code>&lt;</code> Match less than against data.</li>
+<li><code>&lt;=</code> Match less equal against data.</li>
+<li><code>like</code> Match using wildcards. \
+Supported wildcards:</li>
 <li><code>%</code> Represents zero or more characters \
 Example: bl% finds bl, black, blue, and blob</li>
 <li><code>_</code> Represents a single character \
@@ -1008,42 +997,24 @@ $users = $userQueryBuilder-&gt;getQuery()-&gt;fetch();
 <ul>
 <li>
 <h1>$fieldName: string</h1>
-</li>
-</ul>
 <p>The field name argument is the property that we want to check in our data object.</p>
 <p>As our data object is basically a JSON document so it could have nested properties.</p>
 <p>To target nested properties we use a single dot between the property/field name.</p>
 <p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
-<ul>
+</li>
 <li>
 <h1>$condition: string</h1>
-</li>
-</ul>
 <p>To apply the comparison filters we use this argument.</p>
 <p>Allowed conditional operators are:</p>
 <ul>
-<li>
-<p><code>=</code> Match equal against data.</p>
-</li>
-<li>
-<p><code>!=</code> Match not equal against data.</p>
-</li>
-<li>
-<p><code>&gt;</code> Match greater than against data.</p>
-</li>
-<li>
-<p><code>&gt;=</code> Match greater equal against data.</p>
-</li>
-<li>
-<p><code>&lt;</code> Match less than against data.</p>
-</li>
-<li>
-<p><code>&lt;=</code> Match less equal against data.</p>
-</li>
-<li>
-<p><code>like</code> Match using wildcards. \
-Supported wildcards:</p>
-<ul>
+<li><code>=</code> Match equal against data.</li>
+<li><code>!=</code> Match not equal against data.</li>
+<li><code>&gt;</code> Match greater than against data.</li>
+<li><code>&gt;=</code> Match greater equal against data.</li>
+<li><code>&lt;</code> Match less than against data.</li>
+<li><code>&lt;=</code> Match less equal against data.</li>
+<li><code>like</code> Match using wildcards. \
+Supported wildcards:</li>
 <li><code>%</code> Represents zero or more characters \
 Example: bl% finds bl, black, blue, and blob</li>
 <li><code>_</code> Represents a single character \
@@ -1085,6 +1056,142 @@ Example: c[a-b]t finds cat and cbt</li>
     ]
   )
   -&gt;orWhere( ["products.totalBought", "=", 0] )
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h2>nestedWhere()</h2>
+<p>With the <code>nestedWhere(...)</code> method you are able to make complex nested where statements.</p>
+<pre><code class="language-php">function nestedWhere(array $conditions): QueryBuilder</code></pre>
+<h3>Conditions array structure</h3>
+<pre><code class="language-php">[
+  "OUTERMOST_OPERATION" =&gt; [
+    // conditions
+  ]
+];</code></pre>
+<h3>Properties</h3>
+<ol>
+<li>
+<h1>$conditions</h1>
+<p>Multiple where conditions</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>Small Example:<br/>
+[ &quot;OUTERMOST_OPERATION&quot; =&gt; [ [$fieldName, $condition, $value], &quot;OPERATION&quot;, [$fieldName, $condition, $value] ] ]</p>
+<ul>
+<li>
+<h1>$fieldName: string</h1>
+<p>The field name argument is the property that we want to check in our data object.</p>
+<p>As our data object is basically a JSON document so it could have nested properties.</p>
+<p>To target nested properties we use a single dot between the property/field name.</p>
+<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
+</li>
+<li>
+<h1>$condition: string</h1>
+<p>To apply the comparison filters we use this argument.</p>
+<p>Allowed conditional operators are:</p>
+<ul>
+<li><code>=</code> Match equal against data.</li>
+<li><code>!=</code> Match not equal against data.</li>
+<li><code>&gt;</code> Match greater than against data.</li>
+<li><code>&gt;=</code> Match greater equal against data.</li>
+<li><code>&lt;</code> Match less than against data.</li>
+<li><code>&lt;=</code> Match less equal against data.</li>
+<li><code>like</code> Match using wildcards. \
+Supported wildcards:</li>
+<li><code>%</code> Represents zero or more characters \
+Example: bl% finds bl, black, blue, and blob</li>
+<li><code>_</code> Represents a single character \
+Example: h_t finds hot, hat, and hit</li>
+<li><code>[]</code> Represents any single character within the brackets \
+Example: h[oa]t finds hot and hat, but not hit</li>
+<li><code>^</code> Represents any character not in the brackets \
+Example: h[^oa]t finds hit, but not hot and hat</li>
+<li><code>-</code> Represents a range of characters \
+Example: c[a-b]t finds cat and cbt</li>
+</ul>
+</li>
+<li>
+<h1>$value</h1>
+<p>Data that will be checked against the property value of the JSON documents.</p>
+</li>
+<li>
+<h1>OUTERMOST_OPERATION: string</h1>
+<p>Can be set to <code>AND</code> or <code>OR</code>.<br/>
+It is <strong>optional</strong> and will <strong>default</strong> to an <code>AND</code> operation.<br/>
+The outermost operation is optional and does specify how the given conditions are connected with other conditions, like the ones that are specified using the <code>where</code>, <code>orWhere</code>, in or <code>notIn</code> methods.</p>
+</li>
+<li>
+<h1>OPERATION: string</h1>
+<p>Can be set to <code>AND</code> or <code>OR</code>.<br/>
+The operation is used to connect multiple conditions.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Examples</h3>
+<p>Retrieve all users whos name start with &quot;a&quot; or &quot;b&quot;, that have products.totalSaved &gt; 10 and products totalBought &gt; 10 and are between 16 and 20 or 24 and 28 years old.</p>
+<pre><code class="language-sql">WHERE 
+  (products.totalSaved &gt; 10 AND products.totalBought &gt; 20) 
+  AND // &lt;- Outermost Operation
+  ( 
+    (name like 'a%' OR name like 'b%') 
+    AND 
+    (
+      (age &gt;= 16 AND age &lt; 20) 
+      OR 
+      (age &gt;= 24 AND age &lt; 28)) 
+    )</code></pre>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;where(
+    [
+      ["products.totalSaved", "&gt;", 10],
+      ["products.totalBought", "&gt;", 20]
+    ]
+  )
+  -&gt;nestedWhere(
+    [
+      "AND" =&gt; [ // &lt;- Outermost operation
+        [
+          [ "name", "like", "a%" ], "OR", [ "name", "like", "b%" ]
+        ],
+        "AND",
+        [
+          [
+            [ "age", "&gt;=", 16 ], "AND", [ "age", "&lt;", 20 ]
+          ],
+          "OR",
+          [
+            [ "age", "&gt;=", 24 ], "AND", [ "age", "&lt;", 28 ]
+          ]
+        ]
+      ]
+    ]
+  )
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<p>Retrieve all users that have the status &quot;premium&quot;, live in &quot;london&quot; and are between the age of 16 and 20 or older than 30.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;where(
+    [
+      ["status", "=", "premium"]
+    ]
+  )
+  -&gt;nestedWhere(
+    [
+      [ // &lt;- Outermost operation is optional (Default: "AND")
+        [ "city", "=", "london" ]
+        "AND",
+        [
+          [
+            [ "age", "&gt;=", 16 ], "AND", [ "age", "&lt;", 20 ]
+          ],
+          "OR",
+          [ "age", "&gt;", 30 ]
+        ]
+      ]
+    ]
+  )
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
 <h3>in()</h3>
@@ -1231,7 +1338,7 @@ Limit the amount of values in the result set. Has to be greater than 0.</li>
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
 <h2>orderBy()</h2>
-<p>Works as the ORDER BY clause of SQL. With this method you can sort the result. At the moment the result can just be sorted by one field.</p>
+<p>Works as the ORDER BY clause of SQL. With this method you can sort the result. You can use this method to sort the result by one or multiple fields.</p>
 <pre><code class="language-php">function orderBy( array $criteria): QueryBuilder</code></pre>
 <h3>Parameters</h3>
 <ol>
@@ -1240,7 +1347,7 @@ Limit the amount of values in the result set. Has to be greater than 0.</li>
 </li>
 </ol>
 <ul>
-<li>[$fieldName =&gt; $order]
+<li>[ $fieldName =&gt; $order [, ...] ]
 <ul>
 <li>
 <h1>$fieldName: string</h1>
@@ -1260,6 +1367,18 @@ Limit the amount of values in the result set. Has to be greater than 0.</li>
   -&gt;fetch();</code></pre>
 <h4>Result</h4>
 <pre><code>[["_id" =&gt; 13, "name" =&gt; "Anton"], ["_id" =&gt; 2, "name" =&gt; "Berta"], ...]</code></pre>
+<p>Retrieve all users sorted by their name and age.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;orderBy(["name" =&gt; "asc", "age" =&gt; "asc"])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code>[
+  ["_id" =&gt; 13, "name" =&gt; "Anton", "age" =&gt; 20],
+  ["_id" =&gt; 4, "name" =&gt; "Aragon", "age" =&gt; 16], 
+  ["_id" =&gt; 2, "name" =&gt; "Aragon", "age" =&gt; 17], 
+  ...
+]</code></pre>
 <h2>search()</h2>
 <p>Do a fulltext like search against one or multiple fields.</p>
 <pre><code class="language-php">function search(string|array $fields, string $keyword): QueryBuilder</code></pre>
@@ -1287,7 +1406,7 @@ Value that will be searched by.</li>
 <pre><code class="language-php">function join(callable $joinedStore, string $dataPropertyName): QueryBuilder</code></pre>
             <div class="editlink" 
               file="query-builder.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -1400,7 +1519,7 @@ $users = $userQueryBuilder
     -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="cache-management.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -1520,7 +1639,7 @@ $users = $userStore
   -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="join-stores.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -1652,7 +1771,7 @@ $result = $userStore
 // output: [ ["_id" =&gt; 1, "name" =&gt; "Max"], ["_id" =&gt; 4, "name" =&gt; "John"], ... ]</code></pre>
             <div class="editlink" 
               file="query.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -1697,7 +1816,7 @@ $userQuery-&gt;update([
 $usersUpdated = $userQuery-&gt;fetch();</code></pre>
             <div class="editlink" 
               file="advanced.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -1775,7 +1894,7 @@ $usersUpdated = $userQuery-&gt;fetch();</code></pre>
 <p>Either <code>int</code> &gt;= 0 in seconds, where <code>0</code> means infinite, or <code>null</code>.</p>
             <div class="editlink" 
               file="cache.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -1904,7 +2023,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function delete()</code></pre>
             <div class="editlink" 
               file="reference.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -1912,6 +2031,26 @@ Returns the inserted documents with their new and unique _id.</p>
             <h1>🎉 Release Notes</h1>
 <h2>📢 Optimizations, new query methods and more control</h2>
 <p>SleekDB 2.0 comes with so many important optimizations and other features that make it faster and more mature. This is the recommended SleekDB release version for new projects, and if you are using an older version consider upgrading as soon as possible.</p>
+<h3>Changes from 2.1 to 2.2</h3>
+<ul>
+<li>
+<h1>🗃 Order by multiple fields</h1>
+<p>Now the <code>orderBy()</code> method of the QueryBuilder accepts multiple fields to sort the result.<br/>
+Look at the updated orderBy section of the <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a> to learn more.</p>
+</li>
+<li>
+<h1>🔍 New nestedWhere() method</h1>
+<p>With the new added <code>nestedWhere()</code> method you can now use much complexer where statements to filter data.<br/>
+Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a> to learn more.</p>
+</li>
+</ul>
+<h3>Changes from 2.0 to 2.1</h3>
+<ul>
+<li>
+<h1>⚙️ New Configuration</h1>
+<p>With the new <code>primary_key</code> configuration you can now change the _id key name to everything you want. To see how to use the new configuration option visit the <a class="gotoblock" href="/#/configurations">Configurations</a> page.</p>
+</li>
+</ul>
 <h3>Changes from 1.5 to 2.0</h3>
 <ul>
 <li>
@@ -1990,7 +2129,7 @@ Returns the inserted documents with their new and unique _id.</p>
 </ul>
             <div class="editlink" 
               file="release-notes.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -2006,7 +2145,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <p>Please write details about your PR.</p>
             <div class="editlink" 
               file="contributing.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -2019,7 +2158,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <p>Let us know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.</p>
             <div class="editlink" 
               file="contact.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
@@ -2033,7 +2172,7 @@ Returns the inserted documents with their new and unique _id.</p>
 </ul>
             <div class="editlink" 
               file="versions.md" 
-              version="2.0">
+              version="2.2">
             </div>
           </div>
         
