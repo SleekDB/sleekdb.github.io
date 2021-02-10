@@ -1494,7 +1494,7 @@ Value that will be searched by.</li>
 <h2>join()</h2>
 <p>This method is used to join two or multiple stores together.</p>
 <p>For more details please visit the <a class="gotoblock" href="/#/join-stores">Join Stores</a> page.</p>
-<pre><code class="language-php">function join(callable $joinedStore, string $dataPropertyName): QueryBuilder</code></pre>
+<pre><code class="language-php">function join(Closure $joinedStore, string $dataPropertyName): QueryBuilder</code></pre>
             <div class="editlink" 
               file="query-builder.md" 
               version="2.3">
@@ -1646,12 +1646,12 @@ Each user also will get an additional property called &quot;comments&quot;, that
 <h2>join()</h2>
 <p>To join stores we use the join() method of the QueryBuilder object.</p>
 <p>The join() method takes two arguments, those are:</p>
-<pre><code class="language-php">function join(callable $joinFunction, string $dataPropertyName): QueryBuilder</code></pre>
+<pre><code class="language-php">function join(Closure $joinFunction, string $dataPropertyName): QueryBuilder</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$joinFunction: callable</h1>
-<p>This function has to return the <code>result of an executed sub query</code> or prepares a sub query for the join and returns it as a <code>QueryBuilder object</code>.</p>
+<h1>$joinFunction: Closure</h1>
+<p>This anonymous function has to return the <code>result of an executed sub query</code> or prepare a sub query for the join and return it as a <code>QueryBuilder object</code>.</p>
 </li>
 <li>
 <h1>$dataPropertyName: string</h1>
@@ -2046,6 +2046,9 @@ Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function where(array $conditions): QueryBuilder</code></pre>
 <p>Add or-where conditions to filter data.</p>
 <pre><code class="language-php">function orWhere($conditions): QueryBuilder</code></pre>
+<p>Add nested where conditions to filter data.<br/>
+🚨 Deprecated since version 2.3, use <code>where</code> and <code>orWhere</code> instead</p>
+<pre><code class="language-php">function nestedWhere($conditions): QueryBuilder</code></pre>
 <p>Add &quot;in&quot; condition to filter data.</p>
 <pre><code class="language-php">function in(string $fieldName, array $values = []): QueryBuilder</code></pre>
 <p>Add &quot;not in&quot; condition to filter data.</p>
@@ -2059,7 +2062,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <p>Do a fulltext like search against one or more fields.</p>
 <pre><code class="language-php">function search(string|array $field, string $keyword): QueryBuilder</code></pre>
 <p>Join current store with another one. Can be used multiple times to join multiple stores.</p>
-<pre><code class="language-php">function join(callable $joinFunction, string $dataPropertyName): QueryBuilder</code></pre>
+<pre><code class="language-php">function join(Closure $joinFunction, string $dataPropertyName): QueryBuilder</code></pre>
 <p>Return distinct values.</p>
 <pre><code class="language-php">function distinct(string|array $fields = []): QueryBuilder</code></pre>
 <p>Use caching for current query</p>
