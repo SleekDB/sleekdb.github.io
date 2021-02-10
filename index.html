@@ -60,7 +60,7 @@
     href="#/versions"
     title="Find all versions of SleekDB"
     class="menu gotoblock"
-    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.3</a
+    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.4</a
   >
   <a
     class="menu"
@@ -196,7 +196,7 @@
 <p>Join our <a href="https://discord.gg/WJGqUFPtZw" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Discord</a> channel. We would love to know about you and your feedbacks.</p>
             <div class="editlink" 
               file="home.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -306,7 +306,7 @@
 </ul>
             <div class="editlink" 
               file="features.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -338,7 +338,7 @@ Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/p
 <pre><code class="language-sh">composer require rakibtg/sleekdb dev-dev</code></pre>
             <div class="editlink" 
               file="installation.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -409,7 +409,7 @@ print_r($allNews);</code></pre>
 </blockquote>
             <div class="editlink" 
               file="getting-started.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -452,7 +452,7 @@ $newsStore = new Store('news', $dataDir);</code></pre>
 <pre><code class="language-php">$userStore-&gt;deleteStore();</code></pre>
             <div class="editlink" 
               file="managing-store.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -509,7 +509,7 @@ Available caching method's are:</p>
 SleekDB will then use that key instead of the default <code>_id</code> key.</p>
             <div class="editlink" 
               file="configurations.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -604,7 +604,7 @@ $users = [
 $users = $userStore-&gt;insertMany($users);</code></pre>
             <div class="editlink" 
               file="insert-data.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -835,7 +835,7 @@ Example: c[a-b]t finds cat and cbt</li>
    );</code></pre>
             <div class="editlink" 
               file="fetch-data.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -896,7 +896,7 @@ foreach($users as $key =&gt; $user){
 $userStore-&gt;update( $users );</code></pre>
             <div class="editlink" 
               file="edit-data.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -1035,7 +1035,7 @@ $deletedUsers = $userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"], Query::
 // Returns true</code></pre>
             <div class="editlink" 
               file="delete-data.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -1049,8 +1049,8 @@ $deletedUsers = $userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"], Query::
 <li>where</li>
 <li>orWhere</li>
 <li><del>nestedWhere</del> ( 🚨 Deprecated since version 2.3, use where and orWhere instead! )</li>
-<li>in</li>
-<li>notIn</li>
+<li><del>in</del> ( 🚨 Deprecated since version 2.3, use where and orWhere instead! )</li>
+<li><del>notIn</del>  ( 🚨 Deprecated since version 2.3, use where and orWhere instead! )</li>
 <li>select</li>
 <li>except</li>
 <li>distinct</li>
@@ -1506,7 +1506,10 @@ The operation is used to connect multiple conditions.</p>
   )
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
-<h3>in()</h3>
+<h3><del>in()</del></h3>
+<blockquote>
+<h3>🚨 Deprecated since version 2.3, use <code>where</code> and <code>orWhere</code> instead!</h3>
+</blockquote>
 <p>in(...) works as the IN clause of SQL. SleekDB supports multiple IN as object chain for different fields.</p>
 <pre><code class="language-php">in(string $fieldName, array $values = []): QueryBuilder</code></pre>
 <h3>Parameters</h3>
@@ -1533,7 +1536,10 @@ The operation is used to connect multiple conditions.</p>
   -&gt;in("age", [18, 20, 23, 30])
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
-<h2>notIn()</h2>
+<h2><del>notIn()</del></h2>
+<blockquote>
+<h3>🚨 Deprecated since version 2.3, use <code>where</code> and <code>orWhere</code> instead!</h3>
+</blockquote>
 <p>notIn(...) works as the opposite of in() method.</p>
 <p>It will filter out all documents that has particular data items from the given array.
 SleekDB supports multiple notIn as object chain for different fields.</p>
@@ -1720,7 +1726,7 @@ Value that will be searched by.</li>
 <pre><code class="language-php">function join(Closure $joinedStore, string $dataPropertyName): QueryBuilder</code></pre>
             <div class="editlink" 
               file="query-builder.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -1835,7 +1841,7 @@ $users = $userQueryBuilder
     -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="cache-management.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -1957,7 +1963,7 @@ $users = $userStore
   -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="join-stores.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -2091,7 +2097,7 @@ $result = $userStore
 // output: [ ["_id" =&gt; 1, "name" =&gt; "Max"], ["_id" =&gt; 4, "name" =&gt; "John"], ... ]</code></pre>
             <div class="editlink" 
               file="query.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -2136,7 +2142,7 @@ $userQuery-&gt;update([
 $usersUpdated = $userQuery-&gt;fetch();</code></pre>
             <div class="editlink" 
               file="advanced.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -2214,7 +2220,7 @@ $usersUpdated = $userQuery-&gt;fetch();</code></pre>
 <p>Either <code>int</code> &gt;= 0 in seconds, where <code>0</code> means infinite, or <code>null</code>.</p>
             <div class="editlink" 
               file="cache.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -2346,7 +2352,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function delete()</code></pre>
             <div class="editlink" 
               file="reference.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -2354,12 +2360,21 @@ Returns the inserted documents with their new and unique _id.</p>
             <h1>🎉 Release Notes</h1>
 <h2>📢 Optimizations, new query methods and more control</h2>
 <p>SleekDB 2.0 comes with so many important optimizations and other features that make it faster and more mature. This is the recommended SleekDB release version for new projects, and if you are using an older version consider upgrading as soon as possible.</p>
+<h3>Changes from 2.3 to 2.4</h3>
+<ul>
+<li>
+<h1>🚨 Deprecated in() &amp; notIn() methods</h1>
+<p>They will be removed with the next major update.<br/>
+Please <strong>use new conditions <code>"in"</code> and <code>"not in"</code> instead</strong>.<br/>
+Available with the <code>findBy()</code>, <code>findOneBy</code>, <code>deleteBy()</code>, <code>where()</code> and <code>orWhere()</code> methods since version 2.3.</p>
+</li>
+</ul>
 <h3>Changes from 2.2 to 2.3</h3>
 <ul>
 <li>
 <h1>🚨 Deprecated nestedWhere() method</h1>
-<p>We are sorry to deprecate the <code>nestedWhere()</code> method so short after it's release.
-It will be removed with the next major update.
+<p>We are sorry to deprecate the <code>nestedWhere()</code> method so short after it's release.<br/>
+It will be removed with the next major update.<br/>
 Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
 </li>
 <li>
@@ -2374,7 +2389,7 @@ Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
     </ul>
   </td>
   <td>
-    <a href="#/fetch-data">Fetch Data documentation</a>
+    <a class="gotoblock" href="#/fetch-data">Fetch Data documentation</a>
   </td>
 </tr>
 <tr>
@@ -2384,7 +2399,7 @@ Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
     </ul>
   </td>
   <td>
-    <a href="#/delete-data">Delete Data documentation</a>
+    <a class="gotoblock" href="#/delete-data">Delete Data documentation</a>
   </td>
 </tr>
 <tr>
@@ -2395,7 +2410,7 @@ Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
     </ul>
   </td>
   <td>
-    <a href="#/query-builder">QueryBuilder documentation</a>
+    <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a>
   </td>
 </tr>
 </table>
@@ -2408,40 +2423,6 @@ Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
 <li><code>not in</code></li>
 </ul>
 <p>These new conditions can now be used with the <code>findBy()</code>, <code>findOneBy()</code>, <code>deleteBy()</code>, <code>where()</code> and <code>orWhere()</code> methods!</p>
-<table>
-  <tr>
-    <td>
-      <ul>
-        <li><code>findBy()</code></li>
-        <li><code>findOneBy()</code></li>
-      </ul>
-    </td>
-    <td>
-      <a href="#/fetch-data">Fetch Data documentation</a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <ul>
-        <li><code>deleteBy()</code></li>
-      </ul>
-    </td>
-    <td>
-      <a href="#/delete-data">Delete Data documentation</a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <ul>
-        <li><code>where()</code></li>
-        <li><code>orWhere()</code></li>
-      </ul>
-    </td>
-    <td>
-      <a href="#/query-builder">QueryBuilder documentation</a>
-    </td>
-  </tr>
-</table>
 </li>
 <li>
 <h1>💡 Logical connection</h1>
@@ -2547,7 +2528,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="release-notes.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -2563,7 +2544,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Please write details about your PR.</p>
             <div class="editlink" 
               file="contributing.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
@@ -2576,14 +2557,15 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Let us know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.</p>
             <div class="editlink" 
               file="contact.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
           <div class="intro" id="block_versions">
             <h1>Versions</h1>
 <ul>
-<li><strong><a href="/">2.3</a> (Actively Maintained Version)</strong></li>
+<li><strong><a href="/">2.4</a> (Actively Maintained Version)</strong></li>
+<li><strong><a href="/versions/2.3/">2.3</a></strong></li>
 <li><strong><a href="/versions/2.2/">2.2</a></strong></li>
 <li><strong><a href="/versions/2.1/">2.1</a></strong></li>
 <li><strong><a href="/versions/2.0/">2.0</a></strong></li>
@@ -2591,7 +2573,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="versions.md" 
-              version="2.3">
+              version="2.4">
             </div>
           </div>
         
