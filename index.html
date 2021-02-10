@@ -2358,14 +2358,47 @@ Returns the inserted documents with their new and unique _id.</p>
 <ul>
 <li>
 <h1>🚨 Deprecated nestedWhere() method</h1>
-<p>We are sorry to deprecate the <code>nestedWhere()</code> method so short after it's release.<br/>
-It will be removed with the next major update.<br/>
+<p>We are sorry to deprecate the <code>nestedWhere()</code> method so short after it's release.
+It will be removed with the next major update.
 Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
 </li>
 <li>
-<h1>🌟 where() and orWhere() methods improved</h1>
-<p>The <code>where()</code> and <code>orWhere()</code> methods now can handle nested statements!<br/>
-Please check the <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a> for more details.</p>
+<h1>🌟 Nested where statements everywhere!</h1>
+<p>The <code>findBy()</code>, <code>findOneBy</code>, <code>deleteBy()</code>, <code>where()</code> and <code>orWhere()</code> methods now can handle nested statements!</p>
+<table>
+<tr>
+  <td>
+    <ul>
+      <li><code>findBy()</code></li>
+      <li><code>findOneBy()</code></li>
+    </ul>
+  </td>
+  <td>
+    <a href="#/fetch-data">Fetch Data documentation</a>
+  </td>
+</tr>
+<tr>
+  <td>
+    <ul>
+      <li><code>deleteBy()</code></li>
+    </ul>
+  </td>
+  <td>
+    <a href="#/delete-data">Delete Data documentation</a>
+  </td>
+</tr>
+<tr>
+  <td>
+    <ul>
+      <li><code>where()</code></li>
+      <li><code>orWhere()</code></li>
+    </ul>
+  </td>
+  <td>
+    <a href="#/query-builder">QueryBuilder documentation</a>
+  </td>
+</tr>
+</table>
 </li>
 <li>
 <h1>✨ New conditions</h1>
@@ -2374,8 +2407,46 @@ Please check the <a class="gotoblock" href="#/query-builder">QueryBuilder docume
 <li><code>in</code></li>
 <li><code>not in</code></li>
 </ul>
-<p>These new conditions can now be used with the <code>where()</code> and <code>orWhere()</code> methods!<br/>
-Please check the <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a> for more details.</p>
+<p>These new conditions can now be used with the <code>findBy()</code>, <code>findOneBy()</code>, <code>deleteBy()</code>, <code>where()</code> and <code>orWhere()</code> methods!</p>
+<table>
+  <tr>
+    <td>
+      <ul>
+        <li><code>findBy()</code></li>
+        <li><code>findOneBy()</code></li>
+      </ul>
+    </td>
+    <td>
+      <a href="#/fetch-data">Fetch Data documentation</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li><code>deleteBy()</code></li>
+      </ul>
+    </td>
+    <td>
+      <a href="#/delete-data">Delete Data documentation</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li><code>where()</code></li>
+        <li><code>orWhere()</code></li>
+      </ul>
+    </td>
+    <td>
+      <a href="#/query-builder">QueryBuilder documentation</a>
+    </td>
+  </tr>
+</table>
+</li>
+<li>
+<h1>💡 Logical connection</h1>
+<p>All condition methods are now logically connected and the order when using them is now important.<br/>
+See <a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/114" target="_blank">#114</a> for more details.</p>
 </li>
 </ul>
 <h3>Changes from 2.1 to 2.2</h3>
