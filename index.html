@@ -183,15 +183,15 @@
           <div class="intro" id="block_home">
             <h1>SleekDB - A NoSQL Database made using PHP</h1>
 <p>SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files.</p>
-<p>It is not designed to handle heavy-load IO operations, it is designed to have a simple solution where all we need a database for managing a few gigabytes of data. You can think of it as a database for low to medium operation loads.</p>
+<p>It is not designed to handle heavy-load IO operations, it is designed to have a simple solution where all we need a database for is managing a few gigabytes of data. You can think of it as a database for low to medium operation loads.</p>
 <h2>😎 Manage Static Data With Ease</h2>
 <p>SleekDB works great as the database engine for low to medium traffic websites. It makes simple database effortless.</p>
 <h2>📝 Your Dynamic Website Become Static</h2>
 <p>SleekDB will cache all query data by default, in a way that would make any dynamic site as fast as static sites.</p>
 <h2>🗄 Flat File Database</h2>
-<p>SleekDB is also a flat file database, but instead of a single file it stores data in multiple JSON files. That allows it to have a better concurrency support comparing to a FlatFile database system. SleekDB can be compared with other flat file database systems because the final query output will be cached and later reused from a single file instead of traversing all the available files.</p>
+<p>SleekDB is also a flat file database, but instead of a single file it stores data in multiple JSON files. That allows it to have a better concurrency support compared to fully FlatFile database systems. SleekDB can be compared with other flat file database systems because the final query output will be cached and later reused from a single file instead of traversing all the available files.</p>
 <h2>🥳 You Are Not Alone!</h2>
-<p>SleekDB is being used with many websites and applications which are in production right now. The core team consists of two developer, they are actively contributing to the development of SleekDB Database.</p>
+<p>SleekDB is being used with many websites and applications which are in production right now. The core team consists of two developers. They actively maintain, contribute to, and develop the SleekDB Database.</p>
 <h2>👋 Say Hi!</h2>
 <p>Join our <a href="https://discord.gg/WJGqUFPtZw" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Discord</a> channel. We would love to know about you and your feedbacks.</p>
             <div class="editlink" 
@@ -204,15 +204,15 @@
             <h1>Features</h1>
 <ul>
 <li>
-<h1>Lightweight, faster</h1>
+<h1>⚡ Lightweight &amp; Fast</h1>
 <p>Stores data in plain-text utilizing JSON format, no binary conversion needed to store or fetch the data. Default query cache layer.</p>
 </li>
 <li>
-<h1>Schema free data storage</h1>
+<h1>🔆 Schema free data storage</h1>
 <p>SleekDB does not require any schema, so you can insert any types of data you want.</p>
 </li>
 <li>
-<h1>Query on nested properties</h1>
+<h1>🔍 Query on nested properties</h1>
 <p>As it supports schema free data, so you can filter and use conditions on nested properties of the JSON documents!</p>
 <p>If you write this where clause:</p>
 <pre><code class="language-php">where( 'post.author.role', '=', 'admin' )</code></pre>
@@ -226,16 +226,16 @@
 }</code></pre>
 </li>
 <li>
-<h1>Dependency free, only needs PHP to run</h1>
+<h1>✨ Dependency free, only needs PHP to run</h1>
 <p>Supports PHP 7+. Requires no third-party plugins or software.</p>
 </li>
 <li>
-<h1>Default caching layer</h1>
+<h1>🚀 Default caching layer</h1>
 <p>SleekDB will serve data from cache by default and regenerate cache automatically! Query results will be cached and later reused from a single file instead of traversing all the available files.</p>
 </li>
 <li>
-<h1>Rich Conditions and Filters</h1>
-<p>Use multiple conditional comparisons, text search, sorting on multiple properties and nested properties. Some useful methods are:</p>
+<h1>🌈 Rich Conditions and Filters</h1>
+<p>Use multiple conditional comparisons, text search, sorting on multiple properties and nested properties.</p>
 <table>
 <tbody>
   <tr>
@@ -246,7 +246,7 @@
         <li>select</li>
         <li>except</li>
         <li>in</li>
-        <li>notIn</li>
+        <li>not in</li>
       </ul>
     </td>
     <td valign="top">
@@ -269,32 +269,38 @@
         <li>delete</li>
       </ul>
     </td>
+    <td valign="top">
+      <ul>
+        <li>like</li>
+        <li>not like</li>
+      </ul>
+    </td>
   </tr>
 </tbody>
 </table>
 </li>
 <li>
-<h1>Process data on demand</h1>
+<h1>👍 Process data on demand</h1>
 <p>SleekDB does not require any background process or network protocol in order to process data when you use it in a PHP project. All data for a query will be fetched at runtime within the same PHP process.</p>
 </li>
 <li>
-<h1>Runs everywhere</h1>
+<h1>😍 Runs everywhere</h1>
 <p>Runs perfectly on shared-servers or VPS too.</p>
 </li>
 <li>
-<h1>Easy to learn and implement</h1>
+<h1>🍰 Easy to learn and implement</h1>
 <p>SleekDB provides a very simple elegant API to handle all of your data.</p>
 </li>
 <li>
-<h1>Easily import/export or backup data.</h1>
+<h1>🍰 Easily import/export or backup data.</h1>
 <p>SleekDB use files to store information. That makes tasks like backup, import and export very easy.</p>
 </li>
 <li>
-<h1>Actively maintained</h1>
+<h1>💪 Actively maintained</h1>
 <p>SleekDB is created by <a rel="noopener nofollow" href="https://twitter.com/rakibtg" target="_blank">@rakibtg</a> who is using it in various types of applications which are in production right now. Our other contributor and active maintainer is <a rel="noopener nofollow" href="https://www.goodsoft.de" target="_blank">Timucin</a> who is making SleekDB much better in terms of code quality and new features.</p>
 </li>
 <li>
-<h1>Support</h1>
+<h1>💌 Support</h1>
 <p>For support and other requirements <a class="gotoblock" href="/#/contact">contact</a>.</p>
 </li>
 </ul>
@@ -646,18 +652,74 @@ $users = $userStore-&gt;insertMany($users);</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$criteria: array</h1>
-<p>One or multiple where clauses.</p>
+<h1>$criteria</h1>
+<p>One or multiple where conditions.<br/>
+The criteria can be nested as much as needed.</p>
+</li>
+</ol>
 <ul>
-<li>[[&quot;city&quot;, &quot;=&quot;, &quot;london&quot;], [&quot;age&quot;, &quot;&gt;&quot;, 18]]<br/>
-<code>WHERE city = "london" AND age &gt; 18</code></li>
+<li>[$fieldName, $condition, $value]</li>
+<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
+<li>
+<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
+<ul>
+<li>
+<h1>$fieldName: string</h1>
+<p>The field name argument is the property that we want to check in our data object.</p>
+<p>As our data object is basically a JSON document so it could have nested properties.</p>
+<p>To target nested properties we use a single dot between the property/field name.</p>
+<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
+</li>
+<li>
+<h1>$condition: string</h1>
+<p>To apply the comparison filters we use this argument.</p>
+<p>Allowed conditional operators are:</p>
+<ul>
+<li><code>=</code> Match equal against data.</li>
+<li><code>!=</code> Match not equal against data.</li>
+<li><code>&gt;</code> Match greater than against data.</li>
+<li><code>&gt;=</code> Match greater equal against data.</li>
+<li><code>&lt;</code> Match less than against data.</li>
+<li><code>&lt;=</code> Match less equal against data.</li>
+<li><code>like</code> Match using wildcards.</li>
+<li><code>not like</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
+Supported wildcards:
+<ul>
+<li><code>%</code> Represents zero or more characters<br/>
+Example: bl% finds bl, black, blue, and blob</li>
+<li><code>_</code> Represents a single character<br/>
+Example: h_t finds hot, hat, and hit</li>
+<li><code>[]</code> Represents any single character within the brackets<br/>
+Example: h[oa]t finds hot and hat, but not hit</li>
+<li><code>^</code> Represents any character not in the brackets<br/>
+Example: h[^oa]t finds hit, but not hot and hat</li>
+<li><code>-</code> Represents a range of characters<br/>
+Example: c[a-b]t finds cat and cbt</li>
+</ul></li>
+<li><code>in</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>not in</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
 </ul>
 </li>
 <li>
+<h1>$value</h1>
+<p>Data that will be checked against the property value of the JSON documents.</p>
+</li>
+<li>
+<h1>OPERATION: string</h1>
+<p>It is used to connect multiple conditions.<br/>
+The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
+Default: <code>AND</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>
 <h1>$orderBy: array</h1>
-<p>Order in which the results will be sort.</p>
+<p>Sort the result by one or multiple fields.</p>
 <ul>
 <li>[&quot;name&quot; =&gt; &quot;asc&quot;]</li>
+<li>[&quot;name&quot; =&gt; &quot;asc&quot;, &quot;age&quot; =&gt; &quot;desc&quot;]</li>
 </ul>
 </li>
 <li>
@@ -671,28 +733,106 @@ $users = $userStore-&gt;insertMany($users);</code></pre>
 </ol>
 <h3>Return value</h3>
 <p>Returns found <code>documents in an array</code> or <code>null</code> if nothing is found.</p>
-<h3>Example</h3>
+<h3>Example 1</h3>
 <pre><code class="language-php">$news = $newsStore-&gt;findBy(["author", "=", "John"], ["title" =&gt; "asc"], 10, 20);
 // First 20 documents skipped, limited to 10 and ascending sort by title where author is John.</code></pre>
-<h4>Example result</h4>
-<pre><code>[ ["_id" =&gt; 12, "title" =&gt; "Best Database"], ["_id" =&gt; 4, "title" =&gt; "Why SleekDB"], ...]</code></pre>
+<h4>Result</h4>
+<pre><code>[ ["_id" =&gt; 12, ... "title" =&gt; "Best Database"], ["_id" =&gt; 4, ... "title" =&gt; "Why SleekDB"], ...]</code></pre>
+<h3>Example 2</h3>
+<p>More complex where clause.</p>
+<pre><code class="language-sql">WHERE ( author = "John" OR author = "Mark" ) AND ( topic like "School%" OR topic like "Work%" )</code></pre>
+<pre><code class="language-php">$news = $newsStore-&gt;findBy(
+      [
+         [
+            ["author", "=", "John"], "OR", ["author", "=", "Mark"],
+         ],
+         "AND", // &lt;-- Optional
+         [
+            ["topic", "like", "School%"], "OR", ["topic", "like", "Work%"]
+         ]
+      ],
+      ["title" =&gt; "asc"],
+      10,
+      20
+   );</code></pre>
 <p><br/></p>
 <h2>Get one document.</h2>
 <pre><code class="language-php">function findOneBy(array $criteria): array|null</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$criteria: array</h1>
-<p>One or multiple where clauses. * [[&quot;city&quot;, &quot;=&quot;, &quot;london&quot;], [&quot;age&quot;, &quot;&gt;&quot;, 18]]<br/><code>WHERE city = "london" AND age &gt; 18</code></p>
+<h1>$criteria</h1>
+<p>One or multiple where conditions.<br/>
+The criteria can be nested as much as needed.</p>
 </li>
 </ol>
+<ul>
+<li>[$fieldName, $condition, $value]</li>
+<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
+<li>
+<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
+<ul>
+<li>
+<h1>$fieldName: string</h1>
+<p>The field name argument is the property that we want to check in our data object.</p>
+<p>As our data object is basically a JSON document so it could have nested properties.</p>
+<p>To target nested properties we use a single dot between the property/field name.</p>
+<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
+</li>
+<li>
+<h1>$condition: string</h1>
+<p>To apply the comparison filters we use this argument.</p>
+<p>Allowed conditional operators are:</p>
+<ul>
+<li><code>=</code> Match equal against data.</li>
+<li><code>!=</code> Match not equal against data.</li>
+<li><code>&gt;</code> Match greater than against data.</li>
+<li><code>&gt;=</code> Match greater equal against data.</li>
+<li><code>&lt;</code> Match less than against data.</li>
+<li><code>&lt;=</code> Match less equal against data.</li>
+<li><code>like</code> Match using wildcards.</li>
+<li><code>not like</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
+Supported wildcards:
+<ul>
+<li><code>%</code> Represents zero or more characters<br/>
+Example: bl% finds bl, black, blue, and blob</li>
+<li><code>_</code> Represents a single character<br/>
+Example: h_t finds hot, hat, and hit</li>
+<li><code>[]</code> Represents any single character within the brackets<br/>
+Example: h[oa]t finds hot and hat, but not hit</li>
+<li><code>^</code> Represents any character not in the brackets<br/>
+Example: h[^oa]t finds hit, but not hot and hat</li>
+<li><code>-</code> Represents a range of characters<br/>
+Example: c[a-b]t finds cat and cbt</li>
+</ul></li>
+<li><code>in</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>not in</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h3>Return value</h3>
 <p>Returns <code>one document</code> or <code>null</code> if nothing is found.</p>
-<h3>Examples</h3>
+<h3>Example 1</h3>
 <pre><code class="language-php">$news = $newsStore-&gt;findOneBy(["author", "=", "Mike"]);
 // Returns one news article of the author called Mike</code></pre>
-<h4>Example result</h4>
+<h4>Result</h4>
 <pre><code>["_id" =&gt; 18, "title" =&gt; "SleekDB is super fast", "author" =&gt; "Mike"]</code></pre>
+<h3>Example 2</h3>
+<p>More complex where clause.</p>
+<pre><code class="language-sql">WHERE ( author = "John" OR author = "Mark" ) AND ( topic like "School%" OR topic like "Work%" )</code></pre>
+<pre><code class="language-php">$news = $newsStore-&gt;findOneBy(
+      [
+         [
+            ["author", "=", "John"], "OR", ["author", "=", "Mark"],
+         ],
+         "AND", // &lt;-- Optional
+         [
+            ["topic", "like", "School%"], "OR", ["topic", "like", "Work%"]
+         ]
+      ]
+   );</code></pre>
             <div class="editlink" 
               file="fetch-data.md" 
               version="2.3">
@@ -776,12 +916,68 @@ $userStore-&gt;update( $users );</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$criteria: array</h1>
-<p>One or multiple where conditions</p>
+<h1>$criteria</h1>
+<p>One or multiple where conditions.<br/>
+The criteria can be nested as much as needed.</p>
+</li>
+</ol>
 <ul>
-<li>[[&quot;name&quot;, &quot;=&quot;, &quot;John&quot;], [&quot;age&quot;, &quot;&gt;&quot;, 18]]<br/><code>WHERE name = "John" AND age &gt; 18</code></li>
+<li>[$fieldName, $condition, $value]</li>
+<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
+<li>
+<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
+<ul>
+<li>
+<h1>$fieldName: string</h1>
+<p>The field name argument is the property that we want to check in our data object.</p>
+<p>As our data object is basically a JSON document so it could have nested properties.</p>
+<p>To target nested properties we use a single dot between the property/field name.</p>
+<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
+</li>
+<li>
+<h1>$condition: string</h1>
+<p>To apply the comparison filters we use this argument.</p>
+<p>Allowed conditional operators are:</p>
+<ul>
+<li><code>=</code> Match equal against data.</li>
+<li><code>!=</code> Match not equal against data.</li>
+<li><code>&gt;</code> Match greater than against data.</li>
+<li><code>&gt;=</code> Match greater equal against data.</li>
+<li><code>&lt;</code> Match less than against data.</li>
+<li><code>&lt;=</code> Match less equal against data.</li>
+<li><code>like</code> Match using wildcards.</li>
+<li><code>not like</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
+Supported wildcards:
+<ul>
+<li><code>%</code> Represents zero or more characters<br/>
+Example: bl% finds bl, black, blue, and blob</li>
+<li><code>_</code> Represents a single character<br/>
+Example: h_t finds hot, hat, and hit</li>
+<li><code>[]</code> Represents any single character within the brackets<br/>
+Example: h[oa]t finds hot and hat, but not hit</li>
+<li><code>^</code> Represents any character not in the brackets<br/>
+Example: h[^oa]t finds hit, but not hot and hat</li>
+<li><code>-</code> Represents a range of characters<br/>
+Example: c[a-b]t finds cat and cbt</li>
+</ul></li>
+<li><code>in</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>not in</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
 </ul>
 </li>
+<li>
+<h1>$value</h1>
+<p>Data that will be checked against the property value of the JSON documents.</p>
+</li>
+<li>
+<h1>OPERATION: string</h1>
+<p>It is used to connect multiple conditions.<br/>
+The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
+Default: <code>AND</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
 <li>
 <h1>$returnOption: int</h1>
 <p>Different return options provided with constants of the <code>Query</code> class</p>
@@ -794,15 +990,33 @@ $userStore-&gt;update( $users );</code></pre>
 </ol>
 <h3>Return value</h3>
 <p>This method returns based on the given return option either <code>boolean</code>, <code>int</code> or <code>array</code>.</p>
-<h3>Examples</h3>
+<h3>Example 1</h3>
 <p>Lets delete all user whose name is &quot;Joshua Edwards&quot;</p>
-<pre><code class="language-php">$userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards']);
+<pre><code class="language-php">$userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"]);
 // Returns true</code></pre>
 <p>Lets delete all user whose name is &quot;Joshua Edwards&quot; and retrieve deleted documents.</p>
 <pre><code class="language-php">use SleekDB/Query;
-$userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RESULTS);</code></pre>
+$deletedUsers = $userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"], Query::DELETE_RETURN_RESULTS);</code></pre>
 <h4>Example result</h4>
 <pre><code>[ ["_id" =&gt; 12, "name" =&gt; "Joshua Edwards"], ["_id" =&gt; 14, "name" =&gt; "Joshua Edwards"], ... ]</code></pre>
+<h3>Example 2</h3>
+<p>Deletion with more complex where statement.</p>
+<pre><code class="language-sql">WHERE ( name = "Joshua Edwards" OR name = "Mark Schiffer" ) AND ( age &gt; 30 OR age &lt; 10 )</code></pre>
+<pre><code class="language-php">$userStore-&gt;deleteBy(
+    [
+      [
+        ["name", "=", "Joshua Edwards"],
+        "OR",
+        ["name", "=", "Mark Shiffer"],
+      ],
+      "AND", // &lt;-- Optional
+      [
+        ["age", "&gt;", 30],
+        "OR",
+        ["age", "&lt;", 10]
+      ]
+    ]
+  );</code></pre>
 <p><br/></p>
 <h2>Delete one document with its _id</h2>
 <p>This method is especially fast because SleekDB uses the _id to directly delete the document and does not traverse through all files.</p>
@@ -881,7 +1095,8 @@ $userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RE
 <ol>
 <li>
 <h1>$criteria</h1>
-<p>One or multiple where conditions</p>
+<p>One or multiple where conditions.<br/>
+The criteria can be nested as much as needed.</p>
 </li>
 </ol>
 <ul>
@@ -940,7 +1155,7 @@ Default: <code>AND</code></p>
 </ul>
 </li>
 </ul>
-<h3>Examples</h3>
+<h3>Example 1</h3>
 <p>To only get the user whose country is equal to &quot;England&quot; we would query like this:</p>
 <pre><code class="language-php">// inline
 $users = $userStore
@@ -957,6 +1172,7 @@ $userQueryBuilder-&gt;where( [ "name", "=", "Joshua Edwards" ] );
 
 // executing the query
 $users = $userQueryBuilder-&gt;getQuery()-&gt;fetch();</code></pre>
+<h3>Example 2</h3>
 <p>You can also use multiple <code>where</code> conditions.</p>
 <p>Retrieve all users that have <code>products.totalSaved &gt; 10 AND products.totalBought &gt; 20</code>.</p>
 <pre><code class="language-php">// inline &amp; using where method multiple times
@@ -991,6 +1207,7 @@ $userQueryBuilder-&gt;where(
 // execute query
 $users = $userQueryBuilder-&gt;getQuery()-&gt;fetch();
 </code></pre>
+<h3>Example 3</h3>
 <p>Retrieve all users that have the status &quot;premium&quot;, live in &quot;london&quot; or &quot;new york&quot; and are between the age of 16 and 20 or older than 30.</p>
 <pre><code class="language-sql">// example in sql
 WHERE 
@@ -1027,7 +1244,8 @@ WHERE
 <ol>
 <li>
 <h1>$criteria</h1>
-<p>One or multiple where conditions</p>
+<p>One or multiple where conditions.<br/>
+The criteria can be nested as much as needed.</p>
 </li>
 </ol>
 <ul>
@@ -1086,7 +1304,7 @@ Default: <code>AND</code></p>
 </ul>
 </li>
 </ul>
-<h3>Examples</h3>
+<h3>Example 1</h3>
 <p>Retrieve all users that have <code>(products.totalSaved &gt; 10 AND products.totalBought &gt; 20) OR products.shipped = 1</code></p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;where(
@@ -1098,6 +1316,7 @@ Default: <code>AND</code></p>
   -&gt;orWhere( ["products.shipped", "=", 1] )
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
+<h3>Example 2</h3>
 <p>Retrieve all users that have <code>products.totalSaved &gt; 10 OR (products.totalBought &gt; 20 AND products.shipped = 1) OR totalBought = 0</code></p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;where( ["products.totalSaved", "&gt;", 10] )
@@ -1110,6 +1329,7 @@ Default: <code>AND</code></p>
   -&gt;orWhere( ["products.totalBought", "=", 0] )
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
+<h3>Example 3</h3>
 <p>Retrieve all users that have the status &quot;premium&quot; or live in &quot;london&quot; or &quot;new york&quot; and are between the age of 16 and 20 or older than 30.</p>
 <pre><code class="language-sql">// example in sql
 WHERE 
@@ -1156,7 +1376,8 @@ WHERE
 <ol>
 <li>
 <h1>$conditions</h1>
-<p>Multiple where conditions</p>
+<p>Multiple where conditions.<br/>
+The criteria can be nested as much as needed.</p>
 </li>
 </ol>
 <ul>
@@ -1219,7 +1440,7 @@ The operation is used to connect multiple conditions.</p>
 </ul>
 </li>
 </ul>
-<h3>Examples</h3>
+<h3>Example 1</h3>
 <p>Retrieve all users whos name start with &quot;a&quot; or &quot;b&quot;, that have products.totalSaved &gt; 10 and products totalBought &gt; 10 and are between 16 and 20 or 24 and 28 years old.</p>
 <pre><code class="language-sql">WHERE 
   (products.totalSaved &gt; 10 AND products.totalBought &gt; 20) 
@@ -1260,6 +1481,7 @@ The operation is used to connect multiple conditions.</p>
   )
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
+<h3>Example 2</h3>
 <p>Retrieve all users that have the status &quot;premium&quot;, live in &quot;london&quot; and are between the age of 16 and 20 or older than 30.</p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;where(
@@ -1351,7 +1573,7 @@ SleekDB supports multiple notIn as object chain for different fields.</p>
 <p>Specify specific fields to output.</p>
 </li>
 </ol>
-<h3>Examples</h3>
+<h3>Example</h3>
 <p>Retrieve just the name of all users.</p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;select(['name'])
@@ -1367,7 +1589,7 @@ SleekDB supports multiple notIn as object chain for different fields.</p>
 <p>Specify specific fields to exclude from the output.</p>
 </li>
 </ol>
-<h3>Examples</h3>
+<h3>Example</h3>
 <p>Retrieve all information of an user except its _id and name.</p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;except(["_id", "name"])
@@ -1384,7 +1606,7 @@ SleekDB supports multiple notIn as object chain for different fields.</p>
 <p>Specify one or multiple fields you want to be distinct.</p>
 </li>
 </ol>
-<h3>Examples</h3>
+<h3>Example</h3>
 <p>Retrieve all users, but just the first user if there is another one with the same name.</p>
 <pre><code class="language-php">// providing a string
 $distinctUsers = $userQueryBuilder
@@ -1407,7 +1629,7 @@ $distinctUsers = $userQueryBuilder
 <p>The value how many documents should be skipped.</p>
 </li>
 </ol>
-<h3>Examples</h3>
+<h3>Example</h3>
 <p>Retrieve all users except the first 10 found.</p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;skip(10)
@@ -1421,7 +1643,7 @@ $distinctUsers = $userQueryBuilder
 <li>$limit: int
 Limit the amount of values in the result set. Has to be greater than 0.</li>
 </ol>
-<h3>Examples</h3>
+<h3>Example</h3>
 <p>Retrieve just the first ten users.</p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;limit(10)
@@ -1437,7 +1659,8 @@ Limit the amount of values in the result set. Has to be greater than 0.</li>
 </li>
 </ol>
 <ul>
-<li>[ $fieldName =&gt; $order [, ...] ]
+<li>[ $fieldName =&gt; $order ]</li>
+<li>[ $fieldName =&gt; $order, $fieldName =&gt; $order, ... ]
 <ul>
 <li>
 <h1>$fieldName: string</h1>
@@ -1449,7 +1672,7 @@ Limit the amount of values in the result set. Has to be greater than 0.</li>
 </li>
 </ul></li>
 </ul>
-<h3>Examples</h3>
+<h3>Example 1</h3>
 <p>Retrieve all users sorted by their name.</p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;orderBy(["name" =&gt; "asc"])
@@ -1457,6 +1680,7 @@ Limit the amount of values in the result set. Has to be greater than 0.</li>
   -&gt;fetch();</code></pre>
 <h4>Result</h4>
 <pre><code>[["_id" =&gt; 13, "name" =&gt; "Anton"], ["_id" =&gt; 2, "name" =&gt; "Berta"], ...]</code></pre>
+<h3>Example 2</h3>
 <p>Retrieve all users sorted by their name and age.</p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;orderBy(["name" =&gt; "asc", "age" =&gt; "asc"])
@@ -1481,7 +1705,7 @@ Limit the amount of values in the result set. Has to be greater than 0.</li>
 <li>$keyword: string
 Value that will be searched by.</li>
 </ol>
-<h3>Examples</h3>
+<h3>Example</h3>
 <p>Find all articles that include the word &quot;SleekDB&quot; in their description.</p>
 <pre><code class="language-php">$articles = $articleQueryBuilder
   -&gt;search("content", "SleekDB")
@@ -1528,7 +1752,7 @@ Cache will not have a lifetime and will be regenerated on every update, delete a
 <li><code>int</code><br/>
 Cache lifetime in seconds. <code>0</code> means infinite lifetime.</li>
 </ul>
-<h3>Examples</h3>
+<h3>Example 1</h3>
 <p>Retrieve and cache 20 users that are active.</p>
 <p>The results in this example will use caching untill any documents gets updated/ deleted or inserted.</p>
 <pre><code class="language-php">// fetch and insert in cache
@@ -1558,6 +1782,7 @@ $users = $userQueryBuilder
     -&gt;useCache()
     -&gt;getQuery()
     -&gt;fetch();</code></pre>
+<h3>Example 2</h3>
 <p>Retrieve and cache result for 2 minutes, 20 users that are active.</p>
 <pre><code class="language-php">// fetch and insert in cache
 $users = $userQueryBuilder
@@ -1566,6 +1791,7 @@ $users = $userQueryBuilder
     -&gt;useCache(120) // 2 minutes = 120 seconds
     -&gt;getQuery()
     -&gt;fetch();</code></pre>
+<h3>Example 3</h3>
 <p>Retrieve and cache result forever, 20 users that are active.</p>
 <pre><code class="language-php">// fetch and insert in cache
 $users = $userQueryBuilder
@@ -1590,7 +1816,7 @@ $users = $userQueryBuilder
 <h2>regenerateCache()</h2>
 <p>Regenerate the cache of a query regardless of its lifetime.</p>
 <pre><code class="language-php">function regenerateCache(): QueryBuilder</code></pre>
-<h3>Examples</h3>
+<h3>Example</h3>
 <pre><code class="language-php">// cache with infinite lifetime
 $users = $userQueryBuilder
     -&gt;where( ['active', '=', 1] )
@@ -1657,7 +1883,7 @@ Each user also will get an additional property called &quot;comments&quot;, that
 <p>Name of the new property added to each document.</p>
 </li>
 </ol>
-<h3>Examples</h3>
+<h3>Example 1</h3>
 <p>To get the users with their comments we would join like this:</p>
 <pre><code class="language-php">use SleekDB\Store;
 
@@ -1684,6 +1910,7 @@ $users = $userStore
   }, "comments")
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
+<h3>Example 2</h3>
 <p>Use multiple <code>join()</code>.<br/>
 Retrieve all users with their comments and their articles.</p>
 <pre><code class="language-php">use SleekDB\Store;
@@ -1704,6 +1931,7 @@ $users = $userStore
   }, "articles")
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
+<h3>Example 3</h3>
 <p>Use <code>join()</code> within a join sub query.<br/>
 Retrieve all users with their created articles containing the comments.</p>
 <pre><code class="language-php">use SleekDB\Store;
@@ -1776,7 +2004,7 @@ $users = $userStore
 <pre><code class="language-php">function first(): array</code></pre>
 <h3>Return value</h3>
 <p>Returns the very first document discovered or an empty array if nothing found.</p>
-<h3>Examples</h3>
+<h3>Example</h3>
 <pre><code class="language-php">$user = $userQueryBuilder
   -&gt;where([ "email", "=", "foo@bar.com" ])
   -&gt;getQuery()
@@ -1833,7 +2061,7 @@ $users = $userStore
 </ol>
 <h3>Return value</h3>
 <p>This method returns based on the given return option either <code>boolean</code>, <code>int</code> or <code>array</code>.</p>
-<h3>Example</h3>
+<h3>Example 1</h3>
 <p>Delete all users that are not active.</p>
 <pre><code class="language-php">$result = $userStore
   -&gt;createQueryBuilder()
@@ -1841,6 +2069,7 @@ $users = $userStore
   -&gt;getQuery()
   -&gt;delete();
 // output: true</code></pre>
+<h3>Example 2</h3>
 <p>Delete all users that are not active and retrieve the amount of deleted users.</p>
 <pre><code class="language-php">use SleekDB\Query;
 
@@ -1850,6 +2079,7 @@ $result = $userStore
   -&gt;getQuery()
   -&gt;delete(Query::DELETE_RETURN_COUNT);
 // output: 14</code></pre>
+<h3>Example 3</h3>
 <p>Delete all users that are not active and retrieve the deleted users.</p>
 <pre><code class="language-php">use SleekDB\Query;
 
