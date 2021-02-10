@@ -909,7 +909,8 @@ $userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RE
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
 <li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>like</code> Match using wildcards.<br/>
+<li><code>like</code> Match using wildcards.</li>
+<li><code>not like</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
 Supported wildcards:
 <ul>
 <li><code>%</code> Represents zero or more characters<br/>
@@ -923,6 +924,8 @@ Example: h[^oa]t finds hit, but not hot and hat</li>
 <li><code>-</code> Represents a range of characters<br/>
 Example: c[a-b]t finds cat and cbt</li>
 </ul></li>
+<li><code>in</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>not in</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
 </ul>
 </li>
 <li>
@@ -1052,7 +1055,8 @@ WHERE
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
 <li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>like</code> Match using wildcards.<br/>
+<li><code>like</code> Match using wildcards.</li>
+<li><code>not like</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
 Supported wildcards:
 <ul>
 <li><code>%</code> Represents zero or more characters<br/>
@@ -1066,6 +1070,8 @@ Example: h[^oa]t finds hit, but not hot and hat</li>
 <li><code>-</code> Represents a range of characters<br/>
 Example: c[a-b]t finds cat and cbt</li>
 </ul></li>
+<li><code>in</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>not in</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
 </ul>
 </li>
 <li>
@@ -1177,7 +1183,8 @@ WHERE
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
 <li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>like</code> Match using wildcards.<br/>
+<li><code>like</code> Match using wildcards.</li>
+<li><code>not like</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
 Supported wildcards:
 <ul>
 <li><code>%</code> Represents zero or more characters<br/>
@@ -1191,6 +1198,8 @@ Example: h[^oa]t finds hit, but not hot and hat</li>
 <li><code>-</code> Represents a range of characters<br/>
 Example: c[a-b]t finds cat and cbt</li>
 </ul></li>
+<li><code>in</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>not in</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
 </ul>
 </li>
 <li>
@@ -2122,8 +2131,18 @@ It will be removed with the next major update.<br/>
 Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
 </li>
 <li>
-<h1>✨ where() and orWhere() methods improved</h1>
+<h1>🌟 where() and orWhere() methods improved</h1>
 <p>The <code>where()</code> and <code>orWhere()</code> methods now can handle nested statements!<br/>
+Please check the <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a> for more details.</p>
+</li>
+<li>
+<h1>✨ New conditions</h1>
+<ul>
+<li><code>not like</code></li>
+<li><code>in</code></li>
+<li><code>not in</code></li>
+</ul>
+<p>These new conditions can now be used with the <code>where()</code> and <code>orWhere()</code> methods!<br/>
 Please check the <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a> for more details.</p>
 </li>
 </ul>
