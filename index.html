@@ -60,7 +60,7 @@
     href="#/versions"
     title="Find all versions of SleekDB"
     class="menu gotoblock"
-    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.2</a
+    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.3</a
   >
   <a
     class="menu"
@@ -196,7 +196,7 @@
 <p>Join our <a href="https://discord.gg/WJGqUFPtZw" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Discord</a> channel. We would love to know about you and your feedbacks.</p>
             <div class="editlink" 
               file="home.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -300,7 +300,7 @@
 </ul>
             <div class="editlink" 
               file="features.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -332,7 +332,7 @@ Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/p
 <pre><code class="language-sh">composer require rakibtg/sleekdb dev-dev</code></pre>
             <div class="editlink" 
               file="installation.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -403,7 +403,7 @@ print_r($allNews);</code></pre>
 </blockquote>
             <div class="editlink" 
               file="getting-started.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -446,7 +446,7 @@ $newsStore = new Store('news', $dataDir);</code></pre>
 <pre><code class="language-php">$userStore-&gt;deleteStore();</code></pre>
             <div class="editlink" 
               file="managing-store.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -503,7 +503,7 @@ Available caching method's are:</p>
 SleekDB will then use that key instead of the default <code>_id</code> key.</p>
             <div class="editlink" 
               file="configurations.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -598,7 +598,7 @@ $users = [
 $users = $userStore-&gt;insertMany($users);</code></pre>
             <div class="editlink" 
               file="insert-data.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -695,7 +695,7 @@ $users = $userStore-&gt;insertMany($users);</code></pre>
 <pre><code>["_id" =&gt; 18, "title" =&gt; "SleekDB is super fast", "author" =&gt; "Mike"]</code></pre>
             <div class="editlink" 
               file="fetch-data.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -756,7 +756,7 @@ foreach($users as $key =&gt; $user){
 $userStore-&gt;update( $users );</code></pre>
             <div class="editlink" 
               file="edit-data.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -821,7 +821,7 @@ $userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RE
 // Returns true</code></pre>
             <div class="editlink" 
               file="delete-data.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -834,7 +834,7 @@ $userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RE
 <li>getQuery</li>
 <li>where</li>
 <li>orWhere</li>
-<li>nestedWhere</li>
+<li><del>nestedWhere</del> ( 🚨 Deprecated since version 2.3, use where and orWhere instead! )</li>
 <li>in</li>
 <li>notIn</li>
 <li>select</li>
@@ -886,8 +886,9 @@ $userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RE
 </ol>
 <ul>
 <li>[$fieldName, $condition, $value]</li>
+<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
 <li>
-<p>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</p>
+<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
 <ul>
 <li>
 <h1>$fieldName: string</h1>
@@ -907,23 +908,34 @@ $userStore-&gt;deleteBy(['name', '=', 'Joshua Edwards'], Query::DELETE_RETURN_RE
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
 <li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>like</code> Match using wildcards. \
-Supported wildcards:</li>
-<li><code>%</code> Represents zero or more characters \
+<li><code>like</code> Match using wildcards.</li>
+<li><code>not like</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
+Supported wildcards:
+<ul>
+<li><code>%</code> Represents zero or more characters<br/>
 Example: bl% finds bl, black, blue, and blob</li>
-<li><code>_</code> Represents a single character \
+<li><code>_</code> Represents a single character<br/>
 Example: h_t finds hot, hat, and hit</li>
-<li><code>[]</code> Represents any single character within the brackets \
+<li><code>[]</code> Represents any single character within the brackets<br/>
 Example: h[oa]t finds hot and hat, but not hit</li>
-<li><code>^</code> Represents any character not in the brackets \
+<li><code>^</code> Represents any character not in the brackets<br/>
 Example: h[^oa]t finds hit, but not hot and hat</li>
-<li><code>-</code> Represents a range of characters \
+<li><code>-</code> Represents a range of characters<br/>
 Example: c[a-b]t finds cat and cbt</li>
+</ul></li>
+<li><code>in</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>not in</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
 </ul>
 </li>
 <li>
 <h1>$value</h1>
 <p>Data that will be checked against the property value of the JSON documents.</p>
+</li>
+<li>
+<h1>OPERATION: string</h1>
+<p>It is used to connect multiple conditions.<br/>
+The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
+Default: <code>AND</code></p>
 </li>
 </ul>
 </li>
@@ -979,6 +991,35 @@ $userQueryBuilder-&gt;where(
 // execute query
 $users = $userQueryBuilder-&gt;getQuery()-&gt;fetch();
 </code></pre>
+<p>Retrieve all users that have the status &quot;premium&quot;, live in &quot;london&quot; or &quot;new york&quot; and are between the age of 16 and 20 or older than 30.</p>
+<pre><code class="language-sql">// example in sql
+WHERE 
+  status = "premium" 
+  AND 
+  (
+    ( city = "london" OR city = "new york" )
+    AND 
+    ( (age &gt;= 16 AND age &lt; 20) OR age &gt; 30 )
+  )</code></pre>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;where(
+    [
+      ["status", "=", "premium"], // &lt;-- If no operation is provided, "AND" is used.
+      [ 
+        [ "city", "=", "london" ], "OR", ["city", "=", "new york"] 
+      ],
+      "AND",
+      [
+        [
+          [ "age", "&gt;=", 16 ], "AND", [ "age", "&lt;", 20 ]
+        ],
+        "OR",
+        [ "age", "&gt;", 30 ]
+      ]
+    ]
+  )
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
 <h2>orWhere()</h2>
 <p><code>orWhere(...)</code> works as the OR condition of SQL. SleekDB supports multiple orWhere as object chain.<br/>If you provide multiple conditions they are connected with an <code>AND</code>.</p>
 <pre><code class="language-php">function orWhere(array $criteria): QueryBuilder</code></pre>
@@ -991,8 +1032,9 @@ $users = $userQueryBuilder-&gt;getQuery()-&gt;fetch();
 </ol>
 <ul>
 <li>[$fieldName, $condition, $value]</li>
+<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
 <li>
-<p>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</p>
+<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
 <ul>
 <li>
 <h1>$fieldName: string</h1>
@@ -1012,23 +1054,34 @@ $users = $userQueryBuilder-&gt;getQuery()-&gt;fetch();
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
 <li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>like</code> Match using wildcards. \
-Supported wildcards:</li>
-<li><code>%</code> Represents zero or more characters \
+<li><code>like</code> Match using wildcards.</li>
+<li><code>not like</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
+Supported wildcards:
+<ul>
+<li><code>%</code> Represents zero or more characters<br/>
 Example: bl% finds bl, black, blue, and blob</li>
-<li><code>_</code> Represents a single character \
+<li><code>_</code> Represents a single character<br/>
 Example: h_t finds hot, hat, and hit</li>
-<li><code>[]</code> Represents any single character within the brackets \
+<li><code>[]</code> Represents any single character within the brackets<br/>
 Example: h[oa]t finds hot and hat, but not hit</li>
-<li><code>^</code> Represents any character not in the brackets \
+<li><code>^</code> Represents any character not in the brackets<br/>
 Example: h[^oa]t finds hit, but not hot and hat</li>
-<li><code>-</code> Represents a range of characters \
+<li><code>-</code> Represents a range of characters<br/>
 Example: c[a-b]t finds cat and cbt</li>
+</ul></li>
+<li><code>in</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>not in</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
 </ul>
 </li>
 <li>
 <h1>$value</h1>
 <p>Data that will be checked against the property value of the JSON documents.</p>
+</li>
+<li>
+<h1>OPERATION: string</h1>
+<p>It is used to connect multiple conditions.<br/>
+The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
+Default: <code>AND</code></p>
 </li>
 </ul>
 </li>
@@ -1057,7 +1110,40 @@ Example: c[a-b]t finds cat and cbt</li>
   -&gt;orWhere( ["products.totalBought", "=", 0] )
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
-<h2>nestedWhere()</h2>
+<p>Retrieve all users that have the status &quot;premium&quot; or live in &quot;london&quot; or &quot;new york&quot; and are between the age of 16 and 20 or older than 30.</p>
+<pre><code class="language-sql">// example in sql
+WHERE 
+  status = "premium" 
+  OR 
+  (
+    ( city = "london" OR city = "new york" )
+    AND 
+    ( (age &gt;= 16 AND age &lt; 20) OR age &gt; 30 )
+  )</code></pre>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;where(["status", "=", "premium"])
+  -&gt;orWhere(
+    [
+      [ 
+        [ "city", "=", "london" ], "OR", ["city", "=", "new york"] 
+      ],
+      "AND",
+      [
+        [
+          [ "age", "&gt;=", 16 ], // &lt;-- If no operation is provided, "AND" is used.
+          [ "age", "&lt;", 20 ]
+        ],
+        "OR",
+        [ "age", "&gt;", 30 ]
+      ]
+    ]
+  )
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h2><del>nestedWhere()</del></h2>
+<blockquote>
+<h3>🚨 Deprecated since version 2.3, use <code>where</code> and <code>orWhere</code> instead!</h3>
+</blockquote>
 <p>With the <code>nestedWhere(...)</code> method you are able to make complex nested where statements.</p>
 <pre><code class="language-php">function nestedWhere(array $conditions): QueryBuilder</code></pre>
 <h3>Conditions array structure</h3>
@@ -1096,18 +1182,23 @@ Example: c[a-b]t finds cat and cbt</li>
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
 <li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>like</code> Match using wildcards. \
-Supported wildcards:</li>
-<li><code>%</code> Represents zero or more characters \
+<li><code>like</code> Match using wildcards.</li>
+<li><code>not like</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
+Supported wildcards:
+<ul>
+<li><code>%</code> Represents zero or more characters<br/>
 Example: bl% finds bl, black, blue, and blob</li>
-<li><code>_</code> Represents a single character \
+<li><code>_</code> Represents a single character<br/>
 Example: h_t finds hot, hat, and hit</li>
-<li><code>[]</code> Represents any single character within the brackets \
+<li><code>[]</code> Represents any single character within the brackets<br/>
 Example: h[oa]t finds hot and hat, but not hit</li>
-<li><code>^</code> Represents any character not in the brackets \
+<li><code>^</code> Represents any character not in the brackets<br/>
 Example: h[^oa]t finds hit, but not hot and hat</li>
-<li><code>-</code> Represents a range of characters \
+<li><code>-</code> Represents a range of characters<br/>
 Example: c[a-b]t finds cat and cbt</li>
+</ul></li>
+<li><code>in</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>not in</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
 </ul>
 </li>
 <li>
@@ -1267,7 +1358,7 @@ SleekDB supports multiple notIn as object chain for different fields.</p>
   -&gt;getQuery()
   -&gt;fetch();
 // output: [["_id" =&gt; 1, "name" =&gt; "Max"], ["_id" =&gt; 2, "name" =&gt; "Hasan"]]</code></pre>
-<h3>except()</h3>
+<h2>except()</h2>
 <p><code>except(...)</code> works as the opposite of <code>select()</code> method. Use it when you don't want a property in the result. For example, if you don't want the password field in your returned data set.</p>
 <pre><code class="language-php">function except(array $fieldNames): QueryBuilder</code></pre>
 <ol>
@@ -1405,7 +1496,7 @@ Value that will be searched by.</li>
 <pre><code class="language-php">function join(callable $joinedStore, string $dataPropertyName): QueryBuilder</code></pre>
             <div class="editlink" 
               file="query-builder.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -1518,7 +1609,7 @@ $users = $userQueryBuilder
     -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="cache-management.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -1638,7 +1729,7 @@ $users = $userStore
   -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="join-stores.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -1770,7 +1861,7 @@ $result = $userStore
 // output: [ ["_id" =&gt; 1, "name" =&gt; "Max"], ["_id" =&gt; 4, "name" =&gt; "John"], ... ]</code></pre>
             <div class="editlink" 
               file="query.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -1815,7 +1906,7 @@ $userQuery-&gt;update([
 $usersUpdated = $userQuery-&gt;fetch();</code></pre>
             <div class="editlink" 
               file="advanced.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -1893,7 +1984,7 @@ $usersUpdated = $userQuery-&gt;fetch();</code></pre>
 <p>Either <code>int</code> &gt;= 0 in seconds, where <code>0</code> means infinite, or <code>null</code>.</p>
             <div class="editlink" 
               file="cache.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -2022,7 +2113,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function delete()</code></pre>
             <div class="editlink" 
               file="reference.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -2030,6 +2121,30 @@ Returns the inserted documents with their new and unique _id.</p>
             <h1>🎉 Release Notes</h1>
 <h2>📢 Optimizations, new query methods and more control</h2>
 <p>SleekDB 2.0 comes with so many important optimizations and other features that make it faster and more mature. This is the recommended SleekDB release version for new projects, and if you are using an older version consider upgrading as soon as possible.</p>
+<h3>Changes from 2.2 to 2.3</h3>
+<ul>
+<li>
+<h1>🚨 Deprecated nestedWhere() method</h1>
+<p>We are sorry to deprecate the <code>nestedWhere()</code> method so short after it's release.<br/>
+It will be removed with the next major update.<br/>
+Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
+</li>
+<li>
+<h1>🌟 where() and orWhere() methods improved</h1>
+<p>The <code>where()</code> and <code>orWhere()</code> methods now can handle nested statements!<br/>
+Please check the <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a> for more details.</p>
+</li>
+<li>
+<h1>✨ New conditions</h1>
+<ul>
+<li><code>not like</code></li>
+<li><code>in</code></li>
+<li><code>not in</code></li>
+</ul>
+<p>These new conditions can now be used with the <code>where()</code> and <code>orWhere()</code> methods!<br/>
+Please check the <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a> for more details.</p>
+</li>
+</ul>
 <h3>Changes from 2.1 to 2.2</h3>
 <ul>
 <li>
@@ -2128,7 +2243,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="release-notes.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -2144,7 +2259,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Please write details about your PR.</p>
             <div class="editlink" 
               file="contributing.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
@@ -2157,21 +2272,22 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Let us know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.</p>
             <div class="editlink" 
               file="contact.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
           <div class="intro" id="block_versions">
             <h1>Versions</h1>
 <ul>
-<li><strong><a href="/">2.2</a> (Actively Maintained Version)</strong></li>
+<li><strong><a href="/">2.3</a> (Actively Maintained Version)</strong></li>
+<li><strong><a href="/versions/2.2/">2.2</a></strong></li>
 <li><strong><a href="/versions/2.1/">2.1</a></strong></li>
 <li><strong><a href="/versions/2.0/">2.0</a></strong></li>
 <li><strong><a href="/versions/1.5/">1.5</a> (Bug Fixes Only)</strong></li>
 </ul>
             <div class="editlink" 
               file="versions.md" 
-              version="2.2">
+              version="2.3">
             </div>
           </div>
         
