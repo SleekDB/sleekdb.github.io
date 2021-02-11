@@ -5,6 +5,27 @@ window.onunload = function() {
 
 var menulinks = document.getElementsByClassName('gotoblock');
 
+var rightElement = document.getElementById('layoutRight');
+var headerElement = document.getElementsByClassName('header')[0];
+
+var sidebarIsOpen = true;
+
+function removeMenuHighlight() {
+  for (let index = 0; index < menulinks.length; index++) {
+    menulinks[index].classList.remove('visited');
+  }
+}
+
+function addMenuHighlight(blockName) {
+  var blockRegex = new RegExp('#/' + blockName + '$');
+  for (let index = 0; index < menulinks.length; index++) {
+    var menulink = menulinks[index];
+    if (blockRegex.test(menulink)) {
+      menulink.classList.add('visited');
+    }
+  }
+}
+
 window.onload = function() {
   var arr = document.getElementsByTagName('pre');
   for (let index = 0; index < arr.length; index++) {
@@ -31,14 +52,9 @@ function syncTitle(el) {
   document.title = title || 'SleekDB';
 }
 
-function goToBlock(event) {
-  event.preventDefault();
-  var blockName = event.target.hash.replace('#/', '');
-  history.pushState(null, '', `${event.target.pathname}${event.target.hash}`);
-  for (let index = 0; index < menulinks.length; index++) {
-    menulinks[index].classList.remove('visited');
-  }
-  event.target.classList.add('visited');
+function _goToBlock(blockName, sectionId = null) {
+  removeMenuHighlight();
+  addMenuHighlight(blockName);
   var intros = document.getElementsByClassName('intro');
   for (let index = 0; index < intros.length; index++) {
     const element = intros[index];
@@ -49,9 +65,35 @@ function goToBlock(event) {
       element.classList.add('hide');
     }
   }
-  // 	window.scrollTo({ top: 0, behavior: 'smooth' });
-  var rightElement = document.getElementById('layoutRight');
-  rightElement.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (sidebarIsOpen && window.innerWidth < 900) {
+    toggleSiderbarFromMenu();
+  }
+
+  if (sectionId !== null) {
+    setTimeout(function() {
+      scrollToSection(sectionId);
+    }, 100);
+  } else {
+    rightElement.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function goToBlock(event) {
+  event.preventDefault();
+  var blockName = event.target.hash.replace('#/', '');
+
+  var sectionId = null;
+
+  if (blockName.includes('#')) {
+    blockName = blockName.split('#');
+    sectionId = blockName.join('-');
+    blockName = blockName[0];
+  }
+
+  history.pushState(null, '', `${event.target.pathname}${event.target.hash}`);
+
+  _goToBlock(blockName, sectionId);
 }
 
 function resetHome(event) {
@@ -68,33 +110,30 @@ function resetHome(event) {
   }
 }
 
-function rightTop() {
-  setTimeout(() => {
-    document.getElementsByClassName('right')[0].scrollTop = 0;
-  }, 150);
-}
-
 function checkPage() {
   if (window.location.hash) {
-    let id = window.location.hash.replace('#/', '');
-    var intros = document.getElementsByClassName('intro');
-    for (let index = 0; index < intros.length; index++) {
-      const element = intros[index];
-      if (element.id === 'block_' + id) {
-        element.classList.remove('hide');
-        syncTitle(element);
-      } else {
-        element.classList.add('hide');
-      }
+    var sectionId = null;
+    var blockName = window.location.hash.replace('#/', '');
+    if (blockName.includes('#')) {
+      blockName = blockName.split('#');
+      sectionId = blockName.join('-');
+      blockName = blockName[0];
     }
+
+    _goToBlock(blockName, sectionId);
   }
+}
+
+function scrollToSection(sectionId) {
+  var sectionElement = document.getElementById(sectionId);
+  var navHeight = headerElement.clientHeight + 10;
+  rightElement.scrollTo({ top: sectionElement.offsetTop - navHeight, behavior: 'smooth' });
 }
 
 window.onresize = function() {
   toggleSidebar();
 };
 
-var sidebarIsOpen = true;
 function toggleSidebar() {
   if (window.innerWidth < 900) {
     if (sidebarIsOpen) {
@@ -121,23 +160,18 @@ window.addEventListener(
   'popstate',
   function(event) {
     // The popstate event is fired each time when the current history entry changes.
+    var sectionId = null;
     var blockName = window.location.hash.replace('#/', '');
+    if (blockName.includes('#')) {
+      blockName = blockName.split('#');
+      sectionId = blockName.join('-');
+      blockName = blockName[0];
+    }
     if (blockName === '') {
       blockName = 'home';
     }
-    var intros = document.getElementsByClassName('intro');
-    for (let index = 0; index < intros.length; index++) {
-      const element = intros[index];
-      if (element.id === 'block_' + blockName) {
-        element.classList.remove('hide');
-        syncTitle(element);
-      } else {
-        element.classList.add('hide');
-      }
-    }
 
-    var rightElement = document.getElementById('layoutRight');
-    rightElement.scrollTo({ top: 0, behavior: 'smooth' });
+    _goToBlock(blockName, sectionId);
   },
   false
 );
