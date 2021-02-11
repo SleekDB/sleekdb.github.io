@@ -1,96 +1,96 @@
 // Disable auto scroll on hash url
-window.onunload = function () {
+window.onunload = function() {
   window.scrollTo(0, 0);
 };
 
-var menulinks = document.getElementsByClassName("gotoblock");
+var menulinks = document.getElementsByClassName('gotoblock');
 
-window.onload = function () {
-  var arr = document.getElementsByTagName("pre");
+window.onload = function() {
+  var arr = document.getElementsByTagName('pre');
   for (let index = 0; index < arr.length; index++) {
     var element = arr[index];
     hljs.highlightBlock(element);
   }
 
   for (let index = 0; index < menulinks.length; index++) {
-    menulinks[index].addEventListener("click", goToBlock);
+    menulinks[index].addEventListener('click', goToBlock);
   }
 
-  document
-    .getElementsByClassName("toggler")[0]
-    .addEventListener("click", toggleSiderbarFromMenu);
+  document.getElementsByClassName('toggler')[0].addEventListener('click', toggleSiderbarFromMenu);
 
   checkPage();
   toggleSidebar();
 
-  if (navigator.userAgent.search("Firefox") > -1) {
-    this.document.getElementById("firefox-issue").style.display = "";
+  if (navigator.userAgent.search('Firefox') > -1) {
+    this.document.getElementById('firefox-issue').style.display = '';
   }
 };
 
 function syncTitle(el) {
-  const title = el.querySelector("h1").innerText;
-  document.title = title || "SleekDB"
+  const title = el.querySelector('h1').innerText;
+  document.title = title || 'SleekDB';
 }
 
 function goToBlock(event) {
   event.preventDefault();
-  var blockName = event.target.hash.replace("#/", "");
-  history.pushState(null, "", `${event.target.pathname}${event.target.hash}`);
+  var blockName = event.target.hash.replace('#/', '');
+  history.pushState(null, '', `${event.target.pathname}${event.target.hash}`);
   for (let index = 0; index < menulinks.length; index++) {
-    menulinks[index].classList.remove("visited");
+    menulinks[index].classList.remove('visited');
   }
-  event.target.classList.add("visited");
-  var intros = document.getElementsByClassName("intro");
+  event.target.classList.add('visited');
+  var intros = document.getElementsByClassName('intro');
   for (let index = 0; index < intros.length; index++) {
     const element = intros[index];
-    if (element.id === "block_" + blockName) {
-      element.classList.remove("hide");
+    if (element.id === 'block_' + blockName) {
+      element.classList.remove('hide');
       syncTitle(element);
     } else {
-      element.classList.add("hide");
+      element.classList.add('hide');
     }
   }
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  // 	window.scrollTo({ top: 0, behavior: 'smooth' });
+  var rightElement = document.getElementById('layoutRight');
+  rightElement.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function resetHome(event) {
   event.preventDefault();
-  window.location.hash = "home";
+  window.location.hash = 'home';
   for (let index = 0; index < menulinks.length; index++) {
-    menulinks[index].classList.remove("visited");
+    menulinks[index].classList.remove('visited');
   }
 
-  var intros = document.getElementsByClassName("intro");
+  var intros = document.getElementsByClassName('intro');
   for (let index = 0; index < intros.length; index++) {
     const element = intros[index];
-    element.classList.remove("hide");
+    element.classList.remove('hide');
   }
 }
 
 function rightTop() {
   setTimeout(() => {
-    document.getElementsByClassName("right")[0].scrollTop = 0;
+    document.getElementsByClassName('right')[0].scrollTop = 0;
   }, 150);
 }
 
 function checkPage() {
   if (window.location.hash) {
-    let id = window.location.hash.replace("#/", "");
-    var intros = document.getElementsByClassName("intro");
+    let id = window.location.hash.replace('#/', '');
+    var intros = document.getElementsByClassName('intro');
     for (let index = 0; index < intros.length; index++) {
       const element = intros[index];
-      if (element.id === "block_" + id) {
-        element.classList.remove("hide");
+      if (element.id === 'block_' + id) {
+        element.classList.remove('hide');
         syncTitle(element);
       } else {
-        element.classList.add("hide");
+        element.classList.add('hide');
       }
     }
   }
 }
 
-window.onresize = function () {
+window.onresize = function() {
   toggleSidebar();
 };
 
@@ -98,21 +98,46 @@ var sidebarIsOpen = true;
 function toggleSidebar() {
   if (window.innerWidth < 900) {
     if (sidebarIsOpen) {
-      document.getElementsByClassName("left")[0].style.display = "none";
+      document.getElementsByClassName('left')[0].style.display = 'none';
       sidebarIsOpen = false;
     }
   } else {
     if (!sidebarIsOpen) {
-      document.getElementsByClassName("left")[0].style.display = "";
+      document.getElementsByClassName('left')[0].style.display = '';
       sidebarIsOpen = true;
     }
   }
 }
 function toggleSiderbarFromMenu() {
   if (sidebarIsOpen) {
-    document.getElementsByClassName("left")[0].style.display = "none";
+    document.getElementsByClassName('left')[0].style.display = 'none';
   } else {
-    document.getElementsByClassName("left")[0].style.display = "";
+    document.getElementsByClassName('left')[0].style.display = '';
   }
   sidebarIsOpen = !sidebarIsOpen;
 }
+
+window.addEventListener(
+  'popstate',
+  function(event) {
+    // The popstate event is fired each time when the current history entry changes.
+    var blockName = window.location.hash.replace('#/', '');
+    if (blockName === '') {
+      blockName = 'home';
+    }
+    var intros = document.getElementsByClassName('intro');
+    for (let index = 0; index < intros.length; index++) {
+      const element = intros[index];
+      if (element.id === 'block_' + blockName) {
+        element.classList.remove('hide');
+        syncTitle(element);
+      } else {
+        element.classList.add('hide');
+      }
+    }
+
+    var rightElement = document.getElementById('layoutRight');
+    rightElement.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+  false
+);
