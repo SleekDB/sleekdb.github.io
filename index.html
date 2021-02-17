@@ -887,7 +887,7 @@ Default: <code>AND</code></p>
 </ul>
 <h2 id="edit-data-updateById">updateById()</h2>
 <p>Update parts of a document.<br/>
-This method is especially fast because it uses the _id of the given document to update it directly instead of traversing through all documents.</p>
+This method is especially fast because it uses the _id to update the document directly instead of traversing through all documents.</p>
 <pre><code class="language-php">function updateById(int $id, array $updatable): array|false</code></pre>
 <h3>Parameters</h3>
 <ol>
@@ -925,7 +925,7 @@ If a field does not exist in that document, it will be added.</p>
 ]</code></pre>
 <h2 id="edit-data-update">update()</h2>
 <p>Update a whole document.<br/>
-This method is especially fast because it uses the _id of the given document to update it directly instead of traversing through all documents.</p>
+This method is especially fast because it uses the _id of the given document/s to update it directly instead of traversing through all documents.</p>
 <pre><code class="language-php">function update(array $updatable): bool;</code></pre>
 <p><strong>Note</strong>: This method of the <code>Store</code> class updates/overrides entire document/s, not just parts.</p>
 <h3>Parameters</h3>
