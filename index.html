@@ -897,7 +897,9 @@ This method is especially fast because it uses the _id of the given document to 
 </li>
 <li>
 <h1>$updatable: array</h1>
-<p>Array containing the parts to update.</p>
+<p>Array containing the parts to update.<br/>
+Update of nested values possible by using a dot between fieldNames (Example 3)<br/>
+If a field does not exist in that document, it will be added.</p>
 </li>
 </ol>
 <h3>Return value</h3>
@@ -910,8 +912,17 @@ This method is especially fast because it uses the _id of the given document to 
 <pre><code class="language-php">$userStore-&gt;updateById(24, [ "name" =&gt; "Georg", "age" =&gt; 22 ]);</code></pre>
 <h3>Example 3</h3>
 <p>Change the street of the user with _id = 24.<br/>
-<strong>Note</strong>: The street is in a nested array.</p>
+<strong>Note</strong>: The street is stored in a nested array.</p>
 <pre><code class="language-php">$userStore-&gt;updateById(24, [ "address.street" =&gt; "first street" ]);</code></pre>
+<h4>Result</h4>
+<pre><code class="language-php">[
+    "_id" =&gt; 24,
+    "address" =&gt; [
+        "street" =&gt; "first street",
+        "postalCode" =&gt; "47129"
+    ],
+    ...
+]</code></pre>
 <h2 id="edit-data-update">update()</h2>
 <p>Update a whole document.<br/>
 This method is especially fast because it uses the _id of the given document to update it directly instead of traversing through all documents.</p>
@@ -2360,7 +2371,9 @@ $users = $userStore
 <ol>
 <li>
 <h1>$updatable: array</h1>
-<p>An array containing the properties to update.</p>
+<p>An array containing the properties to update.<br/>
+Update of nested values possible by using a dot between fieldNames (Example 2)<br/>
+If a field does not exist in a document, it will be added.</p>
 </li>
 </ol>
 <h3>Return value</h3>
@@ -2382,6 +2395,18 @@ Returns <code>updated documents</code> on success and <code>false</code> if no d
   -&gt;createQueryBuilder()
   -&gt;where("city", "=", "london")
   -&gt;update([ "address.street" =&gt; "first street" ]);</code></pre>
+<h4>Result</h4>
+<pre><code class="language-php">[
+  [
+    "city" =&gt; "london".
+    "address" =&gt; [
+      "street" =&gt; "first street",
+      "postalCode" =&gt; "41824"
+    ],
+    ...
+  ],
+  ...
+]</code></pre>
 <h2 id="query-delete">delete()</h2>
 <p>Delete one or multiple documents based on a given query.</p>
 <pre><code class="language-php">function delete(int $returnOption = Query::DELETE_RETURN_BOOL)</code></pre>
