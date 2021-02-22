@@ -42,9 +42,11 @@ window.onload = function() {
   checkPage();
   toggleSidebar();
 
-  if (navigator.userAgent.search('Firefox') > -1) {
-    this.document.getElementById('firefox-issue').style.display = '';
-  }
+  // if (navigator.userAgent.search('Firefox') > -1) {
+  //   this.document.getElementById('firefox-issue').style.display = '';
+  // }
+
+  document.querySelectorAll('li .mb').forEach((element) => (element.parentNode.style.marginBottom = '20px'));
 };
 
 function syncTitle(el) {
@@ -81,7 +83,13 @@ function _goToBlock(blockName, sectionId = null) {
 
 function goToBlock(event) {
   event.preventDefault();
-  var blockName = event.target.hash.replace('#/', '');
+
+  var target = event.target;
+
+  if (target.hash === undefined) {
+    target = event.target.parentNode;
+  }
+  var blockName = target.hash.replace('#/', '');
 
   var sectionId = null;
 
@@ -91,7 +99,7 @@ function goToBlock(event) {
     blockName = blockName[0];
   }
 
-  history.pushState(null, '', `${event.target.pathname}${event.target.hash}`);
+  history.pushState(null, '', `${target.pathname}${target.hash}`);
 
   _goToBlock(blockName, sectionId);
 }

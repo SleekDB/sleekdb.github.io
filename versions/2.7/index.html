@@ -60,7 +60,7 @@
     href="#/versions"
     title="Find all versions of SleekDB"
     class="menu gotoblock"
-    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.5</a
+    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.7</a
   >
   <a
     class="menu"
@@ -152,9 +152,17 @@
             <ion-icon name="alarm"></ion-icon> 
             Working with Dates
         </a>
+          <a class="gotoblock" href="#/searching">
+            <ion-icon name="search"></ion-icon> 
+            Searching
+        </a>
           <a class="gotoblock" href="#/advanced">
             <ion-icon name="flame"></ion-icon> 
             Advanced
+        </a>
+          <a class="gotoblock" href="#/complete-examples">
+            <ion-icon name="color-wand"></ion-icon> 
+            Complete Examples
         </a>
           <a class="gotoblock" href="#/cache">
             <ion-icon name="logo-buffer"></ion-icon> 
@@ -187,6 +195,7 @@
           <div class="intro" id="block_home">
             <h1>SleekDB - A NoSQL Database made using PHP</h1>
 <p>SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files.</p>
+<p>It is not comparable with databases like Sqlite, MySQL, PostgreSQL and MariaDB because they are relational databases! SleekDB is a NoSQL database and therefore more comparable with for example MongoDB.</p>
 <p>It is not designed to handle heavy-load IO operations, it is designed to have a simple solution where all we need a database for is managing a few gigabytes of data. You can think of it as a database for low to medium operation loads.</p>
 <h2>😎 Manage Static Data With Ease</h2>
 <p>SleekDB works great as the database engine for low to medium traffic websites. It makes simple database effortless.</p>
@@ -200,7 +209,7 @@
 <p>Join our <a href="https://discord.gg/WJGqUFPtZw" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Discord</a> channel. We would love to know about you and your feedbacks.</p>
             <div class="editlink" 
               file="home.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -278,6 +287,10 @@
       <ul>
         <li>like</li>
         <li>not like</li>
+        <li>between</li>
+        <li>not between</li>
+        <li>group by</li>
+        <li>having</li>
       </ul>
     </td>
   </tr>
@@ -311,7 +324,7 @@
 </ul>
             <div class="editlink" 
               file="features.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -322,6 +335,7 @@
 <ul>
 <li>PHP &gt;= 7.0</li>
 <li>ext-json</li>
+<li>ext-mbstring</li>
 </ul>
 <h2>Composer Installation (recommended)</h2>
 <p>To install SleekDB using composer, open a terminal, cd into your project root directory where &quot;composer.json&quot; file lives and run this:</p>
@@ -343,7 +357,7 @@ Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/p
 <pre><code class="language-sh">composer require rakibtg/sleekdb dev-dev</code></pre>
             <div class="editlink" 
               file="installation.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -382,12 +396,13 @@ Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/p
 <ol>
 <li>
 <p>To begin with, we need a valid &quot;path&quot; where we want to store our data.<br/>Both absolute and relative paths are supported.</p>
-<pre><code class="language-php">$dataDir = __DIR__ . "/mydb";</code></pre>
+<pre><code class="language-php">$databaseDirectory = __DIR__ . "/myDatabase";</code></pre>
 </li>
 <li>
 <p>Once we have the data directory, we can initialize the store.<br/>If the store doesn't exist it will be created automatically.</p>
-<pre><code class="language-php">$newsStore = new \SleekDB\Store("news", $dataDir);</code></pre>
-<p>Optionally you can pass a configuration array as a third parameter. Read more about <a class="gotoblock" href="/#/configurations">configurations</a>.</p>
+<pre><code class="language-php">$newsStore = new \SleekDB\Store("news", $databaseDirectory);</code></pre>
+<p>Optionally you can <strong>pass a configuration array as a third parameter</strong>.<br/>
+Read more about <a class="gotoblock" href="/#/configurations">configurations</a>.</p>
 </li>
 <li>
 <p>Inserting your first news article using the <code>insert</code> method. The article has to be an array.</p>
@@ -414,7 +429,7 @@ print_r($allNews);</code></pre>
 </blockquote>
             <div class="editlink" 
               file="getting-started.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -457,7 +472,7 @@ $newsStore = new Store('news', $dataDir);</code></pre>
 <pre><code class="language-php">$userStore-&gt;deleteStore();</code></pre>
             <div class="editlink" 
               file="managing-store.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -469,19 +484,27 @@ $newsStore = new Store('news', $dataDir);</code></pre>
 <li><a class="gotoblock" href="#/configurations#cache_lifetime">cache_lifetime</li>
 <li><a class="gotoblock" href="#/configurations#timeout">timeout</a></li>
 <li><a class="gotoblock" href="#/configurations#primary_key">primary_key</a></li>
+<li><a class="gotoblock" href="#/configurations#search">search</a></li>
 </ul>
 <p>They are store wide, which means they will be used on every query, if not changed on a query by query base.</p>
 <h2>Using Custom Configuration</h2>
 <p>You can pass the configurations array as a third parameter when initializing the Store object:</p>
-<pre><code class="language-php">$configuration = [
+<pre><code class="language-php">// default configurations
+$configuration = [
   "auto_cache" =&gt; true,
   "cache_lifetime" =&gt; null,
   "timeout" =&gt; 120,
-  "primary_key" =&gt; "_id"
+  "primary_key" =&gt; "_id",
+  "search" =&gt; [
+    "min_length" =&gt; 2,
+    "mode" =&gt; "or",
+    "score_key" =&gt; "scoreKey",
+    "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+  ]
 ];
 $newsStore = new \SleekDB\Store("news", $dataDir, $configuration);</code></pre>
 <p>Let's get familiar with the available configuration options.</p>
-<h3 id="configurations-auto_cache">auto_cache</h3>
+<h2 id="configurations-auto_cache">auto_cache</h2>
 <p>The <code>auto_cache</code> is set to <code>true</code> by default!</p>
 <p>This tells SleekDB to use the build in caching system.</p>
 <p>To disable build in caching set <code>auto_cache</code> to <code>false</code> in the config array.</p>
@@ -492,7 +515,7 @@ Available caching method's are:</p>
 <li><code>QueryBuilder-&gt;useCache()</code></li>
 <li><code>QueryBuilder-&gt;disableCache()</code></li>
 </ul>
-<h3 id="configurations-cache_lifetime">cache_lifetime</h3>
+<h2 id="configurations-cache_lifetime">cache_lifetime</h2>
 <p>The <code>cache_lifetime</code> is set to <code>null</code> by default!</p>
 <p>Can be an <code>int &gt;= 0</code>, that specifies the lifetime in seconds, or <code>null</code> to define that there is no lifetime.</p>
 <p>This specifies the default cache time to live store wide.</p>
@@ -507,20 +530,49 @@ Available caching method's are:</p>
 <blockquote>
 <p>Note: You will find more details on caching at <a class="gotoblock" href="/#/cache-management">Cache Management</a></p>
 </blockquote>
-<h3 id="configurations-timeout">timeout</h3>
+<h2 id="configurations-timeout">timeout</h2>
 <p>Set timeout value. Default value is <code>120</code> seconds.</p>
-<h3 id="configurations-primary_key">primary_key</h3>
+<h2 id="configurations-primary_key">primary_key</h2>
 <p>Set the primary key into any string you want.<br/>
 SleekDB will then use that key instead of the default <code>_id</code> key.</p>
+<h2 id="configurations-search">search</h2>
+<p>On this documentation page we will provide you a brief description regarding the configuration options.</p>
+<blockquote>
+<p>Note: You will find more on searching at <a class="gotoblock" href="#/searching">Searching</a></p>
+</blockquote>
+<h3>min_length</h3>
+<p>It has to be an <code>integer</code> &gt; 0.<br/>
+The minimum length of a word within the search query that will be used for searching.</p>
+<h3>mode</h3>
+<p>Has to be a <code>string</code>.<br/>
+SleekDB provides two modes.</p>
+<ul>
+<li>&quot;or&quot; </li>
+<li>&quot;and&quot;</li>
+</ul>
+<h3>score_key</h3>
+<p>Can be a <code>string</code> or <code>null</code>.<br/>
+If this configuration is <code>null</code> no field containing the score will be applied to the documents.<br/>
+If it is a <code>string</code> a new field with the specified field name will be applied to every document, which will contain the search score and can be used to for example sort the documents.</p>
+<h3>algorithm</h3>
+<p>SleekDB provides 4 search algorithms. <code>hits</code>, <code>hits_prioritize</code>, <code>prioritize</code>, <code>prioritize_position</code><br/>
+These algorithms change the score generation.<br/>
+They are available as a <strong>constant of the <code>Query</code> class</strong>.</p>
+<p>Example:</p>
+<pre><code class="language-php">Query::SEARCH_ALGORITHM["hits"] // default</code></pre>
             <div class="editlink" 
               file="configurations.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
           <div class="intro" id="block_insert-data">
             <h1>Insert Data</h1>
 <p>To insert data first you make a PHP array, and simply insert that array into a store.</p>
+<h2>Brief repetition of Store object creation</h2>
+<p>For a more detailed documentation on <code>Store</code> object creation refer to the corresponding <a class="gotoblock" href="#/managing-store">&quot;Managing Store&quot; documentation</a>.</p>
+<pre><code class="language-php">use SleekDB\Store;
+$userStore = new Store('users', __DIR__ . "/database");</code></pre>
 <h2>Summary</h2>
 <ul>
 <li><a class="gotoblock" href="#/insert-data#insert">insert</a></li>
@@ -609,7 +661,7 @@ $users = [
 $users = $userStore-&gt;insertMany($users);</code></pre>
             <div class="editlink" 
               file="insert-data.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -619,6 +671,10 @@ $users = $userStore-&gt;insertMany($users);</code></pre>
 <blockquote>
 <p>ℹ️ If you need to make more complex queries look into <a class="gotoblock" href="/#/query-builder">QueryBuilder</a>.</p>
 </blockquote>
+<h2>Brief repetition of Store object creation</h2>
+<p>For a more detailed documentation on <code>Store</code> object creation refer to the corresponding <a class="gotoblock" href="#/managing-store">&quot;Managing Store&quot; documentation</a>.</p>
+<pre><code class="language-php">use SleekDB\Store;
+$newsStore = new Store('news', __DIR__ . "/database");</code></pre>
 <h2>Summary</h2>
 <ul>
 <li><a class="gotoblock" href="#/fetch-data#findAll">findAll</a></li>
@@ -637,11 +693,11 @@ $users = $userStore-&gt;insertMany($users);</code></pre>
 <p><br/></p>
 <h2 id="fetch-data-findById">Get a single document with its _id</h2>
 <p>With this method SleekDB doesn't traverse through all files. Instead, it accesses the file directly, what makes this method especially fast.</p>
-<pre><code class="language-php">function findById(int $id): array|null</code></pre>
+<pre><code class="language-php">function findById(int|string $id): array|null</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$id: int</h1>
+<h1>$id: int|string</h1>
 <p>The _id of a document located in the store.</p>
 </li>
 </ol>
@@ -682,7 +738,11 @@ The condition is case insensitive.</p>
 <p>Allowed conditional operators are:</p>
 <ul>
 <li><code>=</code> Match equal against data.</li>
+<li><code>===</code> Match equal against data.</li>
+<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
 <li><code>!=</code> Match not equal against data.</li>
+<li><code>!==</code> Match not equal against data.</li>
+<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
 <li><code>&gt;</code> Match greater than against data.</li>
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
@@ -799,7 +859,11 @@ The condition is case insensitive.</p>
 <p>Allowed conditional operators are:</p>
 <ul>
 <li><code>=</code> Match equal against data.</li>
+<li><code>===</code> Match equal against data.</li>
+<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
 <li><code>!=</code> Match not equal against data.</li>
+<li><code>!==</code> Match not equal against data.</li>
+<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
 <li><code>&gt;</code> Match greater than against data.</li>
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
@@ -866,19 +930,69 @@ Default: <code>AND</code></p>
    );</code></pre>
             <div class="editlink" 
               file="fetch-data.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
           <div class="intro" id="block_edit-data">
             <h1>Edit Data</h1>
-<p>To edit a data object you can use the <code>update()</code> method of the <code>Store</code> class.</p>
+<p>To edit a data object you can use the <code>update()</code> and <code>updateById()</code> method of the <code>Store</code> class.</p>
 <blockquote>
 <p>ℹ️ If you need to make more complex updates look into <a class="gotoblock" href="/#/query-builder">QueryBuilder</a> and <a class="gotoblock" href="/#/query">Query</a>.</p>
 </blockquote>
-<p>This method is especially fast because it uses the _id of the given document to update it directly instead of traversing through all documents.</p>
+<h2>Brief repetition of Store object creation</h2>
+<p>For a more detailed documentation on <code>Store</code> object creation refer to the corresponding <a class="gotoblock" href="#/managing-store">&quot;Managing Store&quot; documentation</a>.</p>
+<pre><code class="language-php">use SleekDB\Store;
+$userStore = new Store('users', __DIR__ . "/database");</code></pre>
+<h2>Summary</h2>
+<ul>
+<li><a class="gotoblock" href="#/edit-data#updateById">updateById</a></li>
+<li><a class="gotoblock" href="#/edit-data#update">update</a></li>
+<li><a class="gotoblock" href="#/edit-data#removeFieldsById">removeFieldsById</a></li>
+</ul>
+<h2 id="edit-data-updateById">updateById()</h2>
+<p>Update parts of a document.<br/>
+This method is especially fast because it uses the _id to update the document directly instead of traversing through all documents.</p>
+<pre><code class="language-php">function updateById(int|string $id, array $updatable): array|false</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$id: int|string</h1>
+<p>Id of document to update.</p>
+</li>
+<li>
+<h1>$updatable: array</h1>
+<p>Array containing the parts to update.<br/>
+Update of nested values possible by using a dot between fieldNames (Example 3)<br/>
+If a field does not exist in that document, it will be added.</p>
+</li>
+</ol>
+<h3>Return value</h3>
+<p>Returns <code>updated document</code> on success or <code>false</code> if document could not be found.</p>
+<h3>Example 1</h3>
+<p>Change the status of the user with _id = 23.</p>
+<pre><code class="language-php">$userStore-&gt;updateById(23, [ "status" =&gt; "active" ]);</code></pre>
+<h3>Example 2</h3>
+<p>Change the name and the age of the user with _id = 24.</p>
+<pre><code class="language-php">$userStore-&gt;updateById(24, [ "name" =&gt; "Georg", "age" =&gt; 22 ]);</code></pre>
+<h3>Example 3</h3>
+<p>Change the street of the user with _id = 24.<br/>
+<strong>Note</strong>: The street is stored in a nested array.</p>
+<pre><code class="language-php">$userStore-&gt;updateById(24, [ "address.street" =&gt; "first street" ]);</code></pre>
+<h4>Result</h4>
+<pre><code class="language-php">[
+    "_id" =&gt; 24,
+    "address" =&gt; [
+        "street" =&gt; "first street",
+        "postalCode" =&gt; "47129"
+    ],
+    ...
+]</code></pre>
+<h2 id="edit-data-update">update()</h2>
+<p>Update a whole document.<br/>
+This method is especially fast because it uses the _id of the given document/s to update it directly instead of traversing through all documents.</p>
 <pre><code class="language-php">function update(array $updatable): bool;</code></pre>
-<p>Note: This method of the <code>Store</code> class updates/overrides entire document/s, not just parts.</p>
+<p><strong>Note</strong>: This method of the <code>Store</code> class updates/overrides entire document/s, not just parts.</p>
 <h3>Parameters</h3>
 <ol>
 <li>
@@ -892,7 +1006,7 @@ Default: <code>AND</code></p>
 </ol>
 <h3>Return value</h3>
 <p>Returns <code>true</code> on success or <code>false</code> if document with given _id does not exist.</p>
-<h2>Update one user that we got beforehand</h2>
+<h3>Example 1: Update one user that we got beforehand</h3>
 <pre><code class="language-php">$user = [
     'name' =&gt; 'Willard Bowman',
     'products' =&gt; [
@@ -902,7 +1016,7 @@ Default: <code>AND</code></p>
 ];
 
 //store the user
-$store-&gt;insert($user); // has _id = 1
+$userStore-&gt;insert($user); // has _id = 1
 
 // retrieve a user
 $user = $userStore-&gt;findById(1);
@@ -911,7 +1025,7 @@ $user = $userStore-&gt;findById(1);
 $user["name"] = "Luke Bowman";
 
 $userStore-&gt;update( $user ); // updates the user by using his _id</code></pre>
-<h2>Update multiple users</h2>
+<h3>Example 2: Update multiple users</h3>
 <pre><code class="language-php">// retrieve users
 $users = $userStore-&gt;findBy(["name", "=", "Josh"]);
 
@@ -925,9 +1039,45 @@ foreach($users as $key =&gt; $user){
 
 // update all users that had the name Josh
 $userStore-&gt;update( $users );</code></pre>
+<h2 id="edit-data-removeFieldsById">removeFieldsById()</h2>
+<p>Update parts of a document.<br/>
+This method is especially fast because it uses the _id to update the document directly instead of traversing through all documents.</p>
+<pre><code class="language-php">function removeFieldsById(int|string $id, array $fieldsToRemove): array|false</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$id: int|string</h1>
+<p>Id of document to remove fields of.</p>
+</li>
+<li>
+<h1>$fieldsToRemove: array</h1>
+<p>Array containing fields to remove.<br/>
+Removal of nested fields possible by using a dot between fieldNames (Example 3)</p>
+</li>
+</ol>
+<h3>Return value</h3>
+<p>Returns <code>updated document</code> on success or <code>false</code> if document could not be found.</p>
+<h3>Example 1</h3>
+<p>Change the status field of the user with _id = 23.</p>
+<pre><code class="language-php">$userStore-&gt;updateById(23, [ "status" ]);</code></pre>
+<h3>Example 2</h3>
+<p>Remove the name and the age fields of the user with _id = 24.</p>
+<pre><code class="language-php">$userStore-&gt;updateById(24, [ "name", "age" ]);</code></pre>
+<h3>Example 3</h3>
+<p>Remove the street field of the user with _id = 24.<br/>
+<strong>Note</strong>: The street is stored in a nested array.</p>
+<pre><code class="language-php">$userStore-&gt;updateById(24, [ "address.street" ]);</code></pre>
+<h4>Result</h4>
+<pre><code class="language-php">[
+    "_id" =&gt; 24,
+    "address" =&gt; [
+        "postalCode" =&gt; "47129"
+    ],
+    ...
+]</code></pre>
             <div class="editlink" 
               file="edit-data.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -937,6 +1087,10 @@ $userStore-&gt;update( $users );</code></pre>
 <blockquote>
 <p>ℹ️ If you need to make a more complex delete look into <a class="gotoblock" href="/#/query-builder">QueryBuilder</a> and <a class="gotoblock" href="#/query">Query</a>.</p>
 </blockquote>
+<h2>Brief repetition of Store object creation</h2>
+<p>For a more detailed documentation on <code>Store</code> object creation refer to the corresponding <a class="gotoblock" href="#/managing-store">&quot;Managing Store&quot; documentation</a>.</p>
+<pre><code class="language-php">use SleekDB\Store;
+$userStore = new Store('users', __DIR__ . "/database");</code></pre>
 <h2>Summary</h2>
 <ul>
 <li><a class="gotoblock" href="#/delete-data#deleteBy">deleteBy</a></li>
@@ -972,7 +1126,11 @@ The condition is case insensitive.</p>
 <p>Allowed conditional operators are:</p>
 <ul>
 <li><code>=</code> Match equal against data.</li>
+<li><code>===</code> Match equal against data.</li>
+<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
 <li><code>!=</code> Match not equal against data.</li>
+<li><code>!==</code> Match not equal against data.</li>
+<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
 <li><code>&gt;</code> Match greater than against data.</li>
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
@@ -1059,11 +1217,11 @@ $deletedUsers = $userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"], Query::
 <p><br/></p>
 <h2 id="delete-data-deleteById">Delete one document with its _id</h2>
 <p>This method is especially fast because SleekDB uses the _id to directly delete the document and does not traverse through all files.</p>
-<pre><code class="language-php">function deleteById(int $id): bool</code></pre>
+<pre><code class="language-php">function deleteById(int|string $id): bool</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$id: int</h1>
+<h1>$id: int|string</h1>
 <p>The _id of a document located in the store.</p>
 </li>
 </ol>
@@ -1074,7 +1232,7 @@ $deletedUsers = $userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"], Query::
 // Returns true</code></pre>
             <div class="editlink" 
               file="delete-data.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -1087,18 +1245,20 @@ $deletedUsers = $userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"], Query::
 <li><a class="gotoblock" href="#/query-builder#getQuery">getQuery</a></li>
 <li><a class="gotoblock" href="#/query-builder#where">where</a></li>
 <li><a class="gotoblock" href="#/query-builder#orWhere">orWhere</a></li>
-<li><del><a class="gotoblock" href="#/query-builder#nestedWhere">nestedWhere</a></del> ( 🚨 Deprecated since version 2.3, use where and orWhere instead! )</li>
-<li><del><a class="gotoblock" href="#/query-builder#in">in</a></del> ( 🚨 Deprecated since version 2.4, use where and orWhere instead! )</li>
-<li><del><a class="gotoblock" href="#/query-builder#notIn">notIn</a></del>  ( 🚨 Deprecated since version 2.4, use where and orWhere instead! )</li>
 <li><a class="gotoblock" href="#/query-builder#select">select</a></li>
 <li><a class="gotoblock" href="#/query-builder#except">except</a></li>
-<li><a class="gotoblock" href="#/query-builder#distinct">distinct</a></li>
 <li><a class="gotoblock" href="#/query-builder#skip">skip</a></li>
 <li><a class="gotoblock" href="#/query-builder#limit">limit</a></li>
 <li><a class="gotoblock" href="#/query-builder#orderBy">orderBy</a></li>
+<li><a class="gotoblock" href="#/query-builder#groupBy">groupBy</a></li>
+<li><a class="gotoblock" href="#/query-builder#having">having</a></li>
 <li><a class="gotoblock" href="#/query-builder#search">search</a></li>
+<li><a class="gotoblock" href="#/query-builder#distinct">distinct</a></li>
 <li><a class="gotoblock" href="#/query-builder#cache-management">Cache management</a></li>
 <li><a class="gotoblock" href="#/query-builder#join">join</a></li>
+<li><del><a class="gotoblock" href="#/query-builder#nestedWhere">nestedWhere</a></del> ( 🚨 Deprecated since version 2.3, use where and orWhere instead! )</li>
+<li><del><a class="gotoblock" href="#/query-builder#in">in</a></del> ( 🚨 Deprecated since version 2.4, use where and orWhere instead! )</li>
+<li><del><a class="gotoblock" href="#/query-builder#notIn">notIn</a></del>  ( 🚨 Deprecated since version 2.4, use where and orWhere instead! )</li>
 </ul>
 <h2 id="query-builder-getQuery">getQuery()</h2>
 <p>With the <code>getQuery</code> method of the QueryBuilder class you can <strong><code>retrieve the Query object to execute the query</code></strong>.</p>
@@ -1158,7 +1318,11 @@ The condition is case insensitive.</p>
 <p>Allowed conditional operators are:</p>
 <ul>
 <li><code>=</code> Match equal against data.</li>
+<li><code>===</code> Match equal against data.</li>
+<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
 <li><code>!=</code> Match not equal against data.</li>
+<li><code>!==</code> Match not equal against data.</li>
+<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
 <li><code>&gt;</code> Match greater than against data.</li>
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
@@ -1315,7 +1479,11 @@ The condition is case insensitive.</p>
 <p>Allowed conditional operators are:</p>
 <ul>
 <li><code>=</code> Match equal against data.</li>
+<li><code>===</code> Match equal against data.</li>
+<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
 <li><code>!=</code> Match not equal against data.</li>
+<li><code>!==</code> Match not equal against data.</li>
+<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
 <li><code>&gt;</code> Match greater than against data.</li>
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
@@ -1415,6 +1583,395 @@ WHERE
   )
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
+<h2 id="query-builder-select">select()</h2>
+<p>With select(...) you can specify specific fields to output, like after the SELECT keyword in SQL. SleekDB supports multiple <code>select()</code> as object chain for multiple fields.</p>
+<pre><code class="language-php">function select(array $fieldNames): QueryBuilder</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$fieldNames: array</h1>
+<p>Specify specific fields to output.</p>
+<ul>
+<li>[&quot;fieldName1&quot;, &quot;fieldName2&quot;, ...]</li>
+<li>[&quot;ALIAS&quot; =&gt; &quot;fieldName1&quot;, &quot;fieldName2&quot;, ..]</li>
+</ul>
+</li>
+</ol>
+<h3>When using select in conjunction with <a class="gotoblock" href="#/query-builder#groupBy">groupBy</a> you can also use functions.</h3>
+<ul>
+<li>[&quot;ALIAS&quot; =&gt; [&quot;FUNCTION&quot; =&gt; &quot;fieldName&quot;], ...]<br/>
+Available functions:
+<ul>
+<li><code>SUM</code></li>
+<li><code>MAX</code></li>
+<li><code>MIN</code></li>
+<li><code>AVG</code></li>
+</ul></li>
+</ul>
+<h3>Example 1</h3>
+<p>Retrieve just the name of all users.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;select(['name'])
+  -&gt;getQuery()
+  -&gt;fetch();
+// output: [["_id" =&gt; 1, "name" =&gt; "Max"], ["_id" =&gt; 2, "name" =&gt; "Hasan"]]</code></pre>
+<h3>Example 2</h3>
+<p>Retrieve just the age of all users as age.<br/>
+<strong>Note</strong>: The age of the user is stored in a nested array.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;select(["age" =&gt; "userBiography.age"])
+  -&gt;getQuery()
+  -&gt;fetch();
+// output: [["_id" =&gt; 1, "age" =&gt; 20], ["_id" =&gt; 2, "age" =&gt; 17]]</code></pre>
+<h3>Example 3</h3>
+<p>Using a function when using <a class="gotoblock" href="#/query-builder#groupBy">groupBy</a>.</p>
+<pre><code class="language-sql">SELECT age, SUM(follower) as followerSum GROUP BY age;</code></pre>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;select(["age", "followerSum" =&gt; ["SUM" =&gt; "follower"]])
+  -&gt;groupBy(["age"])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h2 id="query-builder-except">except()</h2>
+<p><code>except(...)</code> works as the opposite of <code>select()</code> method. Use it when you don't want a property in the result. For example, if you don't want the password field in your returned data set.</p>
+<pre><code class="language-php">function except(array $fieldNames): QueryBuilder</code></pre>
+<ol>
+<li>
+<h1>$fieldNames: array</h1>
+<p>Specify specific fields to exclude from the output.</p>
+</li>
+</ol>
+<h3>Example 1</h3>
+<p>Retrieve all information of an user except its _id and name.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;except(["_id", "name"])
+  -&gt;getQuery()
+  -&gt;fetch();
+// output: [["age" =&gt; 28], ["age" =&gt; 18]]</code></pre>
+<h3>Example 2</h3>
+<p>Retrieve all information of an user except its name and streetNumber.<br/>
+<strong>Note</strong>: The steet number is stored in a nested array.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;except(["name", "address.streetNumber"])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code>[ ["_id" =&gt; 2, "address" =&gt; [ "street" =&gt; "Firststreet" ]], ... ]</code></pre>
+<h2 id="query-builder-skip">skip()</h2>
+<p>Skip works as the OFFSET clause of SQL. You can use this to skip a specific amount of documents.</p>
+<pre><code class="language-php">function skip(int $skip = 0): QueryBuilder</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$skip: int</h1>
+<p>The value of how many documents should be skipped.</p>
+</li>
+</ol>
+<h3>Example</h3>
+<p>Retrieve all users except the first 10 found.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;skip(10)
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h2 id="query-builder-limit">limit()</h2>
+<p>Works as the LIMIT clause of SQL. You can use this to limit the results to a specific amount.</p>
+<pre><code class="language-php">function limit($limit = 0): QueryBuilder</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$limit: int</h1>
+<p>Limit the amount of values in the result set. Has to be greater than 0.</p>
+</li>
+</ol>
+<h3>Example</h3>
+<p>Retrieve just the first ten users.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;limit(10)
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h2 id="query-builder-orderBy">orderBy()</h2>
+<p>Works as the ORDER BY clause of SQL. With this method you can sort the result. You can use this method to sort the result by one or multiple fields.</p>
+<pre><code class="language-php">function orderBy( array $criteria): QueryBuilder</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$criteria: array</h1>
+</li>
+</ol>
+<ul>
+<li>[ $fieldName =&gt; $order ]</li>
+<li>[ $fieldName =&gt; $order, $fieldName =&gt; $order, ... ]
+<ul>
+<li>
+<h1>$fieldName: string</h1>
+<p>Name of the field that will be used to sort the result.</p>
+</li>
+<li>
+<h1>$order: string</h1>
+<p>Either <code>desc</code> for a descending sort or <code>asc</code> for a ascending sort.</p>
+</li>
+</ul></li>
+</ul>
+<h3>Example 1</h3>
+<p>Retrieve all users sorted by their name.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;orderBy(["name" =&gt; "asc"])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code>[["_id" =&gt; 13, "name" =&gt; "Anton"], ["_id" =&gt; 2, "name" =&gt; "Berta"], ...]</code></pre>
+<h3>Example 2</h3>
+<p>Retrieve all users sorted by their name and age.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;orderBy(["name" =&gt; "asc", "age" =&gt; "asc"])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code>[
+  ["_id" =&gt; 13, "name" =&gt; "Anton", "age" =&gt; 20],
+  ["_id" =&gt; 4, "name" =&gt; "Aragon", "age" =&gt; 16], 
+  ["_id" =&gt; 2, "name" =&gt; "Aragon", "age" =&gt; 17], 
+  ...
+]</code></pre>
+<h2 id="query-builder-groupBy">groupBy()</h2>
+<p>Group documents using one or multiple fields.</p>
+<pre><code class="language-php">function groupBy(array $groupByFields, string $counterKeyName = null, bool $allowEmpty = false): QueryBuilder</code></pre>
+<blockquote>
+<p>When using groupBy the <a class="gotoblock" href="#/query-builder#select">select</a> method has extended functionality!<br/>
+<strong>Note</strong>: If you use select in conjunction with groupBy you have to explicitly specify all fields you want in the result.</p>
+</blockquote>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$groupByFields: array</h1>
+<p>One or multiple fields to group documents by.</p>
+</li>
+<li>
+<h1>$counterKeyName: string</h1>
+<p>If counterKeyName is not null a counter that represents how many documents are grouped together will be applied to the result documents automatically using the given string as the name for the counter.<br/>
+<strong>Note</strong>: You can not specify an alias with the <a class="gotoblock" href="#/query-builder#select">select</a> method for this new field, because it is already an alias!</p>
+</li>
+<li>
+<h1>$allowEmpty: bool</h1>
+<p>If true documents having an empty value like null, in the fields that are relevant for grouping, will be grouped together.</p>
+</li>
+</ol>
+<h3>Example 1</h3>
+<p>Group active products based on category.</p>
+<pre><code class="language-sql">SELECT category, COUNT(*) AS productAmount WHERE active = true GROUP BY category;</code></pre>
+<pre><code class="language-php">$productQueryBuilder
+  -&gt;where(["active", "=", true])
+  -&gt;groupBy(["category"], "productAmount")
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code>[ 
+  ["category" =&gt; "pants", "productAmount" =&gt; 200], 
+  ["category" =&gt; "shirts", "productAmount" =&gt; 29], 
+  ... 
+]</code></pre>
+<h3>Example 2</h3>
+<p>Group active products based on category and return the sum of the views.</p>
+<pre><code class="language-sql">SELECT 
+  category AS Category,
+  subcategory, 
+  COUNT(*) AS productAmount,
+  SUM(views) AS views 
+WHERE 
+  active = true 
+GROUP BY 
+  category, subcategory
+ORDER BY
+  category ASC, subcategory DESC;</code></pre>
+<pre><code class="language-php">$productQueryBuilder
+  -&gt;select([ 
+    "Category" =&gt; "category", 
+    "subcategory", 
+    "productAmount", 
+    "views" =&gt; ["SUM" =&gt; "views"] 
+  ])
+  -&gt;where(["active", "=", true])
+  -&gt;groupBy(
+    ["category", "subcategory"],
+    "productAmount"
+  )
+  -&gt;orderBy(["category" =&gt; "ASC", "subcategory" =&gt; "DESC"])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code>[ 
+  ["Category" =&gt; "pants", "subcategory" =&gt; "shorts", "productAmount" =&gt; 20, "views" =&gt; 212], 
+  ["Category" =&gt; "pants", "subcategory" =&gt; "jeans", "productAmount" =&gt; 83, "views" =&gt; 331], 
+  ... 
+]</code></pre>
+<h2 id="query-builder-having">having()</h2>
+<p>Filter grouped documents.</p>
+<pre><code class="language-php">function having(array $criteria): QueryBuilder</code></pre>
+<blockquote>
+<p><strong>Note</strong>: <code>having</code> can just be used in conjunction with <a class="gotoblock" href="#/query-builder#groupBy">groupBy</a>!</p>
+</blockquote>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$criteria</h1>
+<p>One or multiple where conditions.<br/>
+The criteria can be nested as much as needed.</p>
+</li>
+</ol>
+<ul>
+<li>[$fieldName, $condition, $value]</li>
+<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
+<li>
+<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
+<ul>
+<li>
+<h1>$fieldName: string</h1>
+<p>The field name argument is the property that we want to check in our data object.</p>
+<p>As our data object is basically a JSON document so it could have nested properties.</p>
+<p>To target nested properties we use a single dot between the property/field name.</p>
+<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
+</li>
+<li>
+<h1>$condition: string</h1>
+<p>To apply the comparison filters we use this argument.<br/>
+The condition is case insensitive.</p>
+<p>Allowed conditional operators are:</p>
+<ul>
+<li><code>=</code> Match equal against data.</li>
+<li><code>===</code> Match equal against data.</li>
+<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
+<li><code>!=</code> Match not equal against data.</li>
+<li><code>!==</code> Match not equal against data.</li>
+<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
+<li><code>&gt;</code> Match greater than against data.</li>
+<li><code>&gt;=</code> Match greater equal against data.</li>
+<li><code>&lt;</code> Match less than against data.</li>
+<li><code>&lt;=</code> Match less equal against data.</li>
+<li><code>LIKE</code> Match using wildcards.</li>
+<li><code>NOT LIKE</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
+Supported wildcards:
+<ul>
+<li><code>%</code> Represents zero or more characters<br/>
+Example: bl% finds bl, black, blue, and blob</li>
+<li><code>_</code> Represents a single character<br/>
+Example: h_t finds hot, hat, and hit</li>
+<li><code>[]</code> Represents any single character within the brackets<br/>
+Example: h[oa]t finds hot and hat, but not hit</li>
+<li><code>^</code> Represents any character not in the brackets<br/>
+Example: h[^oa]t finds hit, but not hot and hat</li>
+<li><code>-</code> Represents a range of characters<br/>
+Example: c[a-b]t finds cat and cbt</li>
+</ul></li>
+<li><code>IN</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>NOT IN</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
+<li><code>BETWEEN</code> $value has to be an <code>array</code> with a lengeth of 2.<br/>
+Check if data is within first and second value.<br/>
+Begin and end values are included.</li>
+<li><code>NOT BETWEEN</code> $value has to be an <code>array</code> with a length of 2.<br/>
+Check if data is <strong>not</strong> within first and second value.<br/>
+Begin and end values are included.</li>
+</ul>
+</li>
+<li>
+<h1>$value</h1>
+<p>Data that will be checked against the property value of the JSON documents.<br/>
+Can also be a DateTime object if the property value of the JSON document is convertable into a DateTime object. Refer to the <a class="gotoblock" href="#/dates">Working with Dates</a> documentation to learn more about that.</p>
+</li>
+<li>
+<h1>OPERATION: string</h1>
+<p>It is used to connect multiple conditions.<br/>
+The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
+Default: <code>AND</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Example 1</h3>
+<p>Group active products based on category and just retrieve categories with views higher than 500 and lower than 1000.</p>
+<pre><code class="language-sql">SELECT 
+  category, 
+  SUM(views) AS totalViews
+WHERE 
+  active = true 
+GROUP BY 
+  category 
+HAVING
+  totalViews &gt; 500 AND totalViews &lt; 1000;</code></pre>
+<pre><code class="language-php">$productQueryBuilder
+  -&gt;select([ "category", "totalViews" =&gt; ["SUM" =&gt; "views"] ])
+  -&gt;where(["active", "=", true])
+  -&gt;groupBy(["category"])
+  -&gt;having([ 
+    ["totalViews", "&gt;", 500], 
+    "AND", // &lt;- Optional
+    ["totalViews", "&lt;", 1000] 
+  ])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code>[ 
+  ["category" =&gt; "pants", "totalViews" =&gt; 502], 
+  ["category" =&gt; "shirts", "totalViews" =&gt; 931], 
+  ... 
+]</code></pre>
+<h2 id="query-builder-search">search()</h2>
+<p>Do a fulltext like search against one or multiple fields.</p>
+<pre><code class="language-php">function search($fields, string $query, array $options = []): QueryBuilder</code></pre>
+<blockquote>
+<p>Please visit the <a class="gotoblock" href="#/searching">&quot;Searching&quot; documentation</a> for more details and examples!</p>
+</blockquote>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$fields: array|string</h1>
+<p>An array containg all fields to search against.</p>
+<ul>
+<li>&quot;title&quot;</li>
+<li>[&quot;title&quot;]</li>
+<li>[&quot;title&quot;, &quot;content&quot;, ...]</li>
+</ul>
+<p>As our documents are basically JSON documents it also could have nested properties.</p>
+<p>To target nested properties we use a single dot between the property/field name.</p>
+<p><strong>Example:</strong> <code>address.street</code></p>
+</li>
+<li>
+<h1>$query: string</h1>
+<p>The search query.</p>
+</li>
+<li>
+<h1>$options: array</h1>
+<p>Configure the search behaviour on a query by query base.</p>
+</li>
+</ol>
+<h2 id="query-builder-distinct">distinct()</h2>
+<p>The distinct method is used to retrieve unique values from the store. It will remove all the duplicate documents while fetching data from a store.</p>
+<pre><code class="language-php">distinct( array|string $fields ): QueryBuilder;</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$fields: array|string</h1>
+<p>Specify one or multiple fields you want to be distinct.</p>
+</li>
+</ol>
+<h3>Example</h3>
+<p>Retrieve all users, but just the first user if there is another one with the same name.</p>
+<pre><code class="language-php">// providing a string
+$distinctUsers = $userQueryBuilder
+  -&gt;distinct("name")
+  -&gt;getQuery()
+  -&gt;fetch();
+
+// providing an array
+$distinctUsers = $userQueryBuilder
+  -&gt;distinct(["name"])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h2 id="query-builder-cache-management">Cache management</h2>
+<p>The QueryBuilder provides the <code>useCache</code>, <code>disableCache</code> and <code>regenerateCache</code> methods to manage caching on a query by query base.</p>
+<p>Please visit the <a class="gotoblock" href="/#/cache-management">Cache Management</a> page for more details.</p>
+<h2 id="query-builder-join">join()</h2>
+<p>This method is used to join two or multiple stores together.</p>
+<p>For more details please visit the <a class="gotoblock" href="/#/join-stores">Join Stores</a> page.</p>
+<pre><code class="language-php">function join(Closure $joinedStore, string $dataPropertyName): QueryBuilder</code></pre>
 <h2 id="query-builder-nestedWhere"><del>nestedWhere()</del></h2>
 <blockquote>
 <h3>🚨 Deprecated since version 2.3, use <code>where</code> and <code>orWhere</code> instead!</h3>
@@ -1454,7 +2011,11 @@ The condition is case insensitive.</p>
 <p>Allowed conditional operators are:</p>
 <ul>
 <li><code>=</code> Match equal against data.</li>
+<li><code>===</code> Match equal against data.</li>
+<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
 <li><code>!=</code> Match not equal against data.</li>
+<li><code>!==</code> Match not equal against data.</li>
+<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
 <li><code>&gt;</code> Match greater than against data.</li>
 <li><code>&gt;=</code> Match greater equal against data.</li>
 <li><code>&lt;</code> Match less than against data.</li>
@@ -1632,164 +2193,9 @@ SleekDB supports multiple notIn as object chain for different fields.</p>
   -&gt;notIn("products.totalSaved", [100, 150, 200])
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
-<h2 id="query-builder-select">select()</h2>
-<p>With select(...) you can specify specific fields to output, like after the SELECT keyword in SQL. SleekDB supports multiple <code>select()</code> as object chain for multiple fields.</p>
-<pre><code class="language-php">function select(array $fieldNames): QueryBuilder</code></pre>
-<h3>Parameters</h3>
-<ol>
-<li>
-<h1>$fieldNames: array</h1>
-<p>Specify specific fields to output.</p>
-</li>
-</ol>
-<h3>Example</h3>
-<p>Retrieve just the name of all users.</p>
-<pre><code class="language-php">$users = $userQueryBuilder
-  -&gt;select(['name'])
-  -&gt;getQuery()
-  -&gt;fetch();
-// output: [["_id" =&gt; 1, "name" =&gt; "Max"], ["_id" =&gt; 2, "name" =&gt; "Hasan"]]</code></pre>
-<h2 id="query-builder-except">except()</h2>
-<p><code>except(...)</code> works as the opposite of <code>select()</code> method. Use it when you don't want a property in the result. For example, if you don't want the password field in your returned data set.</p>
-<pre><code class="language-php">function except(array $fieldNames): QueryBuilder</code></pre>
-<ol>
-<li>
-<h1>$fieldNames: array</h1>
-<p>Specify specific fields to exclude from the output.</p>
-</li>
-</ol>
-<h3>Example</h3>
-<p>Retrieve all information of an user except its _id and name.</p>
-<pre><code class="language-php">$users = $userQueryBuilder
-  -&gt;except(["_id", "name"])
-  -&gt;getQuery()
-  -&gt;fetch();
-// output: [["age": 28], ["age": 18]]</code></pre>
-<h2 id="query-builder-distinct">distinct()</h2>
-<p>The distinct method is used to retrieve unique values from the store. It will remove all the duplicate documents while fetching data from a store.</p>
-<pre><code class="language-php">distinct( array|string $fields ): QueryBuilder;</code></pre>
-<h3>Parameters</h3>
-<ol>
-<li>
-<h1>$fields: array|string</h1>
-<p>Specify one or multiple fields you want to be distinct.</p>
-</li>
-</ol>
-<h3>Example</h3>
-<p>Retrieve all users, but just the first user if there is another one with the same name.</p>
-<pre><code class="language-php">// providing a string
-$distinctUsers = $userQueryBuilder
-  -&gt;distinct("name")
-  -&gt;getQuery()
-  -&gt;fetch();
-
-// providing an array
-$distinctUsers = $userQueryBuilder
-  -&gt;distinct(["name"])
-  -&gt;getQuery()
-  -&gt;fetch();</code></pre>
-<h2 id="query-builder-skip">skip()</h2>
-<p>Skip works as the OFFSET clause of SQL. You can use this to skip a specific amount of documents.</p>
-<pre><code class="language-php">function skip(int $skip = 0): QueryBuilder</code></pre>
-<h3>Parameters</h3>
-<ol>
-<li>
-<h1>$skip: int</h1>
-<p>The value how many documents should be skipped.</p>
-</li>
-</ol>
-<h3>Example</h3>
-<p>Retrieve all users except the first 10 found.</p>
-<pre><code class="language-php">$users = $userQueryBuilder
-  -&gt;skip(10)
-  -&gt;getQuery()
-  -&gt;fetch();</code></pre>
-<h2 id="query-builder-limit">limit()</h2>
-<p>Works as the LIMIT clause of SQL. You can use this to limit the results to a specific amount.</p>
-<pre><code class="language-php">function limit($limit = 0): QueryBuilder</code></pre>
-<h3>Parameters</h3>
-<ol>
-<li>$limit: int
-Limit the amount of values in the result set. Has to be greater than 0.</li>
-</ol>
-<h3>Example</h3>
-<p>Retrieve just the first ten users.</p>
-<pre><code class="language-php">$users = $userQueryBuilder
-  -&gt;limit(10)
-  -&gt;getQuery()
-  -&gt;fetch();</code></pre>
-<h2 id="query-builder-orderBy">orderBy()</h2>
-<p>Works as the ORDER BY clause of SQL. With this method you can sort the result. You can use this method to sort the result by one or multiple fields.</p>
-<pre><code class="language-php">function orderBy( array $criteria): QueryBuilder</code></pre>
-<h3>Parameters</h3>
-<ol>
-<li>
-<h1>$criteria: array</h1>
-</li>
-</ol>
-<ul>
-<li>[ $fieldName =&gt; $order ]</li>
-<li>[ $fieldName =&gt; $order, $fieldName =&gt; $order, ... ]
-<ul>
-<li>
-<h1>$fieldName: string</h1>
-<p>Name of the field that will be used to sort the result.</p>
-</li>
-<li>
-<h1>$order: string</h1>
-<p>Either <code>desc</code> for a descending sort or <code>asc</code> for a ascending sort.</p>
-</li>
-</ul></li>
-</ul>
-<h3>Example 1</h3>
-<p>Retrieve all users sorted by their name.</p>
-<pre><code class="language-php">$users = $userQueryBuilder
-  -&gt;orderBy(["name" =&gt; "asc"])
-  -&gt;getQuery()
-  -&gt;fetch();</code></pre>
-<h4>Result</h4>
-<pre><code>[["_id" =&gt; 13, "name" =&gt; "Anton"], ["_id" =&gt; 2, "name" =&gt; "Berta"], ...]</code></pre>
-<h3>Example 2</h3>
-<p>Retrieve all users sorted by their name and age.</p>
-<pre><code class="language-php">$users = $userQueryBuilder
-  -&gt;orderBy(["name" =&gt; "asc", "age" =&gt; "asc"])
-  -&gt;getQuery()
-  -&gt;fetch();</code></pre>
-<h4>Result</h4>
-<pre><code>[
-  ["_id" =&gt; 13, "name" =&gt; "Anton", "age" =&gt; 20],
-  ["_id" =&gt; 4, "name" =&gt; "Aragon", "age" =&gt; 16], 
-  ["_id" =&gt; 2, "name" =&gt; "Aragon", "age" =&gt; 17], 
-  ...
-]</code></pre>
-<h2 id="query-builder-search">search()</h2>
-<p>Do a fulltext like search against one or multiple fields.</p>
-<pre><code class="language-php">function search(string|array $fields, string $keyword): QueryBuilder</code></pre>
-<h3>Parameters</h3>
-<ol>
-<li>
-<h1>$fields: array|string</h1>
-<p>One or multiple fields that will be searched.</p>
-</li>
-<li>$keyword: string
-Value that will be searched by.</li>
-</ol>
-<h3>Example</h3>
-<p>Find all articles that include the word &quot;SleekDB&quot; in their description.</p>
-<pre><code class="language-php">$articles = $articleQueryBuilder
-  -&gt;search("content", "SleekDB")
-  -&gt;getQuery()
-  -&gt;fetch();</code></pre>
-<h2 id="query-builder-cache-management">Cache management</h2>
-<p>The QueryBuilder provides the <code>useCache</code>, <code>disableCache</code> and <code>regenerateCache</code> methods to manage caching on a query by query base.</p>
-<p>Please visit the <a class="gotoblock" href="/#/cache-management">Cache Management</a> page for more details.</p>
-<h2 id="query-builder-join">join()</h2>
-<p>This method is used to join two or multiple stores together.</p>
-<p>For more details please visit the <a class="gotoblock" href="/#/join-stores">Join Stores</a> page.</p>
-<pre><code class="language-php">function join(Closure $joinedStore, string $dataPropertyName): QueryBuilder</code></pre>
             <div class="editlink" 
               file="query-builder.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -1904,7 +2310,7 @@ $users = $userQueryBuilder
     -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="cache-management.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -2026,7 +2432,7 @@ $users = $userStore
   -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="join-stores.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -2042,6 +2448,7 @@ $users = $userStore
 <li><a class="gotoblock" href="#/query#exists">exists</a></li>
 <li><a class="gotoblock" href="#/query#update">update</a></li>
 <li><a class="gotoblock" href="#/query#delete">delete</a></li>
+<li><a class="gotoblock" href="#/query#removeFields">removeFields</a></li>
 </ul>
 <h2 id="query-fetch">fetch()</h2>
 <p>Execute a query and retrieve an array containing all documents found.</p>
@@ -2096,23 +2503,47 @@ $users = $userStore
   -&gt;exists();</code></pre>
 <h2 id="query-update">update()</h2>
 <p>Update one or multiple documents based on a given query.</p>
-<pre><code class="language-php">function update(array $updatable): bool</code></pre>
+<pre><code class="language-php">function update(array $updatable, bool $returnUpdatedDocuments = false): array|bool</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
 <h1>$updatable: array</h1>
-<p>An array containing the properties to update.</p>
+<p>An array containing the properties to update.<br/>
+Update of nested values possible by using a dot between fieldNames (Example 2)<br/>
+If a field does not exist in a document, it will be added.</p>
 </li>
 </ol>
 <h3>Return value</h3>
-<p>Returns <code>true</code> on success and <code>false</code> if no documents found to update.</p>
-<h3>Example</h3>
+<p>If <strong>$returnUpdatedDocuments = false</strong>:<br/>
+Returns <code>true</code> on success and <code>false</code> if no documents found to update.</p>
+<p>If <strong>$returnUpdatedDocuments = true</strong>:<br/>
+Returns <code>updated documents</code> on success and <code>false</code> if no documents found to update.</p>
+<h3>Example 1</h3>
 <p>Set the status of all users that are located in london to VIP.</p>
 <pre><code class="language-php">$userStore
   -&gt;createQueryBuilder()
   -&gt;where([ "city", "=", "london" ])
   -&gt;getQuery()
   -&gt;update([ "status" =&gt; "VIP" ]);</code></pre>
+<h3>Example 2</h3>
+<p>Change the street of the user with _id = 24.<br/>
+<strong>Note</strong>: The street is in a nested array.</p>
+<pre><code class="language-php">$userStore
+  -&gt;createQueryBuilder()
+  -&gt;where("city", "=", "london")
+  -&gt;update([ "address.street" =&gt; "first street" ]);</code></pre>
+<h4>Result</h4>
+<pre><code class="language-php">[
+  [
+    "city" =&gt; "london".
+    "address" =&gt; [
+      "street" =&gt; "first street",
+      "postalCode" =&gt; "41824"
+    ],
+    ...
+  ],
+  ...
+]</code></pre>
 <h2 id="query-delete">delete()</h2>
 <p>Delete one or multiple documents based on a given query.</p>
 <pre><code class="language-php">function delete(int $returnOption = Query::DELETE_RETURN_BOOL)</code></pre>
@@ -2158,9 +2589,47 @@ $result = $userStore
   -&gt;getQuery()
   -&gt;delete(Query::DELETE_RETURN_RESULT);
 // output: [ ["_id" =&gt; 1, "name" =&gt; "Max"], ["_id" =&gt; 4, "name" =&gt; "John"], ... ]</code></pre>
+<h2 id="query-removeFields">removeFields()</h2>
+<p>Remove fields of one or multiple documents based on current query.</p>
+<pre><code class="language-php">function removeFields(array $fieldsToRemove): array|false</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$fieldsToRemove: array</h1>
+<p>An array containing the fields to remove.<br/>
+Update of nested values possible by using a dot between fieldNames (Example 2)</p>
+</li>
+</ol>
+<h3>Return value</h3>
+<p>Returns <code>updated documents</code> on success and <code>false</code> on failure.</p>
+<h3>Example 1</h3>
+<p>Remove the status field of all users that are located in london.</p>
+<pre><code class="language-php">$userStore
+  -&gt;createQueryBuilder()
+  -&gt;where([ "city", "=", "london" ])
+  -&gt;getQuery()
+  -&gt;removeFields([ "status" ]);</code></pre>
+<h3>Example 2</h3>
+<p>Remove the street field of the user with _id = 24.<br/>
+<strong>Note</strong>: The street is in a nested array.</p>
+<pre><code class="language-php">$userStore
+  -&gt;createQueryBuilder()
+  -&gt;where("city", "=", "london")
+  -&gt;removeFields([ "address.street" ]);</code></pre>
+<h4>Result</h4>
+<pre><code class="language-php">[
+  [
+    "city" =&gt; "london".
+    "address" =&gt; [
+      "postalCode" =&gt; "41824"
+    ],
+    ...
+  ],
+  ...
+]</code></pre>
             <div class="editlink" 
               file="query.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -2170,18 +2639,23 @@ $result = $userStore
 Means you can check against an DateTime object.</p>
 <p>The methods that accept DateTime objects as a value to check against are:</p>
 <ul>
-<li><code>findBy</code></li>
-<li><code>findOneBy</code></li>
-<li><code>deleteBy</code></li>
-<li><code>where</code></li>
-<li><code>orWhere</code></li>
+<li><a class="gotoblock" href="#/fetch-data#findBy"><code>findBy</code></a></li>
+<li><a class="gotoblock" href="#/fetch-data#findOneBy"><code>findOneBy</code></a></li>
+<li><a class="gotoblock" href="#/delete-data#deleteBy"><code>deleteBy</code></a></li>
+<li><a class="gotoblock" href="#/query-builder#where"><code>where</code></a></li>
+<li><a class="gotoblock" href="#/query-builder#orWhere"><code>orWhere</code></a></li>
 </ul>
 <p>The conditions you can use DateTime objects with are:</p>
 <ul>
 <li><code>=</code></li>
+<li><code>===</code></li>
+<li><code>==</code> (Type unsafe comparison)</li>
 <li><code>!=</code></li>
+<li><code>!==</code></li>
+<li><code>&lt;&gt;</code> (Type unsafe comparison)</li>
 <li><code>&gt;</code></li>
 <li><code>&gt;=</code></li>
+<li><code>&lt;</code></li>
 <li><code>&lt;=</code></li>
 <li><code>IN</code></li>
 <li><code>NOT IN</code></li>
@@ -2294,12 +2768,304 @@ $news = $newsStore-&gt;findBy([ "releaseDate", "IN", $datesToFilter ] );
 // WHERE releaseDate IN ("2020-12-01", "2021-01-04", "2021-01-19")</code></pre>
             <div class="editlink" 
               file="dates.md" 
-              version="2.5">
+              version="2.7">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_searching">
+            <h1>Searching</h1>
+<p>SleekDB introduces with version 2.7 enhanced search functionality with <strong>search scores</strong>, <strong>different search algorithms</strong> and <strong>two search modes</strong>.</p>
+<p>Searching through documents was never so easy and good before!</p>
+<h2>Summary</h2>
+<ul>
+<li><a class="gotoblock" href="#/searching#configuration-options">Configuration options</a></li>
+<li><a class="gotoblock" href="#/searching#mode-or">Mode: &quot;or&quot; (default)</a></li>
+<li><a class="gotoblock" href="#/searching#mode-and">Mode: &quot;and&quot;</a></li>
+<li><a class="gotoblock" href="#/searching#algorithm-hits">Algorithm: &quot;hits&quot; (default)</a></li>
+<li><a class="gotoblock" href="#/searching#algorithm-hits_prioritize">Algorithm: &quot;hits_prioritze&quot;</a></li>
+<li><a class="gotoblock" href="#/searching#algorithm-prioritize">Algorithm: &quot;prioritize&quot;</a></li>
+<li><a class="gotoblock" href="#/searching#algorithm-prioritize">Algorithm: &quot;prioritize_position&quot;</a></li>
+<li><a class="gotoblock" href="#/searching#query_builder"><code>search()</code> method of <code>QueryBuilder</code> class</a></li>
+<li><a class="gotoblock" href="#/searching#store"><code>search()</code> method of <code>Store</code> class</a></li>
+</ul>
+<h2>Cofiguration options</h2>
+<p>You can configure the bahaviour of SleekDB regarding searching <a class="gotoblock" href="#/configurations">Store wide</a> and on a query by query bases.</p>
+<pre><code class="language-php">// Store wide configuration when creating a store
+
+$configuration = [
+  "search" =&gt; [
+    "min_length" =&gt; 2,
+    "mode" =&gt; "or",
+    "score_key" =&gt; "scoreKey",
+    "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+  ]
+];
+
+$store = new Store("users", __DIR__ . "/database", $configuration);</code></pre>
+<pre><code class="language-php">// On a query by query bases
+
+$searchOptions = [
+  "minLength" =&gt; 2,
+  "mode" =&gt; "or",
+  "scoreKey" =&gt; "scoreKey",
+  "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+];
+
+$userStore = new Store("users", __DIR__ . "/database");
+
+$userStore-&gt;createQueryBuilder()
+  -&gt;search(["profileDescription"], "SleekDB", $searchOptions)
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h3>&quot;min_length&quot; and &quot;minLength&quot;</h3>
+<p>It has to be an <code>integer</code> &gt; 0.<br/>
+The minimum length of a word within the search query that will be used for searching.<br/>
+If it is for example set to the value of 2 (default) and the user searches for: &quot;I love SleekDB&quot;.<br/>
+The words &quot;love&quot; and &quot;SleekDB&quot; will be used for searching and the word &quot;I&quot; will be ignored.<br/>
+That means with the configuration of 2 all words &gt;= 2 are considered when searching.</p>
+<h3>&quot;mode&quot;</h3>
+<p>Has to be a <code>string</code>.<br/>
+SleekDB provides two modes.</p>
+<ul>
+<li>&quot;or&quot;</li>
+<li>&quot;and&quot;</li>
+</ul>
+<h3>&quot;score_key&quot; and &quot;scoreKey&quot;</h3>
+<p>Can be a <code>string</code> or <code>null</code>.<br/>
+If this configuration is <code>null</code> no field containing the score will be applied to the documents.<br/>
+If it is a <code>string</code> a new field with the specified field name will be applied to every document, which will contain the search score and can be used to for example sort the documents.</p>
+<h3>algorithm</h3>
+<p>SleekDB provides 4 search algorithms. <code>hits</code>, <code>hits_prioritize</code>, <code>prioritize</code>, <code>prioritize_position</code><br/>
+These algorithms change the score generation.<br/>
+They are available as a <strong>constant of the <code>Query</code> class</strong>.</p>
+<p>Example:</p>
+<pre><code class="language-php">Query::SEARCH_ALGORITHM["hits"] // default</code></pre>
+<h2 id="searching-mode-or">Mode: &quot;or&quot; (default)</h2>
+<p>With this mode a field has to contain <strong>one</strong> of the words in the search query to be considered as a search result.<rb/>
+For example our query is &quot;Where School&quot; and we have three values to check agains:</p>
+<ul>
+<li>&quot;Where do you think is the best school?&quot;
+<ul>
+<li>Two search hits</li>
+</ul></li>
+<li>&quot;School is cool, but where is the best one?&quot;
+<ul>
+<li>Two search hits</li>
+</ul></li>
+<li>&quot;Why everybody love School&quot;
+<ul>
+<li>One search hit</li>
+</ul></li>
+</ul>
+<h2 id="searching-mode-and">Mode: &quot;and&quot;</h2>
+<p>With this search mode a field has to contain <strong>all</strong> words of the search query to be considered as a search result.<br/>
+For example our query is &quot;Where School&quot; and we have two values to check agains:</p>
+<ul>
+<li>&quot;<strong>School</strong> is cool, but <strong>where</strong> is the best one?&quot;
+<ul>
+<li>Search hit</li>
+</ul></li>
+<li>&quot;Is your <strong>school</strong> the best?&quot;
+<ul>
+<li>No Search hit</li>
+</ul></li>
+</ul>
+<h2 id="searching-algorithm-hits">Algorithm: &quot;hits&quot; (default)</h2>
+<pre><code class="language-php">Query::SEARCH_ALGORITHM["hits"]</code></pre>
+<p>This is the default algorithm.<br/>
+The score is based on the <strong>amount of search hits</strong>.</p>
+<h2 id="searching-algorithm-hits_prioritize">Algorithm: &quot;hits_prioritize&quot;</h2>
+<pre><code class="language-php">Query::SEARCH_ALGORITHM["hits_prioritize"]</code></pre>
+<p>The score is based on the <strong>amount of search hits</strong> but if two or more <strong>documents have the same amount of search hits</strong> the <strong>order of the given fields</strong> to search through is taken into consideration.<br/>
+For example we search through two fields: [&quot;title&quot;, &quot;content&quot;]<br/>
+Then the title field gets more weight.<br/>
+If one document has two hits in the title and three in the content field, it will have a lesser score than a document that has three hits in the title and two in the content field.</p>
+<h2 id="searching-algorithm-prioritize">Algorithm: &quot;prioritize&quot;</h2>
+<pre><code class="language-php">Query::SEARCH_ALGORITHM["prioritize"]</code></pre>
+<p><strong>The order of the fields</strong> are a big part of the score.<br/>
+For example we search through two fields: [&quot;title&quot;, &quot;content&quot;]<br/>
+If one document has one search hit in the title field it will have a higher score than a document that has no search hits in the title field but 61 search hits in the content field.</p>
+<h2 id="searching-algorithm-prioritize_position">Algorithm: &quot;prioritize_position&quot;</h2>
+<pre><code class="language-php">Query::SEARCH_ALGORITHM["prioritize_position"]</code></pre>
+<p>This algorithm does the same as the &quot;prioritize&quot; algorithm.<br/>
+The difference is, that it also <strong>consideres the position of the first search hit</strong> when generating a score.<br/>
+For example we have two documents with the same amount of search hits in the same fields.<br/>
+The first one has the first search hit at position 3 and the second one at position 4. Then the first document will have a higher score.</p>
+<h2 id="searching-query_builder">search() method of <code>QueryBuilder</code> class</h2>
+<p>Do a fulltext like search against one or multiple fields.</p>
+<pre><code class="language-php">function search(array|string $fields, string $query, array $options = []): QueryBuilder</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$fields: array|string</h1>
+<p>An array containg all fields to search against.</p>
+<ul>
+<li>&quot;title&quot;</li>
+<li>[&quot;title&quot;]</li>
+<li>[&quot;title&quot;, &quot;content&quot;, ...]</li>
+</ul>
+<p>As our documents are basically JSON documents it also could have nested properties.</p>
+<p>To target nested properties we use a single dot between the property/field name.</p>
+<p><strong>Example:</strong> <code>address.street</code></p>
+</li>
+<li>
+<h1>$query: string</h1>
+<p>The search query.</p>
+</li>
+<li>
+<h1>$options: array</h1>
+<p>Configure the search behaviour on a query by query base.</p>
+</li>
+</ol>
+<h3>Example 1</h3>
+<p>Search phrase: &quot;SleekDB is the best database solution&quot;.<br/>
+Search through all news articles &quot;title&quot;, &quot;description&quot; and &quot;content&quot; fields, sort the result by relevance and dont return the score key field.</p>
+<pre><code class="language-php">$newsStore = new Store("news", __DIR__ . "/database");
+
+$searchQuery = "SleekDB is the best database solution";
+
+$result = $newsStore-&gt;createQueryBuilder()
+  -&gt;search(["title", "description", "content"], $searchQuery)
+  -&gt;orderBy(["searchScore" =&gt; "DESC"]) // sort result
+  -&gt;except(["searchScore"]) // exclude field from result
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h3>Example 2</h3>
+<p>Search phrase: &quot;SleekDB is the best database solution&quot;.<br/>
+Search through all news articles &quot;title.mainTitle&quot; and &quot;content&quot; fields, sort the result by relevance and exclude the score key from the result.<br/>
+Also change the search algorithm to &quot;prioritize&quot; for this query and limit the result to 20.</p>
+<pre><code class="language-php">// Example article:
+// [
+//   "_id" =&gt; 1,
+//   "title" =&gt; [
+//     "mainTitle" =&gt; "SleekDB is the best database!"
+//   ],
+//   "content" =&gt; "A NoSQL dabase completely made with PHP.",
+// ]
+
+$newsStore = new Store("news", __DIR__ . "/database");
+
+$searchQuery = "SleekDB is the best database solution";
+
+$searchOptions = [
+  "algorithm" =&gt; Query::SEARCH_ALGORITHM["prioritize"]
+];
+
+$result = $newsStore
+  -&gt;search(["title.mainTitle", "content"], $searchQuery, $searchOptions)
+  -&gt;orderBy(["searchScore" =&gt; "DESC"])
+  -&gt;except(["searchScore"])
+  -&gt;limit(20)
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h2 id="searching-store">search() method of <code>Store</code> class</h2>
+<p>Do a fulltext like search against one or multiple fields.</p>
+<pre><code class="language-php">function search(array $fields, string $query, array $orderBy = null, int $limit = null, int $offset = null): array</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$fields: array</h1>
+<p>An array containg all fields to search against.</p>
+<ul>
+<li>[&quot;title&quot;]</li>
+<li>[&quot;title&quot;, &quot;content&quot;, ...]</li>
+</ul>
+<p>As our documents are basically JSON documents it also could have nested properties.</p>
+<p>To target nested properties we use a single dot between the property/field name.</p>
+<p><strong>Example:</strong> <code>address.street</code></p>
+</li>
+<li>
+<h1>$query: string</h1>
+<p>The search query.    </p>
+</li>
+<li>
+<h1>$orderBy: array</h1>
+<p>Sort the result by one or multiple fields.</p>
+<ul>
+<li>[&quot;name&quot; =&gt; &quot;asc&quot;]</li>
+<li>[&quot;name&quot; =&gt; &quot;asc&quot;, &quot;age&quot; =&gt; &quot;desc&quot;]</li>
+</ul>
+</li>
+<li>
+<h1>$limit: int</h1>
+<p>Limit the result to a specific amount.</p>
+</li>
+<li>
+<h1>$offset: offset</h1>
+<p>Skip a specific amount of documents.</p>
+</li>
+</ol>
+<h3>Return value</h3>
+<p>Will return an <code>array</code> containg all documents having at least one search hit or an <code>empty array</code>.</p>
+<h3>Example 1</h3>
+<p>Search phrase: &quot;SleekDB is the best database solution&quot;.<br/>
+Search through all news articles &quot;title&quot;, &quot;description&quot; and &quot;content&quot; fields and sort the result by relevance.</p>
+<pre><code class="language-php">$newsStore = new Store("news", __DIR__ . "/database");
+
+$searchQuery = "SleekDB is the best database solution";
+
+$result = $newsStore-&gt;search(["title", "description", "content"], $searchQuery, ["searchScore" =&gt; "DESC"]);</code></pre>
+<h3>Example 2</h3>
+<p>Search phrase: &quot;SleekDB is the best database solution&quot;.<br/>
+Search through all news articles &quot;title.mainTitle&quot;, &quot;title.subTitle&quot; and &quot;content&quot; fields and sort the result by relevance.</p>
+<pre><code class="language-php">// Example article:
+// [
+//   "_id" =&gt; 1,
+//   "title" =&gt; [
+//     "mainTitle" =&gt; "SleekDB is the best database!",
+//     "subTitle" =&gt; "Just believe me!"
+//   ],
+//   "content" =&gt; "A NoSQL dabase completely made with PHP.",
+// ]
+
+$newsStore = new Store("news", __DIR__ . "/database");
+
+$searchQuery = "SleekDB is the best database solution";
+
+$result = $newsStore-&gt;search(
+  ["title.mainTitle", "title.subTitle", "content"], // fields
+  $searchQuery, // query
+  ["searchScore" =&gt; "DESC"] // orderBy
+);</code></pre>
+            <div class="editlink" 
+              file="searching.md" 
+              version="2.7">
             </div>
           </div>
         
           <div class="intro" id="block_advanced">
             <h1>Advanced</h1>
+<h2>Changing Store destination</h2>
+<p>With the <code>changeStore()</code> method of the <code>Store</code> class you can change the destination of that store object.<br/>
+That allows you to use one Store object to manage multiple stores.</p>
+<pre><code class="language-php">function changeStore(string $storeName, string $dataDir = null, array $configuration = []): Store</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$storeName: string</h1>
+<p>Name of new store destination</p>
+</li>
+<li>
+<h1>$dataDir: string</h1>
+<p>If null previous database directory destination will be used.</p>
+</li>
+<li>
+<h1>$configuration</h1>
+<p>If empty previous configurations remain.</p>
+</li>
+</ol>
+<h3>Example</h3>
+<pre><code class="language-php">/* create store */
+$store = new Store("users", __DIR__ . "/database");
+
+/* insert new user */
+$store-&gt;insert(["username" =&gt; "admin"]);
+
+/* change store destination */
+$store-&gt;changeStore("alerts");
+
+/* insert a new alert into the alerts store */
+$store-&gt;insert(["content" =&gt; "new user with username admin added."]);</code></pre>
 <h2>Keeping QueryBuilder object</h2>
 <p>When you use the <code>createQueryBuilder()</code> method you get a new QueryBuilder object, that means your conditions are reset to default.</p>
 <p>You can keep the QueryBuilder object and reuse it to add new conditions.</p>
@@ -2339,7 +3105,398 @@ $userQuery-&gt;update([
 $usersUpdated = $userQuery-&gt;fetch();</code></pre>
             <div class="editlink" 
               file="advanced.md" 
-              version="2.5">
+              version="2.7">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_complete-examples">
+            <h1>Some complete code examples</h1>
+<p>We assume you read the documentation so you can understand the following small code examples.</p>
+<h2>Summary</h2>
+<ul>
+<li>
+<p><a class="gotoblock" href="#/complete-examples#insert-one">Insert one document</a></p>
+</li>
+<li>
+<p><a class="gotoblock mb" href="#/complete-examples#insert-multiple">Insert multiple documents</a></p>
+</li>
+<li>
+<p><a class="gotoblock" href="#/complete-examples#retrieve-store">Retrieve document/s using just the Store class</a></p>
+</li>
+<li>
+<p><a class="gotoblock mb" href="#/complete-examples#retrieve-query_builder">Retrieve document/s using the QueryBuilder class</a></p>
+</li>
+<li>
+<p><a class="gotoblock mb" href="#/complete-examples#edit-query_builder">Editing/ Updating documents using the QueryBuilder class</a></p>
+</li>
+<li>
+<p><a class="gotoblock mb" href="#/complete-examples#group">Grouping documents</a></p>
+</li>
+<li>
+<p><a class="gotoblock" href="#/complete-examples#search-store">Searching documents using just the Store object</a></p>
+</li>
+<li>
+<p><a class="gotoblock" href="#/complete-examples#search-query_builder">Searching documents using the QueryBuilder object</a></p>
+</li>
+</ul>
+<h2 id="complete-examples-insert-one">Insert one document</h2>
+<pre><code class="language-php">require_once "./vendor/autoload.php";
+
+use SleekDB\Store;
+use SleekDB\Query;
+
+$databaseDirectory = __DIR__."/database";
+
+// applying the store configuration is optional
+$storeConfiguration = [
+  "auto_cache" =&gt; true,
+  "cache_lifetime" =&gt; null,
+  "timeout" =&gt; 120,
+  "primary_key" =&gt; "_id",
+  "search" =&gt; [
+    "min_length" =&gt; 2,
+    "mode" =&gt; "or",
+    "score_key" =&gt; "scoreKey",
+    "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+  ]
+];
+
+// creating a new store object
+$userStore = new Store("users", $databaseDirectory, $storeConfiguration);
+
+$newUser = [
+  "username" =&gt; "Bob",
+  "age" =&gt; 20,
+  "address" =&gt; [
+    "street" =&gt; "down street"
+    "streetNumber" =&gt; 12,
+    "postalCode" =&gt; "8174",
+  ],
+];
+
+$newUser = $userStore-&gt;insert($newUser);
+
+// Output user with its unique id.
+header("Content-Type: application/json");
+
+echo json_encode($newUser);</code></pre>
+<h2 id="complete-examples-insert-multiple">Insert multiple documents</h2>
+<pre><code class="language-php">require_once "./vendor/autoload.php";
+
+use SleekDB\Store;
+use SleekDB\Query;
+
+$databaseDirectory = __DIR__."/database";
+
+// applying the store configuration is optional
+$storeConfiguration = [
+  "auto_cache" =&gt; true,
+  "cache_lifetime" =&gt; null,
+  "timeout" =&gt; 120,
+  "primary_key" =&gt; "_id",
+  "search" =&gt; [
+    "min_length" =&gt; 2,
+    "mode" =&gt; "or",
+    "score_key" =&gt; "scoreKey",
+    "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+  ]
+];
+
+// creating a new store object
+$userStore = new Store("users", $databaseDirectory, $storeConfiguration);
+
+$newUsers = [
+  [
+    "username" =&gt; "Lisa",
+    "age" =&gt; 17,
+    "address" =&gt; [
+      "street" =&gt; "up street"
+      "streetNumber" =&gt; 48,
+      "postalCode" =&gt; "1822",
+    ],
+  ],
+  [
+    "username" =&gt; "Bob",
+    "age" =&gt; 20,
+    "address" =&gt; [
+      "street" =&gt; "down street"
+      "streetNumber" =&gt; 12,
+      "postalCode" =&gt; "8174",
+    ],
+  ]
+];
+
+$newUsers = $userStore-&gt;insertMany($newUsers);
+
+// Output users with their unique id.
+header("Content-Type: application/json");
+
+echo json_encode($newUsers);</code></pre>
+<h2 id="complete-examples-retrieve-store">Retrieving documents using just the Store object</h2>
+<pre><code class="language-php">require_once "./vendor/autoload.php";
+
+use SleekDB\Store;
+use SleekDB\Query;
+
+$databaseDirectory = __DIR__."/database";
+
+// applying the store configuration is optional
+$storeConfiguration = [
+  "auto_cache" =&gt; true,
+  "cache_lifetime" =&gt; null,
+  "timeout" =&gt; 120,
+  "primary_key" =&gt; "_id",
+  "search" =&gt; [
+    "min_length" =&gt; 2,
+    "mode" =&gt; "or",
+    "score_key" =&gt; "scoreKey",
+    "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+  ]
+];
+
+// creating a new store object
+$userStore = new Store("users", $databaseDirectory, $storeConfiguration);
+
+$whereCondition = [
+  ["location", "IN", ["new york", "london"]],
+  "OR",
+  ["age", "&gt;", 29]
+];
+
+// Pagination
+$page = 1;
+$limit = 10;
+$skip = ($page - 1) * $limit;
+
+// order by _id and limit result to 10
+$result = $userStore-&gt;findBy($whereCondition, ["_id" =&gt; "DESC"], $limit, $skip);
+
+// Output
+header("Content-Type: application/json");
+
+echo json_encode($result);</code></pre>
+<h2 id="complete-examples-retrieve-query_builder">Retrieving documents using the QueryBuilder object</h2>
+<pre><code class="language-php">require_once "./vendor/autoload.php";
+
+use SleekDB\Store;
+use SleekDB\Query;
+
+$databaseDirectory = __DIR__."/database";
+
+// applying the store configuration is optional
+$storeConfiguration = [
+  "auto_cache" =&gt; true,
+  "cache_lifetime" =&gt; null,
+  "timeout" =&gt; 120,
+  "primary_key" =&gt; "_id",
+  "search" =&gt; [
+    "min_length" =&gt; 2,
+    "mode" =&gt; "or",
+    "score_key" =&gt; "scoreKey",
+    "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+  ]
+];
+
+// creating a new store object
+$userStore = new Store("users", $databaseDirectory, $storeConfiguration);
+
+// Pagination
+$page = 1;
+$limit = 10;
+$skip = ($page - 1) * $limit;
+
+$result = $userStore-&gt;createQueryBuilder()
+  -&gt;where([
+    ["location", "IN", ["new york", "london"]],
+    "OR",
+    ["age", "&gt;", 29]
+  ])
+  -&gt;orderBy(["_id" =&gt; "DESC"])
+  -&gt;limit($limit)
+  -&gt;skip($skip)
+  -&gt;getQuery()
+  -&gt;fetch();
+
+// Output
+header("Content-Type: application/json");
+
+echo json_encode($result);</code></pre>
+<h2 id="complete-examples-edit-query_builder">Editing/ Updating documents using the QueryBuilder object</h2>
+<pre><code class="language-php">require_once "./vendor/autoload.php";
+
+use SleekDB\Store;
+use SleekDB\Query;
+
+$databaseDirectory = __DIR__."/database";
+
+// applying the store configuration is optional
+$storeConfiguration = [
+  "auto_cache" =&gt; true,
+  "cache_lifetime" =&gt; null,
+  "timeout" =&gt; 120,
+  "primary_key" =&gt; "_id",
+  "search" =&gt; [
+    "min_length" =&gt; 2,
+    "mode" =&gt; "or",
+    "score_key" =&gt; "scoreKey",
+    "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+  ]
+];
+
+// creating a new store object
+$userStore = new Store("users", $databaseDirectory, $storeConfiguration);
+
+$result = $userStore-&gt;createQueryBuilder()
+  -&gt;where([
+    ["location", "IN", ["new york", "london"]],
+    "OR",
+    ["age", "&gt;", 29]
+  ])
+  -&gt;orderBy(["_id" =&gt; "DESC"])
+  -&gt;getQuery()
+  -&gt;update(["status" =&gt; "VIP"]);
+
+// Output
+header("Content-Type: application/json");
+
+echo json_encode($result);</code></pre>
+<h2 id="complete-examples-group">Grouping documents</h2>
+<pre><code class="language-php">require_once "./vendor/autoload.php";
+
+use SleekDB\Store;
+use SleekDB\Query;
+
+$databaseDirectory = __DIR__."/database";
+
+// applying the store configuration is optional
+$storeConfiguration = [
+  "auto_cache" =&gt; true,
+  "cache_lifetime" =&gt; null,
+  "timeout" =&gt; 120,
+  "primary_key" =&gt; "_id",
+  "search" =&gt; [
+    "min_length" =&gt; 2,
+    "mode" =&gt; "or",
+    "score_key" =&gt; "scoreKey",
+    "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+  ]
+];
+
+// creating a new store object
+$userStore = new Store("users", $databaseDirectory, $storeConfiguration);
+
+// Pagination
+$page = 1;
+$limit = 10;
+$skip = ($page - 1) * $limit;
+
+$result = $userStore-&gt;createQueryBuilder()
+  -&gt;where([ "location", "IN", ["new york", "london"] ])
+  -&gt;select([ "age", "peopleCount", "followerAmount" =&gt; ["SUM" =&gt; "followers"] ])
+  -&gt;groupBy(["age"], "peopleCount", true)
+  -&gt;having([ ["followerAmount", "&gt;", 100], "OR", ["age", "&lt;", 16] ])
+  -&gt;orderBy(["followerAmount" =&gt; "DESC"])
+  -&gt;limit($limit)
+  -&gt;skip($skip)
+  -&gt;getQuery()
+  -&gt;fetch();
+
+// Output
+header("Content-Type: application/json");
+
+echo json_encode($result);</code></pre>
+<h2 id="complete-examples-search-store">Searching documents using just the Store object</h2>
+<pre><code class="language-php">require_once "./vendor/autoload.php";
+
+use SleekDB\Store;
+use SleekDB\Query;
+
+$databaseDirectory = __DIR__."/database";
+
+// applying the store configuration is optional
+$storeConfiguration = [
+  "auto_cache" =&gt; true,
+  "cache_lifetime" =&gt; null,
+  "timeout" =&gt; 120,
+  "primary_key" =&gt; "_id",
+  "search" =&gt; [
+    "min_length" =&gt; 2,
+    "mode" =&gt; "or",
+    "score_key" =&gt; "scoreKey",
+    "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+  ]
+];
+
+// creating a new store object
+$newsStore = new Store("news", $databaseDirectory, $storeConfiguration);
+
+// Pagination
+$page = 1;
+$limit = 10;
+$skip = ($page - 1) * $limit;
+
+$searchQuery = "SleekDB best database";
+
+$result = $newsStore-&gt;search(
+    ["title", "content"], 
+    $searchQuery, 
+    ["scoreKey" =&gt; "DESC"],
+    $limit,
+    $skip
+  );
+
+// Output
+header("Content-Type: application/json");
+
+echo json_encode($result);</code></pre>
+<h2 id="complete-examples-search-query_builder">Searching documents using the QueryBuilder object</h2>
+<pre><code class="language-php">require_once "./vendor/autoload.php";
+
+use SleekDB\Store;
+use SleekDB\Query;
+
+$databaseDirectory = __DIR__."/database";
+
+// applying the store configuration is optional
+$storeConfiguration = [
+  "auto_cache" =&gt; true,
+  "cache_lifetime" =&gt; null,
+  "timeout" =&gt; 120,
+  "primary_key" =&gt; "_id",
+  "search" =&gt; [
+    "min_length" =&gt; 2,
+    "mode" =&gt; "or",
+    "score_key" =&gt; "scoreKey",
+    "algorithm" =&gt; Query::SEARCH_ALGORITHM["hits"]
+  ]
+];
+
+// creating a new store object
+$newsStore = new Store("news", $databaseDirectory, $storeConfiguration);
+
+// Pagination
+$page = 1;
+$limit = 10;
+$skip = ($page - 1) * $limit;
+
+$searchQuery = "SleekDB best database";
+
+$result = $newsStore-&gt;createQueryBuilder()
+  -&gt;search(["title", "content"], $searchQuery)
+  -&gt;orderBy(["searchScore" =&gt; "DESC"])
+  -&gt;except(["searchScore"]) // remove score from result
+  -&gt;limit($limit)
+  -&gt;skip($skip)
+  -&gt;getQuery()
+  -&gt;fetch();
+
+// Output
+header("Content-Type: application/json");
+
+echo json_encode($result);</code></pre>
+            <div class="editlink" 
+              file="complete-examples.md" 
+              version="2.7">
             </div>
           </div>
         
@@ -2417,7 +3574,7 @@ $usersUpdated = $userQuery-&gt;fetch();</code></pre>
 <p>Either <code>int</code> &gt;= 0 in seconds, where <code>0</code> means infinite, or <code>null</code>.</p>
             <div class="editlink" 
               file="cache.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -2427,9 +3584,11 @@ $usersUpdated = $userQuery-&gt;fetch();</code></pre>
 <h2>Store</h2>
 <p>The Store class is the beginning point and handles everything regarding store configuration. It also provides all methods needed for simple queries.</p>
 <p>Create a new Store object. (Internally it creates a new store folder if it doesn't exist)</p>
-<pre><code class="language-php">function __construct(string $storeName, string $dataDir, array $configuration = [])</code></pre>
+<pre><code class="language-php">function __construct(string $storeName, string $databasePath, array $configuration = [])</code></pre>
 <p>Returns a new <code>QueryBuilder</code> object.</p>
 <pre><code class="language-php">function createQueryBuilder(): QueryBuilder</code></pre>
+<p>Change the destination of the store object.</p>
+<pre><code class="language-php">function changeStore(string $storeName, string $databasePath = null, array $configuration = []): Store</code></pre>
 <p>Create/Insert a new document in the store.<br/>
 Returns the inserted document with it's new and unique _id.</p>
 <pre><code class="language-php">function insert(array $data): array</code></pre>
@@ -2439,31 +3598,44 @@ Returns the inserted documents with their new and unique _id.</p>
 <p>Retrieve all documents of that store.</p>
 <pre><code class="language-php">function findAll(): array</code></pre>
 <p>Retrieve one document by its _id. Very fast because it finds the document by its file path.</p>
-<pre><code class="language-php">function findById(int $id): array|null</code></pre>
+<pre><code class="language-php">function findById(int|string $id): array|null</code></pre>
 <p>Retrieve one or multiple documents.</p>
 <pre><code class="language-php">function findBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null): array</code></pre>
 <p>Retrieve one document.</p>
 <pre><code class="language-php">function findOneBy(array $criteria): array|null</code></pre>
+<p>Do a fulltext like search against one or multiple fields.</p>
+<pre><code class="language-php">function search(array $fields, string $query, array $orderBy = null, int $limit = null, int $offset = null): array</code></pre>
+<p>Update parts of one document.</p>
+<pre><code class="language-php">function updateById(int|string $id, array $updatable): array|false</code></pre>
 <p>Update one or multiple documents.</p>
 <pre><code class="language-php">function update(array $updatable): bool</code></pre>
 <p>Delete one or multiple documents.</p>
 <pre><code class="language-php">function deleteBy(array $criteria, int $returnOption = Query::DELETE_RETURN_BOOL): bool|array|null</code></pre>
 <p>Delete one document by its _id. Very fast because it deletes the document by its file path.</p>
-<pre><code class="language-php">function deleteById(int $id): bool</code></pre>
+<pre><code class="language-php">function deleteById(int|string $id): bool</code></pre>
+<p>Remove fields from one document by its primary key.</p>
+<pre><code class="language-php">function removeFieldsById($id, array $fieldsToRemove): array|false</code></pre>
+<p>Return the last created store object ID.</p>
+<pre><code class="language-php">function getLastInsertedId(): int</code></pre>
 <p>Deletes a store and wipes all the data and cache it contains.</p>
 <pre><code class="language-php">function deleteStore(): bool</code></pre>
 <p>Get the name of the store.</p>
 <pre><code class="language-php">function getStoreName(): string</code></pre>
-<p>Get the location (directory path) of the store.</p>
-<pre><code class="language-php">function getDataDirectory(): string</code></pre>
-<p>Returns if caching is enabled store wide.</p>
-<pre><code class="language-php">function _getUseCache(): bool</code></pre>
-<p>Returns the store wide default cache lifetime.</p>
-<pre><code class="language-php">function getDefaultCacheLifetime(): null|int</code></pre>
-<p>Return the last created store object ID.</p>
-<pre><code class="language-php">function getLastInsertedId(): int</code></pre>
-<p>Get the path to the store, including store name.</p>
+<p>Get the path to the database folder.</p>
+<pre><code class="language-php">function getDatabasePath(): string</code></pre>
+<p>Get the path to the store. (including store name)</p>
 <pre><code class="language-php">function getStorePath(): string</code></pre>
+<p>Get the name of the field used as the primary key.</p>
+<pre><code class="language-php">function getPrimaryKey(): string</code></pre>
+<p>This method is used internally. Returns if caching is enabled store wide.</p>
+<pre><code class="language-php">function _getUseCache(): bool</code></pre>
+<p>This method is used internally. Returns the search options of the store.</p>
+<pre><code class="language-php">function _getSearchOptions(): array</code></pre>
+<p>This method is used internally. Returns the store wide default cache lifetime.</p>
+<pre><code class="language-php">function _getDefaultCacheLifetime(): null|int</code></pre>
+<p>Get the location (directory path) of the store.<br/>
+🚨 Deprecated since version 2.7, use <code>getDatabasePath</code> instead.</p>
+<pre><code class="language-php">function getDataDirectory(): string</code></pre>
 <h2>QueryBuilder</h2>
 <p>The QueryBuilder class handles everything regarding query creation like for example the where or join methods.</p>
 <p>Create a new QueryBuilder object.</p>
@@ -2478,21 +3650,18 @@ Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function where(array $conditions): QueryBuilder</code></pre>
 <p>Add or-where conditions to filter data.</p>
 <pre><code class="language-php">function orWhere($conditions): QueryBuilder</code></pre>
-<p>Add nested where conditions to filter data.<br/>
-🚨 Deprecated since version 2.3, use <code>where</code> and <code>orWhere</code> instead</p>
-<pre><code class="language-php">function nestedWhere($conditions): QueryBuilder</code></pre>
-<p>Add &quot;in&quot; condition to filter data.</p>
-<pre><code class="language-php">function in(string $fieldName, array $values = []): QueryBuilder</code></pre>
-<p>Add &quot;not in&quot; condition to filter data.</p>
-<pre><code class="language-php">function notIn(string $fieldName, array $values = []): QueryBuilder</code></pre>
 <p>Set the amount of data record to skip.</p>
 <pre><code class="language-php">function skip(int $skip = 0): QueryBuilder</code></pre>
 <p>Set the amount of data record to limit.</p>
 <pre><code class="language-php">function limit(int $limit = 0): QueryBuilder</code></pre>
 <p>Set the sort order.</p>
 <pre><code class="language-php">function orderBy(array $criteria): QueryBuilder</code></pre>
+<p>Group documents using one or multiple fields.</p>
+<pre><code class="language-php">function groupBy(array $groupByFields, string $counterKeyName = null, bool $allowEmpty = false): QueryBuilder</code></pre>
+<p>Filter grouped documents.</p>
+<pre><code class="language-php">function having(array $criteria): QueryBuilder</code></pre>
 <p>Do a fulltext like search against one or more fields.</p>
-<pre><code class="language-php">function search(string|array $field, string $keyword): QueryBuilder</code></pre>
+<pre><code class="language-php">function search(string|array $fields, string $query, array $options = []): QueryBuilder</code></pre>
 <p>Join current store with another one. Can be used multiple times to join multiple stores.</p>
 <pre><code class="language-php">function join(Closure $joinFunction, string $dataPropertyName): QueryBuilder</code></pre>
 <p>Return distinct values.</p>
@@ -2501,14 +3670,23 @@ Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function useCache(int $lifetime = null): QueryBuilder</code></pre>
 <p>Disable caching for current query.</p>
 <pre><code class="language-php">function disableCache(): QueryBuilder</code></pre>
-<p>This method is used internally. It returns an array containing all properties that are used for the cache token generation.</p>
-<pre><code class="language-php">function _getCacheTokenArray(): array</code></pre>
-<p>This method is used internally. It returns an array that contains all information needed to execute an query.</p>
-<pre><code class="language-php">function _getConditionProperties(): array</code></pre>
 <p>Re-generate the cache for the query.</p>
 <pre><code class="language-php">function regenerateCache(): QueryBuilder</code></pre>
-<p>Get the store object used to create the query builder.</p>
+<p>This method is used internally. Returns a an array used to generate a unique token for the current query.</p>
+<pre><code class="language-php">function _getCacheTokenArray(): array</code></pre>
+<p>This method is used internally. Returns an array containing all information needed to execute an query.</p>
+<pre><code class="language-php">function _getConditionProperties(): array</code></pre>
+<p>This method is used internally. Returns the Store object used to create the QueryBuilder object.</p>
 <pre><code class="language-php">function _getStore(): Store</code></pre>
+<p>Add nested where conditions to filter data.<br/>
+🚨 Deprecated since version 2.3, use <code>where</code> and <code>orWhere</code> instead</p>
+<pre><code class="language-php">function nestedWhere($conditions): QueryBuilder</code></pre>
+<p>Add &quot;in&quot; condition to filter data.<br/>
+🚨 Deprecated since version 2.4, use &quot;in&quot; condition instead</p>
+<pre><code class="language-php">function in(string $fieldName, array $values = []): QueryBuilder</code></pre>
+<p>Add &quot;not in&quot; condition to filter data.<br/>
+🚨 Deprecated since version 2.4, use &quot;not in&quot; condition instead</p>
+<pre><code class="language-php">function notIn(string $fieldName, array $values = []): QueryBuilder</code></pre>
 <h2>Query</h2>
 <p>This class handles everything regarding query execution like fetch / first / exists.</p>
 <p>Create a new Query object. (Internally it creates a new Cache object)</p>
@@ -2522,42 +3700,201 @@ Returns the inserted documents with their new and unique _id.</p>
 <p>Return the first document. (More efficient than <code>fetch</code> but <code>orderBy</code> does not work)</p>
 <pre><code class="language-php">function first(): array</code></pre>
 <p>Update one or multiple documents, based on the current query.</p>
-<pre><code class="language-php">function update(array $updatable): bool</code></pre>
+<pre><code class="language-php">function update(array $updatable, bool $returnUpdatedDocuments = false): array|bool</code></pre>
 <p>Deletes matched documents.</p>
 <pre><code class="language-php">function delete(int $returnOption = Query::DELETE_RETURN_BOOL): bool|array|int</code></pre>
+<p>Remove fields of one or multiple documents based on current query.</p>
+<pre><code class="language-php">function removeFields(array $fieldsToRemove): bool</code></pre>
 <h2>Cache</h2>
 <p>This class handles everything regarding caching like for example cache deletion.</p>
 <p>Create a new Cache object.</p>
-<pre><code class="language-php">function __construct(Query $query, string $storePath)</code></pre>
-<p>Set the cache lifetime.</p>
-<pre><code class="language-php">function setLifetime(int|null $lifetime): Cache</code></pre>
-<p>Get the cache lifetime.</p>
+<pre><code class="language-php">function __construct(Query $storePath, array &amp;$cacheTokenArray, int|null $cacheLifetime)</code></pre>
+<p>Retrieve the cache lifetime for current query.</p>
 <pre><code class="language-php">function getLifetime(): null|int</code></pre>
-<p>Get the path to the cache folder.</p>
+<p>Retrieve the path to cache folder of current store.</p>
 <pre><code class="language-php">function getCachePath(): string</code></pre>
-<p>Get the cache token.</p>
+<p>Retrieve the cache token used as filename to store cache file.</p>
 <pre><code class="language-php">function getToken(): string</code></pre>
 <p>Delete all cache files for current store.</p>
 <pre><code class="language-php">function deleteAll()</code></pre>
 <p>Delete all cache files with no lifetime (null) in current store.</p>
 <pre><code class="language-php">function deleteAllWithNoLifetime()</code></pre>
-<p>Cache content for current query</p>
+<p>Save content for current query as a cache file.</p>
 <pre><code class="language-php">function set(array $content)</code></pre>
-<p>Returns cached result for current query if found, else null.</p>
+<p>Retrieve content of cache file.</p>
 <pre><code class="language-php">function get(): array|null</code></pre>
 <p>Delete cache file/s for current query.</p>
 <pre><code class="language-php">function delete()</code></pre>
             <div class="editlink" 
               file="reference.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
           <div class="intro" id="block_release-notes">
             <h1>🎉 Release Notes</h1>
 <h2>📢 Optimizations, new query methods and more control</h2>
-<p>SleekDB 2.0 comes with so many important optimizations and other features that make it faster and more mature. This is the recommended SleekDB release version for new projects, and if you are using an older version consider upgrading as soon as possible.</p>
-<h3>Changes from 2.4 to 2.5</h3>
+<p>SleekDB 2.X comes with so many important optimizations and other features that make it faster and more mature. This is the recommended SleekDB release version for new projects, and if you are using an older version consider upgrading as soon as possible.</p>
+<h2>Changes from 2.6 to 2.7</h2>
+<ul>
+<li>
+<h1>🚨 New requirement!</h1>
+<ul>
+<li>
+<h3>In order to implement the new search functionality we had to add a new PHP module requirement to SleekDB.</h3>
+<ul>
+<li><strong><code>ext-mbstring</code></strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h1>🚨 Deprecated method!</h1>
+<ul>
+<li>
+<h3>The <code>getDataDirectory()</code> method of the <code>Store</code> class is now deprecated. Use <code>getDatabasePath()</code> instead!</h3>
+</li>
+</ul>
+</li>
+<li>
+<h1>📝 New documentation page!</h1>
+<ul>
+<li>
+<h3>This new documentation page contains some complete code examples!</h3>
+<ul>
+<li><a class="gotoblock" href="#/complete-examples">&quot;Some complete code examples&quot;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h1>✨ New functionality!</h1>
+<ul>
+<li>
+<h3>SleekDB now has multiple enhanced searching algorithms with scored results!</h3>
+<ul>
+<li><a class="gotoblock" href="#/searching">New &quot;Searching&quot; documentation</a></li>
+</ul>
+</li>
+<li>
+<h3>New store wide search configurations!</h3>
+<ul>
+<li><a class="gotoblock" href="#/configurations">Configure the search behavion when creating a <code>Store</code> object.</a></li>
+</ul>
+</li>
+<li>
+<h3>New shorthand <code>search()</code> method for <code>Store</code> class!</h3>
+<ul>
+<li><a class="gotoblock" href="#/searching#store">Documentation of new shorthand <code>search()</code> method!</a></li>
+</ul>
+</li>
+<li>
+<h3>New comparisons!</h3>
+<ul>
+<li>
+<h4>Type safe</h4>
+<ul>
+<li><code>===</code></li>
+<li><code>!==</code></li>
+</ul>
+</li>
+<li>
+<h4>Type unsafe</h4>
+<ul>
+<li><code>==</code></li>
+<li><code>&lt;&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h3>Now you can easily remove fields from a document!</h3>
+<ul>
+<li><a class="gotoblock" href="#/edit-data#removeFieldsById">removeFieldsById()</a></li>
+<li><a class="gotoblock" href="#/query#removeFields">removeFields()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h1>🌈 Improved functionality!</h1>
+<ul>
+<li>
+<h3>Configuration on a query by query base with the <code>search()</code> method of the <code>QueryBuilder</code> class</h3>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#search">Documentation of <code>search()</code> method</a></li>
+</ul>
+</li>
+<li>
+<h3>All *byId methods now also accept strings as id!</h3>
+<p>For more details please visit the corresponding documentation pages:</p>
+<ul>
+<li><a class="gotoblock" href="#/fetch-data#findById">findById()</a></li>
+<li><a class="gotoblock" href="#/edit-data#updateById">updateById()</a></li>
+<li><a class="gotoblock" href="#/delete-data#deleteById">deleteById()</a></li>
+<li><a class="gotoblock" href="#/edit-data#removeFieldsById">removeFieldsById()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>Changes from 2.5 to 2.6</h2>
+<ul>
+<li>
+<h1>✨ New functionality</h1>
+<ul>
+<li>
+<h3>SleekDB now can group results and filter grouped results!</h3>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#groupBy">groupBy()</a></li>
+<li><a class="gotoblock" href="#/query-builder#having">having()</a></li>
+</ul>
+</li>
+<li>
+<h3>Easily update parts of a document with its id!</h3>
+<ul>
+<li><a class="gotoblock" href="#/edit-data#updateById">updateById()</a></li>
+</ul>
+</li>
+<li>
+<h3>Use one Store object to manage multiple stores!</h3>
+<ul>
+<li><a class="gotoblock" href="#/advanced">changeStore()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h1>🌈 Improved functionality</h1>
+<ul>
+<li>
+<h3>select()</h3>
+<p>For more details please visit the <a class="gotoblock" href="#/query-builder#select">documentation of select</a>.</p>
+<ul>
+<li>The select method now accepts aliase!</li>
+<li>When using select in conjunction with <code>groupBy</code> you can use functions!</li>
+<li>You can now select nested fields!</li>
+</ul>
+</li>
+<li>
+<h3>except()</h3>
+<p>For more details please visit the <a class="gotoblock" href="#/query-builder#except">documentation of except</a>.</p>
+<ul>
+<li>You can now exclude nested fields!</li>
+</ul>
+</li>
+<li>
+<h3>update() of Query class</h3>
+<p>For more details please visit the <a class="gotoblock" href="#/query#update">documentation of update</a>.</p>
+<ul>
+<li>You can now update nested fields!</li>
+<li>Can now return the updated results!</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>Changes from 2.4 to 2.5</h2>
 <ul>
 <li>
 <h1>✨ New conditions:</h1>
@@ -2592,7 +3929,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <p>Visit our new <a class="gotoblock" href="#/dates">Working with Dates documentation</a> page to learn more about date handling.</p>
 </li>
 </ul>
-<h3>Changes from 2.3 to 2.4</h3>
+<h2>Changes from 2.3 to 2.4</h2>
 <ul>
 <li>
 <h1>🚨 Deprecated in() &amp; notIn() methods</h1>
@@ -2602,7 +3939,7 @@ Available with the <code>findBy()</code>, <code>findOneBy</code>, <code>deleteBy
 See <a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/118" target="_blank">#118</a> for more details.</p>
 </li>
 </ul>
-<h3>Changes from 2.2 to 2.3</h3>
+<h2>Changes from 2.2 to 2.3</h2>
 <ul>
 <li>
 <h1>🚨 Deprecated nestedWhere() method</h1>
@@ -2663,7 +4000,7 @@ Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
 See <a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/114" target="_blank">#114</a> for more details.</p>
 </li>
 </ul>
-<h3>Changes from 2.1 to 2.2</h3>
+<h2>Changes from 2.1 to 2.2</h2>
 <ul>
 <li>
 <h1>🗃 Order by multiple fields</h1>
@@ -2676,14 +4013,14 @@ Look at the updated orderBy section of the <a class="gotoblock" href="#/query-bu
 Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a> to learn more.</p>
 </li>
 </ul>
-<h3>Changes from 2.0 to 2.1</h3>
+<h2>Changes from 2.0 to 2.1</h2>
 <ul>
 <li>
 <h1>⚙️ New Configuration</h1>
 <p>With the new <code>primary_key</code> configuration you can now change the _id key name to everything you want. To see how to use the new configuration option visit the <a class="gotoblock" href="/#/configurations">Configurations</a> page.</p>
 </li>
 </ul>
-<h3>Changes from 1.5 to 2.0</h3>
+<h2>Changes from 1.5 to 2.0</h2>
 <ul>
 <li>
 <h1>🔎 Improving document discovery process</h1>
@@ -2761,7 +4098,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="release-notes.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -2777,7 +4114,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Please write details about your PR.</p>
             <div class="editlink" 
               file="contributing.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -2790,7 +4127,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Let us know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.</p>
             <div class="editlink" 
               file="contact.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
@@ -2809,7 +4146,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="versions.md" 
-              version="2.5">
+              version="2.7">
             </div>
           </div>
         
