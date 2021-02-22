@@ -42,9 +42,11 @@ window.onload = function() {
   checkPage();
   toggleSidebar();
 
-  if (navigator.userAgent.search('Firefox') > -1) {
-    this.document.getElementById('firefox-issue').style.display = '';
-  }
+  // if (navigator.userAgent.search('Firefox') > -1) {
+  //   this.document.getElementById('firefox-issue').style.display = '';
+  // }
+
+  document.querySelectorAll('li .mb').forEach((element) => (element.parentNode.style.marginBottom = '20px'));
 };
 
 function syncTitle(el) {
