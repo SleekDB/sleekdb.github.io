@@ -81,6 +81,9 @@ function _goToBlock(blockName, sectionId = null) {
 
 function goToBlock(event) {
   event.preventDefault();
+  if (event.target.hash === undefined) {
+    event.target.hash = event.target.parentNode.hash;
+  }
   var blockName = event.target.hash.replace('#/', '');
 
   var sectionId = null;
