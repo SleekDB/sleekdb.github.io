@@ -1690,7 +1690,7 @@ Available functions:
   -&gt;fetch();</code></pre>
 <h2 id="query-builder-orderBy">orderBy()</h2>
 <p>Works as the ORDER BY clause of SQL. With this method you can sort the result. You can use this method to sort the result by one or multiple fields.</p>
-<pre><code class="language-php">function orderBy( array $criteria): QueryBuilder</code></pre>
+<pre><code class="language-php">function orderBy(array $criteria): QueryBuilder</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
@@ -1915,7 +1915,7 @@ HAVING
 ]</code></pre>
 <h2 id="query-builder-search">search()</h2>
 <p>Do a fulltext like search against one or multiple fields.</p>
-<pre><code class="language-php">function search($fields, string $query, array $options = []): QueryBuilder</code></pre>
+<pre><code class="language-php">function search(array|string $fields, string $query, array $options = []): QueryBuilder</code></pre>
 <blockquote>
 <p>Please visit the <a class="gotoblock" href="#/searching">&quot;Searching&quot; documentation</a> for more details and examples!</p>
 </blockquote>
@@ -1944,7 +1944,7 @@ HAVING
 </ol>
 <h2 id="query-builder-distinct">distinct()</h2>
 <p>The distinct method is used to retrieve unique values from the store. It will remove all the duplicate documents while fetching data from a store.</p>
-<pre><code class="language-php">distinct( array|string $fields ): QueryBuilder;</code></pre>
+<pre><code class="language-php">function distinct(array|string $fields): QueryBuilder</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
@@ -1971,7 +1971,7 @@ $distinctUsers = $userQueryBuilder
 <h2 id="query-builder-join">join()</h2>
 <p>This method is used to join two or multiple stores together.</p>
 <p>For more details please visit the <a class="gotoblock" href="/#/join-stores">Join Stores</a> page.</p>
-<pre><code class="language-php">function join(Closure $joinedStore, string $dataPropertyName): QueryBuilder</code></pre>
+<pre><code class="language-php">function join(Closure $joinedStore, string $propertyName): QueryBuilder</code></pre>
 <h2 id="query-builder-nestedWhere"><del>nestedWhere()</del></h2>
 <blockquote>
 <h3>🚨 Deprecated since version 2.3, use <code>where</code> and <code>orWhere</code> instead!</h3>
@@ -2346,7 +2346,7 @@ Each user also will get an additional property called &quot;comments&quot;, that
 <h2>join()</h2>
 <p>To join stores we use the join() method of the QueryBuilder object.</p>
 <p>The join() method takes two arguments, those are:</p>
-<pre><code class="language-php">function join(Closure $joinFunction, string $dataPropertyName): QueryBuilder</code></pre>
+<pre><code class="language-php">function join(Closure $joinFunction, string $propertyName): QueryBuilder</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
@@ -2354,7 +2354,7 @@ Each user also will get an additional property called &quot;comments&quot;, that
 <p>This anonymous function has to return the <code>result of an executed sub query</code> or prepare a sub query for the join and return it as a <code>QueryBuilder object</code>.</p>
 </li>
 <li>
-<h1>$dataPropertyName: string</h1>
+<h1>$propertyName: string</h1>
 <p>Name of the new property added to each document.</p>
 </li>
 </ol>
@@ -3663,7 +3663,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <p>Do a fulltext like search against one or more fields.</p>
 <pre><code class="language-php">function search(string|array $fields, string $query, array $options = []): QueryBuilder</code></pre>
 <p>Join current store with another one. Can be used multiple times to join multiple stores.</p>
-<pre><code class="language-php">function join(Closure $joinFunction, string $dataPropertyName): QueryBuilder</code></pre>
+<pre><code class="language-php">function join(Closure $joinFunction, string $propertyName): QueryBuilder</code></pre>
 <p>Return distinct values.</p>
 <pre><code class="language-php">function distinct(string|array $fields = []): QueryBuilder</code></pre>
 <p>Use caching for current query</p>
