@@ -81,10 +81,13 @@ function _goToBlock(blockName, sectionId = null) {
 
 function goToBlock(event) {
   event.preventDefault();
-  if (event.target.hash === undefined) {
-    event.target.hash = event.target.parentNode.hash;
+
+  var target = event.target;
+
+  if (target.hash === undefined) {
+    target = event.target.parentNode;
   }
-  var blockName = event.target.hash.replace('#/', '');
+  var blockName = target.hash.replace('#/', '');
 
   var sectionId = null;
 
@@ -94,7 +97,7 @@ function goToBlock(event) {
     blockName = blockName[0];
   }
 
-  history.pushState(null, '', `${event.target.pathname}${event.target.hash}`);
+  history.pushState(null, '', `${target.pathname}${target.hash}`);
 
   _goToBlock(blockName, sectionId);
 }
