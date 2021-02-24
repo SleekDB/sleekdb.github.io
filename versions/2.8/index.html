@@ -60,7 +60,7 @@
     href="#/versions"
     title="Find all versions of SleekDB"
     class="menu gotoblock"
-    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.7</a
+    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.8</a
   >
   <a
     class="menu"
@@ -209,7 +209,7 @@
 <p>Join our <a href="https://discord.gg/WJGqUFPtZw" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Discord</a> channel. We would love to know about you and your feedbacks.</p>
             <div class="editlink" 
               file="home.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -324,7 +324,7 @@
 </ul>
             <div class="editlink" 
               file="features.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -357,7 +357,7 @@ Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/p
 <pre><code class="language-sh">composer require rakibtg/sleekdb dev-dev</code></pre>
             <div class="editlink" 
               file="installation.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -429,7 +429,7 @@ print_r($allNews);</code></pre>
 </blockquote>
             <div class="editlink" 
               file="getting-started.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -472,7 +472,7 @@ $newsStore = new Store('news', $dataDir);</code></pre>
 <pre><code class="language-php">$userStore-&gt;deleteStore();</code></pre>
             <div class="editlink" 
               file="managing-store.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -562,7 +562,7 @@ They are available as a <strong>constant of the <code>Query</code> class</strong
 <pre><code class="language-php">Query::SEARCH_ALGORITHM["hits"] // default</code></pre>
             <div class="editlink" 
               file="configurations.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -661,7 +661,7 @@ $users = [
 $users = $userStore-&gt;insertMany($users);</code></pre>
             <div class="editlink" 
               file="insert-data.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -681,6 +681,7 @@ $newsStore = new Store('news', __DIR__ . "/database");</code></pre>
 <li><a class="gotoblock" href="#/fetch-data#findById">findById</a></li>
 <li><a class="gotoblock" href="#/fetch-data#findBy">findBy</a></li>
 <li><a class="gotoblock" href="#/fetch-data#findOneBy">findOneBy</a></li>
+<li><a class="gotoblock" href="#/fetch-data#count">count</a></li>
 </ul>
 <h2 id="fetch-data-findAll">Get all documents</h2>
 <pre><code class="language-php">function findAll(): array</code></pre>
@@ -829,7 +830,7 @@ Default: <code>AND</code></p>
       20
    );</code></pre>
 <p><br/></p>
-<h2 id="fetch-data-findOneBy">Get one document.</h2>
+<h2 id="fetch-data-findOneBy">Get one document</h2>
 <pre><code class="language-php">function findOneBy(array $criteria): array|null</code></pre>
 <h3>Parameters</h3>
 <ol>
@@ -928,9 +929,17 @@ Default: <code>AND</code></p>
          ]
       ]
    );</code></pre>
+<h2 id="fetch-data-count">Get the amount of documents stored</h2>
+<p>This method is especially fast because it just counts the amount of files.</p>
+<pre><code class="language-php">function count(): int</code></pre>
+<h3>Return value</h3>
+<p>Returns the amount of documents in the store as an <code>int</code>.</p>
+<h3>Example</h3>
+<pre><code class="language-php">$newsCount = $newsStore-&gt;count();
+// Returns: 27 </code></pre>
             <div class="editlink" 
               file="fetch-data.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -1077,7 +1086,7 @@ Removal of nested fields possible by using a dot between fieldNames (Example 3)<
 ]</code></pre>
             <div class="editlink" 
               file="edit-data.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -1232,7 +1241,7 @@ $deletedUsers = $userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"], Query::
 // Returns true</code></pre>
             <div class="editlink" 
               file="delete-data.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -2195,7 +2204,7 @@ SleekDB supports multiple notIn as object chain for different fields.</p>
   -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="query-builder.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -2310,7 +2319,7 @@ $users = $userQueryBuilder
     -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="cache-management.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -2432,7 +2441,7 @@ $users = $userStore
   -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="join-stores.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -2629,7 +2638,7 @@ Update of nested values possible by using a dot between fieldNames (Example 2)</
 ]</code></pre>
             <div class="editlink" 
               file="query.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -2768,7 +2777,7 @@ $news = $newsStore-&gt;findBy([ "releaseDate", "IN", $datesToFilter ] );
 // WHERE releaseDate IN ("2020-12-01", "2021-01-04", "2021-01-19")</code></pre>
             <div class="editlink" 
               file="dates.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -3029,7 +3038,7 @@ $result = $newsStore-&gt;search(
 );</code></pre>
             <div class="editlink" 
               file="searching.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -3105,7 +3114,7 @@ $userQuery-&gt;update([
 $usersUpdated = $userQuery-&gt;fetch();</code></pre>
             <div class="editlink" 
               file="advanced.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -3496,7 +3505,7 @@ header("Content-Type: application/json");
 echo json_encode($result);</code></pre>
             <div class="editlink" 
               file="complete-examples.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -3574,7 +3583,7 @@ echo json_encode($result);</code></pre>
 <p>Either <code>int</code> &gt;= 0 in seconds, where <code>0</code> means infinite, or <code>null</code>.</p>
             <div class="editlink" 
               file="cache.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -3615,6 +3624,8 @@ Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function deleteById(int|string $id): bool</code></pre>
 <p>Remove fields from one document by its primary key.</p>
 <pre><code class="language-php">function removeFieldsById($id, array $fieldsToRemove): array|false</code></pre>
+<p>Returns the amount of documents in the store.</p>
+<pre><code class="language-php">function count(): int</code></pre>
 <p>Return the last created store object ID.</p>
 <pre><code class="language-php">function getLastInsertedId(): int</code></pre>
 <p>Deletes a store and wipes all the data and cache it contains.</p>
@@ -3727,7 +3738,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function delete()</code></pre>
             <div class="editlink" 
               file="reference.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -3735,6 +3746,20 @@ Returns the inserted documents with their new and unique _id.</p>
             <h1>🎉 Release Notes</h1>
 <h2>📢 Optimizations, new query methods and more control</h2>
 <p>SleekDB 2.X comes with so many important optimizations and other features that make it faster and more mature. This is the recommended SleekDB release version for new projects, and if you are using an older version consider upgrading as soon as possible.</p>
+<h2>Changes from 2.7 to 2.8</h2>
+<ul>
+<li>
+<h1>✨ New functionality!</h1>
+<ul>
+<li>
+<h3>Retrieve the amount of documents stored in a fast way.</h3>
+<ul>
+<li><a class="gotoblock" href="#/fetch-data#count">Store-&gt;count()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2>Changes from 2.6 to 2.7</h2>
 <ul>
 <li>
@@ -4098,7 +4123,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="release-notes.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -4114,7 +4139,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Please write details about your PR.</p>
             <div class="editlink" 
               file="contributing.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -4127,7 +4152,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Let us know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.</p>
             <div class="editlink" 
               file="contact.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
@@ -4147,7 +4172,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="versions.md" 
-              version="2.7">
+              version="2.8">
             </div>
           </div>
         
