@@ -60,7 +60,7 @@
     href="#/versions"
     title="Find all versions of SleekDB"
     class="menu gotoblock"
-    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.7</a
+    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.11</a
   >
   <a
     class="menu"
@@ -132,6 +132,10 @@
             <ion-icon name="trash"></ion-icon> 
             Delete Data
         </a>
+          <a class="gotoblock" href="#/criteria">
+            <ion-icon name="checkmark-circle-outline"></ion-icon> 
+            $criteria
+        </a>
           <a class="gotoblock" href="#/query-builder">
             <ion-icon name="build"></ion-icon> 
             QueryBuilder
@@ -155,6 +159,10 @@
           <a class="gotoblock" href="#/searching">
             <ion-icon name="search"></ion-icon> 
             Searching
+        </a>
+          <a class="gotoblock" href="#/execution-order">
+            <ion-icon name="git-network"></ion-icon> 
+            Order of Execution
         </a>
           <a class="gotoblock" href="#/advanced">
             <ion-icon name="flame"></ion-icon> 
@@ -209,7 +217,7 @@
 <p>Join our <a href="https://discord.gg/WJGqUFPtZw" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Discord</a> channel. We would love to know about you and your feedbacks.</p>
             <div class="editlink" 
               file="home.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -324,7 +332,7 @@
 </ul>
             <div class="editlink" 
               file="features.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -357,7 +365,7 @@ Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/p
 <pre><code class="language-sh">composer require rakibtg/sleekdb dev-dev</code></pre>
             <div class="editlink" 
               file="installation.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -429,7 +437,7 @@ print_r($allNews);</code></pre>
 </blockquote>
             <div class="editlink" 
               file="getting-started.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -472,7 +480,7 @@ $newsStore = new Store('news', $dataDir);</code></pre>
 <pre><code class="language-php">$userStore-&gt;deleteStore();</code></pre>
             <div class="editlink" 
               file="managing-store.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -531,7 +539,9 @@ Available caching method's are:</p>
 <p>Note: You will find more details on caching at <a class="gotoblock" href="/#/cache-management">Cache Management</a></p>
 </blockquote>
 <h2 id="configurations-timeout">timeout</h2>
-<p>Set timeout value. Default value is <code>120</code> seconds.</p>
+<p>Set timeout value. Default value is <code>120</code> seconds.
+It uses the build in php <a href="https://www.php.net/manual/en/function.set-time-limit.php" target="_blank" rel="noopener nofollow">set_time_limit()</a> function.<br/>
+You can set the timeout option to <code>false</code> if you do not want to use or can not use set_time_limit.</p>
 <h2 id="configurations-primary_key">primary_key</h2>
 <p>Set the primary key into any string you want.<br/>
 SleekDB will then use that key instead of the default <code>_id</code> key.</p>
@@ -562,7 +572,7 @@ They are available as a <strong>constant of the <code>Query</code> class</strong
 <pre><code class="language-php">Query::SEARCH_ALGORITHM["hits"] // default</code></pre>
             <div class="editlink" 
               file="configurations.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -577,6 +587,8 @@ $userStore = new Store('users', __DIR__ . "/database");</code></pre>
 <ul>
 <li><a class="gotoblock" href="#/insert-data#insert">insert</a></li>
 <li><a class="gotoblock" href="#/insert-data#insertMany">insertMany</a></li>
+<li><a class="gotoblock" href="#/insert-data#updateOrInsert">updateOrInsert</a></li>
+<li><a class="gotoblock" href="#/insert-data#updateOrInsertMany">updateOrInsertMany</a></li>
 </ul>
 <h2 id="insert-data-insert">Insert a single document</h2>
 <pre><code class="language-php">function insert(array $data): array</code></pre>
@@ -659,9 +671,109 @@ $users = [
 ];
 // Insert all data.
 $users = $userStore-&gt;insertMany($users);</code></pre>
+<h2 id="insert-data-updateOrInsert">updateOrInsert()</h2>
+<p>Update or insert one document.<br/>
+This method is especially fast because it uses the _id to update or insert the document directly instead of traversing through all documents.</p>
+<pre><code class="language-php">public function updateOrInsert(array $data, bool $autoGenerateIdOnInsert = true): array</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$data: array</h1>
+<p>Document to update or insert.</p>
+</li>
+<li>
+<h1>$autoGenerateIdOnInsert: bool</h1>
+<p>Default: <code>true</code><br/>
+If <code>false</code> and <strong>the document has a _id</strong>, that does not already exist (insert), the _id will be to insert the new document, an auto-generated _id will be used otherwise.</p>
+</li>
+</ol>
+<h3>Return value</h3>
+<p>Returns <code>updated / inserted document</code>.</p>
+<h3>Example 1</h3>
+<p>Update or Insert a user with _id = 23, apply an auto-generated _id if it is an insert.</p>
+<pre><code class="language-php">$user = [
+    "_id" =&gt; 23,
+    "name" =&gt; "John",
+    ...
+];
+$userStore-&gt;updateOrInsert($user);</code></pre>
+<h3>Example 2</h3>
+<p>Update or Insert a user with _id = 23.</p>
+<pre><code class="language-php">$user = [
+    "_id" =&gt; 23,
+    "name" =&gt; "John",
+    ...
+];
+$userStore-&gt;updateOrInsert($user, false);</code></pre>
+<h3>Example 3</h3>
+<p>Update or Insert a user with no _id.</p>
+<pre><code class="language-php">$user = [
+    "name" =&gt; "John",
+    ...
+];
+$userStore-&gt;updateOrInsert($user);</code></pre>
+<h2 id="insert-data-updateOrInsertMany">updateOrInsertMany()</h2>
+<p>Update or insert multiple documents.<br/>
+This method is especially fast because it uses the _id to update or insert the documents directly instead of traversing through all documents.</p>
+<pre><code class="language-php">public function updateOrInsertMany(array $data, bool $autoGenerateIdOnInsert = true): array</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$data: array</h1>
+<p>Documents to update or insert.</p>
+</li>
+<li>
+<h1>$autoGenerateIdOnInsert: bool</h1>
+<p>Default: <code>true</code><br/>
+If <code>false</code> and <strong>a document has a _id</strong>, that does not already exist (insert), the _id will be to insert the new document, an auto-generated _id will be used otherwise.</p>
+</li>
+</ol>
+<h3>Return value</h3>
+<p>Returns <code>updated / inserted documents</code>.</p>
+<h3>Example 1</h3>
+<p>Update or Insert multiple users and apply auto-generated _id's on inserts.</p>
+<pre><code class="language-php">$users = [
+    [
+        "_id" =&gt; 23,
+        "name" =&gt; "John",
+        ...
+    ],
+    [
+        "_id" =&gt; 25,
+        "name" =&gt; "Max",
+        ...
+    ],
+    [
+        "name" =&gt; "Lisa",
+        ...
+    ]
+    ...
+];
+$userStore-&gt;updateOrInsertMany($users);</code></pre>
+<h3>Example 2</h3>
+<p>Update or Insert a users with their _id's.</p>
+<pre><code class="language-php">$users = [
+    [
+        "_id" =&gt; 23,
+        "name" =&gt; "John",
+        ...
+    ],
+    [
+        "_id" =&gt; 25,
+        "name" =&gt; "Max",
+        ...
+    ],
+    [
+        "name" =&gt; "Lisa", // &lt;-- will get auto-generated _id
+        ...
+    ]
+    ...
+];
+$userStore-&gt;updateOrInsertMany($users, false);
+// Lisa will get a auto-generated _id, because there is no _id in the document!</code></pre>
             <div class="editlink" 
               file="insert-data.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -681,9 +793,29 @@ $newsStore = new Store('news', __DIR__ . "/database");</code></pre>
 <li><a class="gotoblock" href="#/fetch-data#findById">findById</a></li>
 <li><a class="gotoblock" href="#/fetch-data#findBy">findBy</a></li>
 <li><a class="gotoblock" href="#/fetch-data#findOneBy">findOneBy</a></li>
+<li><a class="gotoblock" href="#/fetch-data#count">count</a></li>
 </ul>
 <h2 id="fetch-data-findAll">Get all documents</h2>
-<pre><code class="language-php">function findAll(): array</code></pre>
+<pre><code class="language-php">function findAll(array $orderBy = null, int $limit = null, int $offset = null): array</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$orderBy: array</h1>
+<p>Sort the result by one or multiple fields.</p>
+<ul>
+<li>[&quot;name&quot; =&gt; &quot;asc&quot;]</li>
+<li>[&quot;name&quot; =&gt; &quot;asc&quot;, &quot;age&quot; =&gt; &quot;desc&quot;]</li>
+</ul>
+</li>
+<li>
+<h1>$limit: int</h1>
+<p>Limit the result to a specific amount.</p>
+</li>
+<li>
+<h1>$offset: offset</h1>
+<p>Skip a specific amount of documents.</p>
+</li>
+</ol>
 <h3>Return value</h3>
 <p>Returns either an <code>array containing all documents</code> of that store or an <code>empty array</code> if there are no documents.</p>
 <h3>Example</h3>
@@ -709,84 +841,14 @@ $newsStore = new Store('news', __DIR__ . "/database");</code></pre>
 <pre><code>["_id" =&gt; 12, "title" =&gt; "SleekDB is the Best", ...]</code></pre>
 <p><br/></p>
 <h2 id="fetch-data-findBy">Get one or multiple documents</h2>
-<pre><code class="language-php">function findBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null): array|null</code></pre>
+<pre><code class="language-php">function findBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null): array</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$criteria</h1>
+<h1>$criteria: array</h1>
 <p>One or multiple where conditions.<br/>
-The criteria can be nested as much as needed.</p>
+Visit the <a class="gotoblock" href="#/criteria">$criteria</a> documentation page to learn more on how to define conditions.</p>
 </li>
-</ol>
-<ul>
-<li>[$fieldName, $condition, $value]</li>
-<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
-<li>
-<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
-<ul>
-<li>
-<h1>$fieldName: string</h1>
-<p>The field name argument is the property that we want to check in our data object.</p>
-<p>As our data object is basically a JSON document so it could have nested properties.</p>
-<p>To target nested properties we use a single dot between the property/field name.</p>
-<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
-</li>
-<li>
-<h1>$condition: string</h1>
-<p>To apply the comparison filters we use this argument.<br/>
-The condition is case insensitive.</p>
-<p>Allowed conditional operators are:</p>
-<ul>
-<li><code>=</code> Match equal against data.</li>
-<li><code>===</code> Match equal against data.</li>
-<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
-<li><code>!=</code> Match not equal against data.</li>
-<li><code>!==</code> Match not equal against data.</li>
-<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
-<li><code>&gt;</code> Match greater than against data.</li>
-<li><code>&gt;=</code> Match greater equal against data.</li>
-<li><code>&lt;</code> Match less than against data.</li>
-<li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>LIKE</code> Match using wildcards.</li>
-<li><code>NOT LIKE</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
-Supported wildcards:
-<ul>
-<li><code>%</code> Represents zero or more characters<br/>
-Example: bl% finds bl, black, blue, and blob</li>
-<li><code>_</code> Represents a single character<br/>
-Example: h_t finds hot, hat, and hit</li>
-<li><code>[]</code> Represents any single character within the brackets<br/>
-Example: h[oa]t finds hot and hat, but not hit</li>
-<li><code>^</code> Represents any character not in the brackets<br/>
-Example: h[^oa]t finds hit, but not hot and hat</li>
-<li><code>-</code> Represents a range of characters<br/>
-Example: c[a-b]t finds cat and cbt</li>
-</ul></li>
-<li><code>IN</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
-<li><code>NOT IN</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
-<li><code>BETWEEN</code> $value has to be an <code>array</code> with a lengeth of 2.<br/>
-Check if data is within first and second value.<br/>
-Begin and end values are included.</li>
-<li><code>NOT BETWEEN</code> $value has to be an <code>array</code> with a length of 2.<br/>
-Check if data is <strong>not</strong> within first and second value.<br/>
-Begin and end values are included.</li>
-</ul>
-</li>
-<li>
-<h1>$value</h1>
-<p>Data that will be checked against the property value of the JSON documents.<br/>
-Can also be a DateTime object if the property value of the JSON document is convertable into a DateTime object. Refer to the <a class="gotoblock" href="#/dates">Working with Dates</a> documentation to learn more about that.</p>
-</li>
-<li>
-<h1>OPERATION: string</h1>
-<p>It is used to connect multiple conditions.<br/>
-The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
-Default: <code>AND</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<ol start="2">
 <li>
 <h1>$orderBy: array</h1>
 <p>Sort the result by one or multiple fields.</p>
@@ -805,7 +867,7 @@ Default: <code>AND</code></p>
 </li>
 </ol>
 <h3>Return value</h3>
-<p>Returns found <code>documents in an array</code> or <code>null</code> if nothing is found.</p>
+<p>Returns found <code>documents in an array</code> or <code>an empty array</code> if nothing is found.</p>
 <h3>Example 1</h3>
 <pre><code class="language-php">$news = $newsStore-&gt;findBy(["author", "=", "John"], ["title" =&gt; "asc"], 10, 20);
 // First 20 documents skipped, limited to 10 and ascending sort by title where author is John.</code></pre>
@@ -829,84 +891,16 @@ Default: <code>AND</code></p>
       20
    );</code></pre>
 <p><br/></p>
-<h2 id="fetch-data-findOneBy">Get one document.</h2>
+<h2 id="fetch-data-findOneBy">Get one document</h2>
 <pre><code class="language-php">function findOneBy(array $criteria): array|null</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$criteria</h1>
+<h1>$criteria: array</h1>
 <p>One or multiple where conditions.<br/>
-The criteria can be nested as much as needed.</p>
+Visit the <a class="gotoblock" href="#/criteria">$criteria</a> documentation page to learn more on how to define conditions.</p>
 </li>
 </ol>
-<ul>
-<li>[$fieldName, $condition, $value]</li>
-<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
-<li>
-<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
-<ul>
-<li>
-<h1>$fieldName: string</h1>
-<p>The field name argument is the property that we want to check in our data object.</p>
-<p>As our data object is basically a JSON document so it could have nested properties.</p>
-<p>To target nested properties we use a single dot between the property/field name.</p>
-<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
-</li>
-<li>
-<h1>$condition: string</h1>
-<p>To apply the comparison filters we use this argument.<br/>
-The condition is case insensitive.</p>
-<p>Allowed conditional operators are:</p>
-<ul>
-<li><code>=</code> Match equal against data.</li>
-<li><code>===</code> Match equal against data.</li>
-<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
-<li><code>!=</code> Match not equal against data.</li>
-<li><code>!==</code> Match not equal against data.</li>
-<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
-<li><code>&gt;</code> Match greater than against data.</li>
-<li><code>&gt;=</code> Match greater equal against data.</li>
-<li><code>&lt;</code> Match less than against data.</li>
-<li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>LIKE</code> Match using wildcards.</li>
-<li><code>NOT LIKE</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
-Supported wildcards:
-<ul>
-<li><code>%</code> Represents zero or more characters<br/>
-Example: bl% finds bl, black, blue, and blob</li>
-<li><code>_</code> Represents a single character<br/>
-Example: h_t finds hot, hat, and hit</li>
-<li><code>[]</code> Represents any single character within the brackets<br/>
-Example: h[oa]t finds hot and hat, but not hit</li>
-<li><code>^</code> Represents any character not in the brackets<br/>
-Example: h[^oa]t finds hit, but not hot and hat</li>
-<li><code>-</code> Represents a range of characters<br/>
-Example: c[a-b]t finds cat and cbt</li>
-</ul></li>
-<li><code>IN</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
-<li><code>NOT IN</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
-<li><code>BETWEEN</code> $value has to be an <code>array</code> with a lengeth of 2.<br/>
-Check if data is within first and second value.<br/>
-Begin and end values are included.</li>
-<li><code>NOT BETWEEN</code> $value has to be an <code>array</code> with a length of 2.<br/>
-Check if data is <strong>not</strong> within first and second value.<br/>
-Begin and end values are included.</li>
-</ul>
-</li>
-<li>
-<h1>$value</h1>
-<p>Data that will be checked against the property value of the JSON documents.<br/>
-Can also be a DateTime object if the property value of the JSON document is convertable into a DateTime object. Refer to the <a class="gotoblock" href="#/dates">Working with Dates</a> documentation to learn more about that.</p>
-</li>
-<li>
-<h1>OPERATION: string</h1>
-<p>It is used to connect multiple conditions.<br/>
-The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
-Default: <code>AND</code></p>
-</li>
-</ul>
-</li>
-</ul>
 <h3>Return value</h3>
 <p>Returns <code>one document</code> or <code>null</code> if nothing is found.</p>
 <h3>Example 1</h3>
@@ -928,9 +922,17 @@ Default: <code>AND</code></p>
          ]
       ]
    );</code></pre>
+<h2 id="fetch-data-count">Get the amount of all documents stored</h2>
+<p>This method is especially fast because it just counts the amount of files.</p>
+<pre><code class="language-php">function count(): int</code></pre>
+<h3>Return value</h3>
+<p>Returns the amount of documents in the store as an <code>int</code>.</p>
+<h3>Example</h3>
+<pre><code class="language-php">$newsCount = $newsStore-&gt;count();
+// Returns: 27 </code></pre>
             <div class="editlink" 
               file="fetch-data.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -949,6 +951,8 @@ $userStore = new Store('users', __DIR__ . "/database");</code></pre>
 <li><a class="gotoblock" href="#/edit-data#updateById">updateById</a></li>
 <li><a class="gotoblock" href="#/edit-data#update">update</a></li>
 <li><a class="gotoblock" href="#/edit-data#removeFieldsById">removeFieldsById</a></li>
+<li><a class="gotoblock" href="#/edit-data#updateOrInsert">updateOrInsert</a></li>
+<li><a class="gotoblock" href="#/edit-data#updateOrInsertMany">updateOrInsertMany</a></li>
 </ul>
 <h2 id="edit-data-updateById">updateById()</h2>
 <p>Update parts of a document.<br/>
@@ -1058,7 +1062,7 @@ Removal of nested fields possible by using a dot between fieldNames (Example 3)<
 <h3>Return value</h3>
 <p>Returns <code>updated document</code> on success or <code>false</code> if document could not be found.</p>
 <h3>Example 1</h3>
-<p>Change the status field of the user with _id = 23.</p>
+<p>Remove the status field of the user with _id = 23.</p>
 <pre><code class="language-php">$userStore-&gt;updateById(23, [ "status" ]);</code></pre>
 <h3>Example 2</h3>
 <p>Remove the name and the age fields of the user with _id = 24.</p>
@@ -1075,9 +1079,109 @@ Removal of nested fields possible by using a dot between fieldNames (Example 3)<
     ],
     ...
 ]</code></pre>
+<h2 id="edit-data-updateOrInsert">updateOrInsert()</h2>
+<p>Update or insert one document.<br/>
+This method is especially fast because it uses the _id to update or insert the document directly instead of traversing through all documents.</p>
+<pre><code class="language-php">public function updateOrInsert(array $data, bool $autoGenerateIdOnInsert = true): array</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$data: array</h1>
+<p>Document to update or insert.</p>
+</li>
+<li>
+<h1>$autoGenerateIdOnInsert: bool</h1>
+<p>Default: <code>true</code><br/>
+If <code>false</code> and <strong>the document has a _id</strong>, that does not already exist (insert), the _id will be to insert the new document, an auto-generated _id will be used otherwise.</p>
+</li>
+</ol>
+<h3>Return value</h3>
+<p>Returns <code>updated / inserted document</code>.</p>
+<h3>Example 1</h3>
+<p>Update or Insert a user with _id = 23, apply an auto-generated _id if it is an insert.</p>
+<pre><code class="language-php">$user = [
+    "_id" =&gt; 23,
+    "name" =&gt; "John",
+    ...
+];
+$userStore-&gt;updateOrInsert($user);</code></pre>
+<h3>Example 2</h3>
+<p>Update or Insert a user with _id = 23.</p>
+<pre><code class="language-php">$user = [
+    "_id" =&gt; 23,
+    "name" =&gt; "John",
+    ...
+];
+$userStore-&gt;updateOrInsert($user, false);</code></pre>
+<h3>Example 3</h3>
+<p>Update or Insert a user with no _id.</p>
+<pre><code class="language-php">$user = [
+    "name" =&gt; "John",
+    ...
+];
+$userStore-&gt;updateOrInsert($user);</code></pre>
+<h2 id="edit-data-updateOrInsertMany">updateOrInsertMany()</h2>
+<p>Update or insert multiple documents.<br/>
+This method is especially fast because it uses the _id to update or insert the documents directly instead of traversing through all documents.</p>
+<pre><code class="language-php">public function updateOrInsertMany(array $data, bool $autoGenerateIdOnInsert = true): array</code></pre>
+<h3>Parameters</h3>
+<ol>
+<li>
+<h1>$data: array</h1>
+<p>Documents to update or insert.</p>
+</li>
+<li>
+<h1>$autoGenerateIdOnInsert: bool</h1>
+<p>Default: <code>true</code><br/>
+If <code>false</code> and <strong>a document has a _id</strong>, that does not already exist (insert), the _id will be to insert the new document, an auto-generated _id will be used otherwise.</p>
+</li>
+</ol>
+<h3>Return value</h3>
+<p>Returns <code>updated / inserted documents</code>.</p>
+<h3>Example 1</h3>
+<p>Update or Insert multiple users and apply auto-generated _id's on inserts.</p>
+<pre><code class="language-php">$users = [
+    [
+        "_id" =&gt; 23,
+        "name" =&gt; "John",
+        ...
+    ],
+    [
+        "_id" =&gt; 25,
+        "name" =&gt; "Max",
+        ...
+    ],
+    [
+        "name" =&gt; "Lisa",
+        ...
+    ]
+    ...
+];
+$userStore-&gt;updateOrInsertMany($users);</code></pre>
+<h3>Example 2</h3>
+<p>Update or Insert a users with their _id's.</p>
+<pre><code class="language-php">$users = [
+    [
+        "_id" =&gt; 23,
+        "name" =&gt; "John",
+        ...
+    ],
+    [
+        "_id" =&gt; 25,
+        "name" =&gt; "Max",
+        ...
+    ],
+    [
+        "name" =&gt; "Lisa", // &lt;-- will get auto-generated _id
+        ...
+    ]
+    ...
+];
+$userStore-&gt;updateOrInsertMany($users, false);
+// Lisa will get a auto-generated _id, because there is no _id in the document!</code></pre>
             <div class="editlink" 
               file="edit-data.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -1101,80 +1205,10 @@ $userStore = new Store('users', __DIR__ . "/database");</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$criteria</h1>
+<h1>$criteria: array</h1>
 <p>One or multiple where conditions.<br/>
-The criteria can be nested as much as needed.</p>
+Visit the <a class="gotoblock" href="#/criteria">$criteria</a> documentation page to learn more on how to define conditions.</p>
 </li>
-</ol>
-<ul>
-<li>[$fieldName, $condition, $value]</li>
-<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
-<li>
-<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
-<ul>
-<li>
-<h1>$fieldName: string</h1>
-<p>The field name argument is the property that we want to check in our data object.</p>
-<p>As our data object is basically a JSON document so it could have nested properties.</p>
-<p>To target nested properties we use a single dot between the property/field name.</p>
-<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
-</li>
-<li>
-<h1>$condition: string</h1>
-<p>To apply the comparison filters we use this argument.<br/>
-The condition is case insensitive.</p>
-<p>Allowed conditional operators are:</p>
-<ul>
-<li><code>=</code> Match equal against data.</li>
-<li><code>===</code> Match equal against data.</li>
-<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
-<li><code>!=</code> Match not equal against data.</li>
-<li><code>!==</code> Match not equal against data.</li>
-<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
-<li><code>&gt;</code> Match greater than against data.</li>
-<li><code>&gt;=</code> Match greater equal against data.</li>
-<li><code>&lt;</code> Match less than against data.</li>
-<li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>LIKE</code> Match using wildcards.</li>
-<li><code>NOT LIKE</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
-Supported wildcards:
-<ul>
-<li><code>%</code> Represents zero or more characters<br/>
-Example: bl% finds bl, black, blue, and blob</li>
-<li><code>_</code> Represents a single character<br/>
-Example: h_t finds hot, hat, and hit</li>
-<li><code>[]</code> Represents any single character within the brackets<br/>
-Example: h[oa]t finds hot and hat, but not hit</li>
-<li><code>^</code> Represents any character not in the brackets<br/>
-Example: h[^oa]t finds hit, but not hot and hat</li>
-<li><code>-</code> Represents a range of characters<br/>
-Example: c[a-b]t finds cat and cbt</li>
-</ul></li>
-<li><code>IN</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
-<li><code>NOT IN</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
-<li><code>BETWEEN</code> $value has to be an <code>array</code> with a lengeth of 2.<br/>
-Check if data is within first and second value.<br/>
-Begin and end values are included.</li>
-<li><code>NOT BETWEEN</code> $value has to be an <code>array</code> with a length of 2.<br/>
-Check if data is <strong>not</strong> within first and second value.<br/>
-Begin and end values are included.</li>
-</ul>
-</li>
-<li>
-<h1>$value</h1>
-<p>Data that will be checked against the property value of the JSON documents.<br/>
-Can also be a DateTime object if the property value of the JSON document is convertable into a DateTime object. Refer to the <a class="gotoblock" href="#/dates">Working with Dates</a> documentation to learn more about that.</p>
-</li>
-<li>
-<h1>OPERATION: string</h1>
-<p>It is used to connect multiple conditions.<br/>
-The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
-Default: <code>AND</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<ol start="2">
 <li>
 <h1>$returnOption: int</h1>
 <p>Different return options provided with constants of the <code>Query</code> class</p>
@@ -1232,7 +1266,192 @@ $deletedUsers = $userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"], Query::
 // Returns true</code></pre>
             <div class="editlink" 
               file="delete-data.md" 
-              version="2.7">
+              version="2.11">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_criteria">
+            <h1>$criteria</h1>
+<p>The $criteria is an argument accepted by many different methods.<br/>
+It is used to define one or multiple conditions to filter documents.</p>
+<p>Methods that accept criteria as an argument:</p>
+<ul>
+<li><a class="gotoblock" href="#/fetch-data#findBy">Store-&gt;findBy()</a></li>
+<li><a class="gotoblock" href="#/fetch-data#findOneBy">Store-&gt;findOneBy()</a></li>
+<li><a class="gotoblock" href="#/delete-data#deleteBy">Store-&gt;deleteBy()</a></li>
+<li><a class="gotoblock" href="#/query-builder#where">QueryBuilder-&gt;where()</a></li>
+<li><a class="gotoblock" href="#/query-builder#orWhere">QueryBuilder-&gt;orWhere()</a></li>
+<li><a class="gotoblock" href="#/query-builder#having">QueryBuilder-&gt;having()</a></li>
+</ul>
+<h2>Summary</h2>
+<ul>
+<li><a class="gotoblock" href="#/criteria#criteria">$criteria: array</a></li>
+<li><a class="gotoblock" href="#/criteria#examples">Examples</a></li>
+</ul>
+<h2 id="criteria-criteria">$criteria: array</h2>
+<p>One or multiple conditions.<br/>
+The criteria can be nested as much as needed.</p>
+<ul>
+<li>[$fieldName, $condition, $value]</li>
+<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
+<li>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</li>
+</ul>
+<p>With SleekDB version 2.10 we introduce closures to filter data with your own custom functions.</p>
+<ul>
+<li>[ CLOSURE ]</li>
+<li>[ CLOSURE, CLOSURE, ... ]</li>
+<li>[ CLOSURE, [$fieldName, $condition, $value], ... ]</li>
+<li>
+<p>[ CLOSURE, OPERATION, [$fieldName, $condition, $value], ... ]</p>
+<ul>
+<li>
+<h1>$fieldName: string</h1>
+<p>The field name argument is the property that we want to check in our data object.</p>
+<p>As our data object is basically a JSON document so it could have nested properties.</p>
+<p>To target nested properties we use a single dot between the property/field name.</p>
+<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
+</li>
+<li>
+<h1>$condition: string</h1>
+<p>To apply the comparison filters we use this argument.<br/>
+The condition is <strong>case insensitive</strong>.</p>
+<p>Allowed conditional operators are:</p>
+<ul>
+<li><code>=</code> Match equal against data.</li>
+<li><code>===</code> Match equal against data.</li>
+<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
+<li><code>!=</code> Match not equal against data.</li>
+<li><code>!==</code> Match not equal against data.</li>
+<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
+<li><code>&gt;</code> Match greater than against data.</li>
+<li><code>&gt;=</code> Match greater equal against data.</li>
+<li><code>&lt;</code> Match less than against data.</li>
+<li><code>&lt;=</code> Match less equal against data.</li>
+<li><code>LIKE</code> Match using wildcards.</li>
+<li><code>NOT LIKE</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
+Supported wildcards:
+<ul>
+<li><code>%</code> Represents zero or more characters<br/>
+Example: bl% finds bl, black, blue, and blob</li>
+<li><code>_</code> Represents a single character<br/>
+Example: h_t finds hot, hat, and hit</li>
+<li><code>[]</code> Represents any single character within the brackets<br/>
+Example: h[oa]t finds hot and hat, but not hit</li>
+<li><code>^</code> Represents any character not in the brackets<br/>
+Example: h[^oa]t finds hit, but not hot and hat</li>
+<li><code>-</code> Represents a range of characters<br/>
+Example: c[a-b]t finds cat and cbt</li>
+</ul></li>
+<li><code>IN</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
+<li><code>NOT IN</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
+<li><code>CONTAINS</code> Returns <code>true</code> if stored data is an array and the array contains $value.</li>
+<li><code>NOT CONTAINS</code> Returns <code>true</code> if stored data is not an array or the array <strong>not</strong> contains $value.</li>
+<li><code>BETWEEN</code> $value has to be an <code>array</code> with a lengeth of 2.<br/>
+Check if data is within first and second value.<br/>
+Begin and end values are included.</li>
+<li><code>NOT BETWEEN</code> $value has to be an <code>array</code> with a length of 2.<br/>
+Check if data is <strong>not</strong> within first and second value.<br/>
+Begin and end values are included.</li>
+</ul>
+</li>
+<li>
+<h1>$value</h1>
+<p>Data that will be checked against the property value of the JSON documents.<br/>
+Can also be a DateTime object if the property value of the JSON document is convertable into a DateTime object. Refer to the <a class="gotoblock" href="#/dates">Working with Dates</a> documentation to learn more about that.</p>
+</li>
+<li>
+<h1>OPERATION: string</h1>
+<p>It is used to connect multiple conditions.<br/>
+The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
+Default: <code>AND</code></p>
+</li>
+<li>
+<h1>CLOSURE: Closure</h1>
+<p>Refer to the <a href="https://www.php.net/manual/en/functions.anonymous.php" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Official PHP documentation</a> to learn more about closures and anonymous functions.<br/>
+The closure receives a document as parameter and has to return a <code>boolean</code>.<br/>
+In <strong>Example 4</strong> (below) we use a closure.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="criteria-examples">Examples</h2>
+<h3>Example 1</h3>
+<p>Find all news articles of the author &quot;John&quot;.</p>
+<pre><code class="language-php">$news = $newsStore-&gt;findBy(["author", "=", "John"]);</code></pre>
+<h3>Example 2</h3>
+<p>Find all news articles of the author &quot;John&quot;, that have &quot;cat&quot; in their title.</p>
+<pre><code class="language-php">$news = $newsStore-&gt;findBy([
+  ["author", "=", "John"], 
+  "AND", // &lt;-- Optional
+  ["title", "LIKE", "%cat%"]
+]);</code></pre>
+<pre><code class="language-php">$news = $newsStore-&gt;findBy([
+  ["author", "=", "John"], 
+  ["title", "LIKE", "%cat%"]
+]);</code></pre>
+<h3>Example 3</h3>
+<p>Find all news articles of the author &quot;John&quot; or &quot;Smith&quot;, that have &quot;cat&quot; in their title.</p>
+<pre><code class="language-php">$news = $newsStore-&gt;findBy([
+  [
+    ["author", "=", "John"], 
+    "OR",
+    ["author", "=", "Smith"], 
+  ],
+  "AND", // &lt;-- Optional
+  ["title", "LIKE", "%cat%"]
+]);</code></pre>
+<pre><code class="language-php">$news = $newsStore-&gt;findBy([
+  [
+    ["author", "=", "John"], 
+    "OR",
+    ["author", "=", "Smith"], 
+  ],
+  ["title", "LIKE", "%cat%"]
+]);</code></pre>
+<h3>Example 4</h3>
+<p>With this example we show you the usage of closures to filter data.<br/>
+Every codeblock below does the same thing.<br/>
+Find all news articles of the author &quot;John&quot; or &quot;Smith&quot;, that have &quot;cat&quot; in their title.</p>
+<pre><code class="language-php">// A closure in conjunction with a normal condition
+$news = $newsStore-&gt;findBy([
+  function($article){
+    return ($article['author'] === 'John' || $article['author'] === 'Smith');
+  },
+  "AND", // &lt;-- Optional
+  ["title", "LIKE", "%cat%"]
+]);</code></pre>
+<pre><code class="language-php">// A closure in conjunction with a normal condition
+$news = $newsStore-&gt;findBy([
+  function($article){
+    return ($article['author'] === 'John' || $article['author'] === 'Smith');
+  },
+  ["title", "LIKE", "%cat%"]
+]);</code></pre>
+<pre><code class="language-php">// Extracted the closure from the criteria array
+$johnOrSmithCondition = function($article){
+  return ($article['author'] === 'John' || $article['author'] === 'Smith')
+};
+
+// A closure in conjunction with a normal condition
+$news = $newsStore-&gt;findBy([
+  $johnOrSmithCondition,
+  ["title", "LIKE", "%cat%"]
+]);</code></pre>
+<pre><code class="language-php">// Use external variables
+$wantedAuthors = ['John', 'Smith'];
+
+$johnOrSmithCondition = function($article) use ($wantedAuthors){
+  return in_array($article['author'], $wantedAuthors, true);
+};
+
+// A closure in conjunction with a normal condition
+$news = $newsStore-&gt;findBy([
+  $johnOrSmithCondition,
+  ["title", "LIKE", "%cat%"]
+]);</code></pre>
+            <div class="editlink" 
+              file="criteria.md" 
+              version="2.11">
             </div>
           </div>
         
@@ -1295,77 +1514,9 @@ $deletedUsers = $userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"], Query::
 <li>
 <h1>$criteria</h1>
 <p>One or multiple where conditions.<br/>
-The criteria can be nested as much as needed.</p>
+Visit the <a class="gotoblock" href="#/criteria">$criteria</a> documentation page to learn more on how to define conditions.</p>
 </li>
 </ol>
-<ul>
-<li>[$fieldName, $condition, $value]</li>
-<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
-<li>
-<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
-<ul>
-<li>
-<h1>$fieldName: string</h1>
-<p>The field name argument is the property that we want to check in our data object.</p>
-<p>As our data object is basically a JSON document so it could have nested properties.</p>
-<p>To target nested properties we use a single dot between the property/field name.</p>
-<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
-</li>
-<li>
-<h1>$condition: string</h1>
-<p>To apply the comparison filters we use this argument.<br/>
-The condition is case insensitive.</p>
-<p>Allowed conditional operators are:</p>
-<ul>
-<li><code>=</code> Match equal against data.</li>
-<li><code>===</code> Match equal against data.</li>
-<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
-<li><code>!=</code> Match not equal against data.</li>
-<li><code>!==</code> Match not equal against data.</li>
-<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
-<li><code>&gt;</code> Match greater than against data.</li>
-<li><code>&gt;=</code> Match greater equal against data.</li>
-<li><code>&lt;</code> Match less than against data.</li>
-<li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>LIKE</code> Match using wildcards.</li>
-<li><code>NOT LIKE</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
-Supported wildcards:
-<ul>
-<li><code>%</code> Represents zero or more characters<br/>
-Example: bl% finds bl, black, blue, and blob</li>
-<li><code>_</code> Represents a single character<br/>
-Example: h_t finds hot, hat, and hit</li>
-<li><code>[]</code> Represents any single character within the brackets<br/>
-Example: h[oa]t finds hot and hat, but not hit</li>
-<li><code>^</code> Represents any character not in the brackets<br/>
-Example: h[^oa]t finds hit, but not hot and hat</li>
-<li><code>-</code> Represents a range of characters<br/>
-Example: c[a-b]t finds cat and cbt</li>
-</ul></li>
-<li><code>IN</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
-<li><code>NOT IN</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
-<li><code>BETWEEN</code> $value has to be an <code>array</code> with a lengeth of 2.<br/>
-Check if data is within first and second value.<br/>
-Begin and end values are included.</li>
-<li><code>NOT BETWEEN</code> $value has to be an <code>array</code> with a length of 2.<br/>
-Check if data is <strong>not</strong> within first and second value.<br/>
-Begin and end values are included.</li>
-</ul>
-</li>
-<li>
-<h1>$value</h1>
-<p>Data that will be checked against the property value of the JSON documents.<br/>
-Can also be a DateTime object if the property value of the JSON document is convertable into a DateTime object. Refer to the <a class="gotoblock" href="#/dates">Working with Dates</a> documentation to learn more about that.</p>
-</li>
-<li>
-<h1>OPERATION: string</h1>
-<p>It is used to connect multiple conditions.<br/>
-The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
-Default: <code>AND</code></p>
-</li>
-</ul>
-</li>
-</ul>
 <h3>Example 1</h3>
 <p>To only get the user whose country is equal to &quot;England&quot; we would query like this:</p>
 <pre><code class="language-php">// inline
@@ -1456,77 +1607,9 @@ WHERE
 <li>
 <h1>$criteria</h1>
 <p>One or multiple where conditions.<br/>
-The criteria can be nested as much as needed.</p>
+Visit the <a class="gotoblock" href="#/criteria">$criteria</a> documentation page to learn more on how to define conditions.</p>
 </li>
 </ol>
-<ul>
-<li>[$fieldName, $condition, $value]</li>
-<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
-<li>
-<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
-<ul>
-<li>
-<h1>$fieldName: string</h1>
-<p>The field name argument is the property that we want to check in our data object.</p>
-<p>As our data object is basically a JSON document so it could have nested properties.</p>
-<p>To target nested properties we use a single dot between the property/field name.</p>
-<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
-</li>
-<li>
-<h1>$condition: string</h1>
-<p>To apply the comparison filters we use this argument.
-The condition is case insensitive.</p>
-<p>Allowed conditional operators are:</p>
-<ul>
-<li><code>=</code> Match equal against data.</li>
-<li><code>===</code> Match equal against data.</li>
-<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
-<li><code>!=</code> Match not equal against data.</li>
-<li><code>!==</code> Match not equal against data.</li>
-<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
-<li><code>&gt;</code> Match greater than against data.</li>
-<li><code>&gt;=</code> Match greater equal against data.</li>
-<li><code>&lt;</code> Match less than against data.</li>
-<li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>LIKE</code> Match using wildcards.</li>
-<li><code>NOT LIKE</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
-Supported wildcards:
-<ul>
-<li><code>%</code> Represents zero or more characters<br/>
-Example: bl% finds bl, black, blue, and blob</li>
-<li><code>_</code> Represents a single character<br/>
-Example: h_t finds hot, hat, and hit</li>
-<li><code>[]</code> Represents any single character within the brackets<br/>
-Example: h[oa]t finds hot and hat, but not hit</li>
-<li><code>^</code> Represents any character not in the brackets<br/>
-Example: h[^oa]t finds hit, but not hot and hat</li>
-<li><code>-</code> Represents a range of characters<br/>
-Example: c[a-b]t finds cat and cbt</li>
-</ul></li>
-<li><code>IN</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
-<li><code>NOT IN</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
-<li><code>BETWEEN</code> $value has to be an <code>array</code> with a lengeth of 2.<br/>
-Check if data is within first and second value.<br/>
-Begin and end values are included.</li>
-<li><code>NOT BETWEEN</code> $value has to be an <code>array</code> with a length of 2.<br/>
-Check if data is <strong>not</strong> within first and second value.<br/>
-Begin and end values are included.</li>
-</ul>
-</li>
-<li>
-<h1>$value</h1>
-<p>Data that will be checked against the property value of the JSON documents.<br/>
-Can also be a DateTime object if the property value of the JSON document is convertable into a DateTime object. Refer to the <a class="gotoblock" href="#/dates">Working with Dates</a> documentation to learn more about that.</p>
-</li>
-<li>
-<h1>OPERATION: string</h1>
-<p>It is used to connect multiple conditions.<br/>
-The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
-Default: <code>AND</code></p>
-</li>
-</ul>
-</li>
-</ul>
 <h3>Example 1</h3>
 <p>Retrieve all users that have <code>(products.totalSaved &gt; 10 AND products.totalBought &gt; 20) OR products.shipped = 1</code></p>
 <pre><code class="language-php">$users = $userQueryBuilder
@@ -1593,21 +1676,120 @@ WHERE
 <p>Specify specific fields to output.</p>
 <ul>
 <li>[&quot;fieldName1&quot;, &quot;fieldName2&quot;, ...]</li>
-<li>[&quot;ALIAS&quot; =&gt; &quot;fieldName1&quot;, &quot;fieldName2&quot;, ..]</li>
+<li>[&quot;ALIAS&quot; =&gt; &quot;fieldName1&quot;, &quot;fieldName2&quot;, ...]</li>
+<li>[&quot;ALIAS&quot; =&gt; [&quot;FUNCTION&quot; =&gt; PARAMETER], ...]</li>
+<li>[&quot;ALIAS&quot; =&gt; CLOSURE, ...]</li>
 </ul>
 </li>
 </ol>
-<h3>When using select in conjunction with <a class="gotoblock" href="#/query-builder#groupBy">groupBy</a> you can also use functions.</h3>
+<h3>Select-Functions</h3>
+<p>When using select functions you always need to define an alias!</p>
+<h4>String functions</h4>
+<p>String functions just apply to strings and return <code>null</code> on all other types.</p>
+<ol>
+<li>
+<h1>UPPER</h1>
+<p>Make a field uppercase.<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["UPPER" =&gt; "fieldName"], ...]</code></pre>
+</li>
+<li>
+<h1>LOWER</h1>
+<p>Make a field lowercase.<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["LOWER" =&gt; "fieldName"], ...]</code></pre>
+</li>
+<li>
+<h1>LENGTH</h1>
+<p>Get the length of a field.<br/>
+<strong>Can also be used to get the <code>length of an array</code>!</strong><br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["LENGTH" =&gt; "fieldName"], ...]</code></pre>
+</li>
+<li>
+<h1>CONCAT</h1>
+<p>Concatenate multiple fields with a glue between each.<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["CONCAT" =&gt; [GLUE, "fieldName1", "fieldName2", ...]], ...]</code></pre>
 <ul>
-<li>[&quot;ALIAS&quot; =&gt; [&quot;FUNCTION&quot; =&gt; &quot;fieldName&quot;], ...]<br/>
-Available functions:
-<ul>
-<li><code>SUM</code></li>
-<li><code>MAX</code></li>
-<li><code>MIN</code></li>
-<li><code>AVG</code></li>
-</ul></li>
+<li>GLUE: string<br/>
+The glue between the concatenated fields.</li>
 </ul>
+</li>
+<li>
+<h1>POSITION</h1>
+<p>Get the position of a sub string.<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["POSITION" =&gt; [SUBSTRING, "fieldName"]], ...]</code></pre>
+<ul>
+<li>SUBSTRING: string<br/>
+The sub string to get the position of.</li>
+</ul>
+</li>
+</ol>
+<h4>Numeric functions</h4>
+<p>Numeric functions just apply to numeric fields and return <code>null</code> on all other types.</p>
+<ol>
+<li>
+<h1>SUM</h1>
+<p>Retrieve the sum of a field.<br/>
+Reduces amount of documents in result set to one. (If Group-By is not used)<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["SUM" =&gt; "fieldName"], ...]</code></pre>
+</li>
+<li>
+<h1>MAX</h1>
+<p>Retrieve the max value of a field.<br/>
+Reduces amount of documents in result set to one. (If Group-By is not used)<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["MAX" =&gt; "fieldName"], ...]</code></pre>
+</li>
+<li>
+<h1>MIN</h1>
+<p>Retrieve the min value of a field.<br/>
+Reduces amount of documents in result set to one. (If Group-By is not used)<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["MIN" =&gt; "fieldName"], ...]</code></pre>
+</li>
+<li>
+<h1>AVG</h1>
+<p>Retrieve the average value of a field. (sum / amount)<br/>
+Reduces amount of documents in result set to one. (If Group-By is not used)<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["AVG" =&gt; "fieldName"], ...]</code></pre>
+</li>
+<li>
+<h1>ROUND</h1>
+<p>Round the value of a field.<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["ROUND" =&gt; ["fieldName", PRECISION]], ...]</code></pre>
+<ul>
+<li>PRECISION: int<br/>
+The optional number of decimal digits to round to.<br/>
+If the precision is positive, val is rounded to precision significant digits after the decimal point.<br/>
+If the precision is negative, val is rounded to precision significant digits before the decimal point, e.g. for a precision of -1 val is rounded to tens, for a precision of -2 to hundreds, etc.</li>
+</ul>
+</li>
+<li>
+<h1>ABS</h1>
+<p>Get the absolute value of a field.<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; ["ABS" =&gt; "fieldName"], ...]</code></pre>
+</li>
+</ol>
+<h3>Custom select function</h3>
+<p>With SleekDB version 2.10 we introduce closures to select fields with custom functions.<br/>
+Refer to the <a href="https://www.php.net/manual/en/functions.anonymous.php" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Official PHP documentation</a> to learn more about closures and anonymous functions.<br/>
+<br/>
+Currently it is <u>not possible</u> to create a custom select function that considers the whole result set and reduces the amount of the result set to one, like <code>AVG</code>, <code>MIN</code>, <code>MAX</code> and <code>SUM</code> does.<br/>
+<br/>
+When using a custom select function you always have to provide an alias.<br/>
+The closure <strong>receives a document as parameter</strong>.<br/>
+<br/>
+In <strong>Example 5</strong> you can see how to use custom functions to select fields.<br/>
+<br/>
+Usage:</p>
+<pre><code class="language-php">["ALIAS" =&gt; CLOSURE, ...]</code></pre>
 <h3>Example 1</h3>
 <p>Retrieve just the name of all users.</p>
 <pre><code class="language-php">$users = $userQueryBuilder
@@ -1617,20 +1799,89 @@ Available functions:
 // output: [["_id" =&gt; 1, "name" =&gt; "Max"], ["_id" =&gt; 2, "name" =&gt; "Hasan"]]</code></pre>
 <h3>Example 2</h3>
 <p>Retrieve just the age of all users as age.<br/>
-<strong>Note</strong>: The age of the user is stored in a nested array.</p>
+<strong>Note</strong>: The age of the user is stored in a nested array and we use an alias.</p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;select(["age" =&gt; "userBiography.age"])
   -&gt;getQuery()
   -&gt;fetch();
 // output: [["_id" =&gt; 1, "age" =&gt; 20], ["_id" =&gt; 2, "age" =&gt; 17]]</code></pre>
 <h3>Example 3</h3>
-<p>Using a function when using <a class="gotoblock" href="#/query-builder#groupBy">groupBy</a>.</p>
+<p>Using select functions that reduce the amount of the result set to one.</p>
+<pre><code class="language-sql">SELECT SUM(follower) as followerSum;</code></pre>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;select([
+    "followerSum" =&gt; ["SUM" =&gt; "follower"],
+    "followerAvg" =&gt; ["AVG" =&gt; "follower"]
+  ])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code class="language-php">[
+  ["followerSum" =&gt; 81482, "followerAvg" =&gt; 501.319205]
+]</code></pre>
+<h3>Example 4</h3>
+<p>Using a select function in conjunction with <a class="gotoblock" href="#/query-builder#groupBy">groupBy</a>.</p>
 <pre><code class="language-sql">SELECT age, SUM(follower) as followerSum GROUP BY age;</code></pre>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;select(["age", "followerSum" =&gt; ["SUM" =&gt; "follower"]])
   -&gt;groupBy(["age"])
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code class="language-php">[
+  ["age" =&gt; 18, "followerSum" =&gt; 901],
+  ["age" =&gt; 20, "followerSum" =&gt; 435],
+  ...
+]</code></pre>
+<h3>Example 5</h3>
+<p>Using a custom select function (closure).<br/>
+Every codeblock below does the same thing.<br/>
+For demonstration purposes this <strong>example is very simple</strong> and you can achieve the <strong>same result with the <code>CONCAT</code> function</strong>!<br/>
+The result of the query is shown at the bottom of this section.</p>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;select([
+    "age", 
+    "fullName" =&gt; function($user){
+      return $user['forename'] . ', ' . $user['surname'];
+    },
+    "follower"
+  ])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<pre><code class="language-php">// Extract the custom function from the select array
+$fullNameSelectFunction = function($user){
+  return $user['forename'] . ', ' . $user['surname'];
+}
+
+$users = $userQueryBuilder
+  -&gt;select([
+    "age", 
+    "fullName" =&gt; $fullNameSelectFunction,
+    "follower"
+  ])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<pre><code class="language-php">// Use external variables
+$nameSeparator = ', ';
+
+$fullNameSelectFunction = function($user) use ($nameSeparator){
+  return $user['forename'] . $nameSeparator . $user['surname'];
+};
+
+$users = $userQueryBuilder
+  -&gt;select([
+    "age", 
+    "fullName" =&gt; $fullNameSelectFunction,
+    "follower"
+  ])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code class="language-php">[
+  ["age" =&gt; 18, "fullName" =&gt; "Tom, Great", "follower" =&gt; 901],
+  ["age" =&gt; 20, "fullName" =&gt; "John, West", "follower" =&gt; 435],
+  ...
+]</code></pre>
 <h2 id="query-builder-except">except()</h2>
 <p><code>except(...)</code> works as the opposite of <code>select()</code> method. Use it when you don't want a property in the result. For example, if you don't want the password field in your returned data set.</p>
 <pre><code class="language-php">function except(array $fieldNames): QueryBuilder</code></pre>
@@ -1658,11 +1909,11 @@ Available functions:
 <pre><code>[ ["_id" =&gt; 2, "address" =&gt; [ "street" =&gt; "Firststreet" ]], ... ]</code></pre>
 <h2 id="query-builder-skip">skip()</h2>
 <p>Skip works as the OFFSET clause of SQL. You can use this to skip a specific amount of documents.</p>
-<pre><code class="language-php">function skip(int $skip = 0): QueryBuilder</code></pre>
+<pre><code class="language-php">function skip(int|string $skip = 0): QueryBuilder</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$skip: int</h1>
+<h1>$skip: int|string</h1>
 <p>The value of how many documents should be skipped.</p>
 </li>
 </ol>
@@ -1672,20 +1923,28 @@ Available functions:
   -&gt;skip(10)
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;skip('10')
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
 <h2 id="query-builder-limit">limit()</h2>
 <p>Works as the LIMIT clause of SQL. You can use this to limit the results to a specific amount.</p>
-<pre><code class="language-php">function limit($limit = 0): QueryBuilder</code></pre>
+<pre><code class="language-php">function limit(int|string $limit = 0): QueryBuilder</code></pre>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$limit: int</h1>
-<p>Limit the amount of values in the result set. Has to be greater than 0.</p>
+<h1>$limit: int|string</h1>
+<p>Limit the amount of documents in the result set. Has to be greater than 0.</p>
 </li>
 </ol>
 <h3>Example</h3>
 <p>Retrieve just the first ten users.</p>
 <pre><code class="language-php">$users = $userQueryBuilder
   -&gt;limit(10)
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<pre><code class="language-php">$users = $userQueryBuilder
+  -&gt;limit('10')
   -&gt;getQuery()
   -&gt;fetch();</code></pre>
 <h2 id="query-builder-orderBy">orderBy()</h2>
@@ -1736,8 +1995,7 @@ Available functions:
 <p>Group documents using one or multiple fields.</p>
 <pre><code class="language-php">function groupBy(array $groupByFields, string $counterKeyName = null, bool $allowEmpty = false): QueryBuilder</code></pre>
 <blockquote>
-<p>When using groupBy the <a class="gotoblock" href="#/query-builder#select">select</a> method has extended functionality!<br/>
-<strong>Note</strong>: If you use select in conjunction with groupBy you have to explicitly specify all fields you want in the result.</p>
+<p><strong>Note</strong>: If you use <a class="gotoblock" href="#/query-builder#select">select</a> in conjunction with groupBy you have to explicitly specify all fields you want in the result set.</p>
 </blockquote>
 <h3>Parameters</h3>
 <ol>
@@ -1752,7 +2010,7 @@ Available functions:
 </li>
 <li>
 <h1>$allowEmpty: bool</h1>
-<p>If true documents having an empty value like null, in the fields that are relevant for grouping, will be grouped together.</p>
+<p>If <code>true</code> documents having an empty value like null, in the fields that are relevant for grouping, will be grouped together.</p>
 </li>
 </ol>
 <h3>Example 1</h3>
@@ -1804,87 +2062,17 @@ ORDER BY
   ... 
 ]</code></pre>
 <h2 id="query-builder-having">having()</h2>
-<p>Filter grouped documents.</p>
+<p>The <code>having()</code> method was added, because the <code>where()</code> and <code>orWhere()</code> methods do not consider select functions and grouped documents.<br/>
+As you can see in the <a class="gotoblock" href="#/execution-order#query">Order of query execution</a> documentation you can use <code>having()</code> to further filter the result after <code>join()</code>, <code>search()</code>, <code>select()</code> and <code>groupBy()</code> is applied.</p>
 <pre><code class="language-php">function having(array $criteria): QueryBuilder</code></pre>
-<blockquote>
-<p><strong>Note</strong>: <code>having</code> can just be used in conjunction with <a class="gotoblock" href="#/query-builder#groupBy">groupBy</a>!</p>
-</blockquote>
 <h3>Parameters</h3>
 <ol>
 <li>
-<h1>$criteria</h1>
+<h1>$criteria: array</h1>
 <p>One or multiple where conditions.<br/>
-The criteria can be nested as much as needed.</p>
+Visit the <a class="gotoblock" href="#/criteria">$criteria</a> documentation page to learn more on how to define conditions.</p>
 </li>
 </ol>
-<ul>
-<li>[$fieldName, $condition, $value]</li>
-<li>[ [$fieldName, $condition, $value], [$fieldName, $condition, $value], ... ]</li>
-<li>
-<p>[ [$fieldName, $condition, $value], OPERATION ,[$fieldName, $condition, $value], ... ]</p>
-<ul>
-<li>
-<h1>$fieldName: string</h1>
-<p>The field name argument is the property that we want to check in our data object.</p>
-<p>As our data object is basically a JSON document so it could have nested properties.</p>
-<p>To target nested properties we use a single dot between the property/field name.</p>
-<p><strong>Example:</strong> From our above users object if we want to target the &quot;country&quot; property of a user, then we would pass <code>location.country</code> in this argument, because &quot;location&quot; is the parent property of the &quot;country&quot; property in our data object.</p>
-</li>
-<li>
-<h1>$condition: string</h1>
-<p>To apply the comparison filters we use this argument.<br/>
-The condition is case insensitive.</p>
-<p>Allowed conditional operators are:</p>
-<ul>
-<li><code>=</code> Match equal against data.</li>
-<li><code>===</code> Match equal against data.</li>
-<li><code>==</code> Match equal against data. (Type unsafe comparison)</li>
-<li><code>!=</code> Match not equal against data.</li>
-<li><code>!==</code> Match not equal against data.</li>
-<li><code>&lt;&gt;</code> Match not equal against data. (Type unsafe comparison)</li>
-<li><code>&gt;</code> Match greater than against data.</li>
-<li><code>&gt;=</code> Match greater equal against data.</li>
-<li><code>&lt;</code> Match less than against data.</li>
-<li><code>&lt;=</code> Match less equal against data.</li>
-<li><code>LIKE</code> Match using wildcards.</li>
-<li><code>NOT LIKE</code> Match using wildcards. <strong>Negation</strong> of result.<br/>
-Supported wildcards:
-<ul>
-<li><code>%</code> Represents zero or more characters<br/>
-Example: bl% finds bl, black, blue, and blob</li>
-<li><code>_</code> Represents a single character<br/>
-Example: h_t finds hot, hat, and hit</li>
-<li><code>[]</code> Represents any single character within the brackets<br/>
-Example: h[oa]t finds hot and hat, but not hit</li>
-<li><code>^</code> Represents any character not in the brackets<br/>
-Example: h[^oa]t finds hit, but not hot and hat</li>
-<li><code>-</code> Represents a range of characters<br/>
-Example: c[a-b]t finds cat and cbt</li>
-</ul></li>
-<li><code>IN</code> $value has to be an <code>array</code>. Check if data is in given list. </li>
-<li><code>NOT IN</code> $value has to be an <code>array</code>. Check if data is <strong>not</strong> in given list. </li>
-<li><code>BETWEEN</code> $value has to be an <code>array</code> with a lengeth of 2.<br/>
-Check if data is within first and second value.<br/>
-Begin and end values are included.</li>
-<li><code>NOT BETWEEN</code> $value has to be an <code>array</code> with a length of 2.<br/>
-Check if data is <strong>not</strong> within first and second value.<br/>
-Begin and end values are included.</li>
-</ul>
-</li>
-<li>
-<h1>$value</h1>
-<p>Data that will be checked against the property value of the JSON documents.<br/>
-Can also be a DateTime object if the property value of the JSON document is convertable into a DateTime object. Refer to the <a class="gotoblock" href="#/dates">Working with Dates</a> documentation to learn more about that.</p>
-</li>
-<li>
-<h1>OPERATION: string</h1>
-<p>It is used to connect multiple conditions.<br/>
-The operation is optional and can be set to <code>AND</code> or <code>OR</code>.<br/>
-Default: <code>AND</code></p>
-</li>
-</ul>
-</li>
-</ul>
 <h3>Example 1</h3>
 <p>Group active products based on category and just retrieve categories with views higher than 500 and lower than 1000.</p>
 <pre><code class="language-sql">SELECT 
@@ -1911,6 +2099,31 @@ HAVING
 <pre><code>[ 
   ["category" =&gt; "pants", "totalViews" =&gt; 502], 
   ["category" =&gt; "shirts", "totalViews" =&gt; 931], 
+  ... 
+]</code></pre>
+<h3>Example 2</h3>
+<p>Group active products based on category and just retrieve categories with views higher than 500 and lower than 1000.</p>
+<pre><code class="language-sql">SELECT 
+  name, 
+  ROUND(price, 0) AS roundedPrice
+WHERE 
+  active = true 
+HAVING
+  roundedPrice &gt; 500 AND roundedPrice &lt; 1000;</code></pre>
+<pre><code class="language-php">$productQueryBuilder
+  -&gt;select([ "name", "roundedPrice" =&gt; ["ROUND" =&gt; ["price", 0]] ])
+  -&gt;where(["active", "=", true])
+  -&gt;having([ 
+    ["roundedPrice", "&gt;", 500], 
+    "AND", // &lt;- Optional
+    ["roundedPrice", "&lt;", 1000] 
+  ])
+  -&gt;getQuery()
+  -&gt;fetch();</code></pre>
+<h4>Result</h4>
+<pre><code>[ 
+  ["name" =&gt; "Best Schoe", "roundedPrice" =&gt; 519], 
+  ["name" =&gt; "Black Jeans", "roundedPrice" =&gt; 549], 
   ... 
 ]</code></pre>
 <h2 id="query-builder-search">search()</h2>
@@ -2195,7 +2408,7 @@ SleekDB supports multiple notIn as object chain for different fields.</p>
   -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="query-builder.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -2310,7 +2523,7 @@ $users = $userQueryBuilder
     -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="cache-management.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -2432,7 +2645,7 @@ $users = $userStore
   -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="join-stores.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -2629,7 +2842,7 @@ Update of nested values possible by using a dot between fieldNames (Example 2)</
 ]</code></pre>
             <div class="editlink" 
               file="query.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -2639,11 +2852,12 @@ Update of nested values possible by using a dot between fieldNames (Example 2)</
 Means you can check against an DateTime object.</p>
 <p>The methods that accept DateTime objects as a value to check against are:</p>
 <ul>
-<li><a class="gotoblock" href="#/fetch-data#findBy"><code>findBy</code></a></li>
-<li><a class="gotoblock" href="#/fetch-data#findOneBy"><code>findOneBy</code></a></li>
-<li><a class="gotoblock" href="#/delete-data#deleteBy"><code>deleteBy</code></a></li>
-<li><a class="gotoblock" href="#/query-builder#where"><code>where</code></a></li>
-<li><a class="gotoblock" href="#/query-builder#orWhere"><code>orWhere</code></a></li>
+<li><a class="gotoblock" href="#/fetch-data#findBy">Store-&gt;findBy()</a></li>
+<li><a class="gotoblock" href="#/fetch-data#findOneBy">Store-&gt;findOneBy()</a></li>
+<li><a class="gotoblock" href="#/delete-data#deleteBy">Store-&gt;deleteBy()</a></li>
+<li><a class="gotoblock" href="#/query-builder#where">QueryBuilder-&gt;where()</a></li>
+<li><a class="gotoblock" href="#/query-builder#orWhere">QueryBuilder-&gt;orWhere()</a></li>
+<li><a class="gotoblock" href="#/query-builder#having">QueryBuilder-&gt;having()</a></li>
 </ul>
 <p>The conditions you can use DateTime objects with are:</p>
 <ul>
@@ -2661,6 +2875,8 @@ Means you can check against an DateTime object.</p>
 <li><code>NOT IN</code></li>
 <li><code>BETWEEN</code></li>
 <li><code>NOT BETWEEN</code></li>
+<li><code>CONTAINS</code></li>
+<li><code>NOT CONTAINS</code></li>
 </ul>
 <h2>Quick example</h2>
 <pre><code class="language-php">require_once './vendor/autoload.php';
@@ -2693,7 +2909,8 @@ $news = $newsStore-&gt;findBy([ "releaseDate", "BETWEEN", [ $startDate, $endDate
 <li>array()</li>
 </ul>
 <h2>Best practice to store dates in the database</h2>
-<p>You should either store the date and time as a string or as a timestamp.</p>
+<p>You should either store the date and time as a string or as a timestamp.<br/>
+<strong>We recommend</strong> storing the date and time as a <strong>timestamp</strong>.</p>
 <h3>Example 1</h3>
 <p>Store date as a string.</p>
 <pre><code class="language-php">$newArticle = [
@@ -2768,7 +2985,7 @@ $news = $newsStore-&gt;findBy([ "releaseDate", "IN", $datesToFilter ] );
 // WHERE releaseDate IN ("2020-12-01", "2021-01-04", "2021-01-19")</code></pre>
             <div class="editlink" 
               file="dates.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -3029,7 +3246,167 @@ $result = $newsStore-&gt;search(
 );</code></pre>
             <div class="editlink" 
               file="searching.md" 
-              version="2.7">
+              version="2.11">
+            </div>
+          </div>
+        
+          <div class="intro" id="block_execution-order">
+            <h1>Order of Execution</h1>
+<h2>Summary</h2>
+<ul>
+<li><a class="gotoblock" href="#/execution-order#general-life-cycle">General Life Cycle</a></li>
+<li><a class="gotoblock" href="#/execution-order#query">Order of query execution</a>
+<ol>
+<li><a class="gotoblock" href="#/execution-order#query-where">WHERE</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-distinct">DISTINCT</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-join">JOIN</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-search">SEARCH</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-select1">SELECT - Step 1</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-groupBy">GROUP BY</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-select2">SELECT - Step 2</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-having">HAVING</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-except">EXCEPT (Remove fields)</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-orderBy">ORDER BY</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-skip">SKIP</a></li>
+<li><a class="gotoblock" href="#/execution-order#query-limit">LIMIT</a></li>
+</ol></li>
+</ul>
+<h2 id="execution-order-general-life-cycle">General Life Cycle</h2>
+<p>Each query will follow the below steps or execution life cycle.</p>
+<ol>
+<li>
+<h1>Store</h1>
+<p>The <code>Store</code> class is the first, and in most cases also the only part you need to come in contact with.</p>
+</li>
+<li>
+<h1>Query Builder</h1>
+<p>The <code>QueryBuilder</code> class is used to prepare a query. It can be retrieved with <code>Store-&gt;createQueryBuilder()</code>.</p>
+</li>
+<li>
+<h1>Query</h1>
+<p>The <code>Query</code> class contains all information needed to execute the query and is used to do so.<br/>
+The <code>Query object</code> can be retrieved using the <code>QueryBuilder-&gt;getQuery()</code> method.</p>
+</li>
+<li>
+<h1>Cache</h1>
+<p>The <code>Cache</code> class handles everything regarding caching. It will decide when to cache or not to cache.<br/>
+It is mainly designed for internal use but can be retrieved using <code>Query-&gt;getCache()</code>.</p>
+</li>
+</ol>
+<h2 id="execution-order-query">Order of query execution</h2>
+<p>The following diagram represents the internal order of execution when using the <code>Query-&gt;fetch()</code> method.</p>
+<ul>
+<li><a class="gotoblock" href="#/query#fetch">Query-&gt;fetch()</a></li>
+</ul>
+<div style="max-width: 400px; padding-left: 15px; padding-right: 15px;">
+   <a href="/assets/query-execution-order.png">
+      <img src="/assets/query-execution-order.png" style="width: 100%;">
+   </a>
+</div>
+<h3>Single document</h3>
+<ol>
+<li>
+<h1 id="execution-order-query-where">WHERE</h1>
+<p>The <code>where</code> and <code>orWhere</code> conditions are used to determine if a document will be a part of the result set or not.</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#where">QueryBuilder-&gt;where()</a></li>
+<li><a class="gotoblock" href="#/query-builder#orWhere">QueryBuilder-&gt;orWhere()</a></li>
+</ul>
+</li>
+<li>
+<h1 id="execution-order-query-distinct">DISTINCT</h1>
+<p>If the <code>WHERE</code> resulted in <code>true</code> the document is checked against the result set using the fields defined with the <code>distict()</code> method.</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#distinct">QueryBuilder-&gt;distinct()</a></li>
+</ul>
+</li>
+</ol>
+<h3>All documents in result set</h3>
+<p>Now we have all documents in a result array.</p>
+<ol start="3">
+<li>
+<h1 id="execution-order-query-join">JOIN</h1>
+<p>All documents will be joined with one or multiple stores.</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#join">QueryBuilder-&gt;join()</a></li>
+</ul>
+</li>
+<li>
+<h1 id="execution-order-query-search">SEARCH</h1>
+<p>We go through all documents and check if they contain what we search, if not we remove them from the result array.</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#search">QueryBuilder-&gt;search()</a></li>
+</ul>
+</li>
+<li>
+<h1 id="execution-order-query-select1">SELECT - Step 1</h1>
+<p>Apply select functions that do not reduce the result amount to one and apply their aliases.</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#select">QueryBuilder-&gt;select()</a></li>
+</ul>
+</li>
+<li>
+<h1 id="execution-order-query-groupBy">GROUP BY</h1>
+<p>Group documents by fields defined with <code>groupBy()</code>.</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#groupBy">QueryBuilder-&gt;groupBy()</a></li>
+</ul>
+</li>
+<li>
+<h1 id="execution-order-query-select2">SELECT - Step 2</h1>
+<p>Select specific fields and apply their aliases, if they have one.<br/>
+Apply select functions that reduce result amount to one and their aliases.<br/>
+<strong>Amount will not be reduced when using Group-By.</strong></p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#select">QueryBuilder-&gt;select()</a></li>
+</ul>
+<p>Functions that reduce the amount of the result set to one:</p>
+<ul>
+<li><code>SUM</code></li>
+<li><code>MAX</code></li>
+<li><code>MIN</code></li>
+<li><code>AVG</code></li>
+</ul>
+</li>
+<li>
+<h1 id="execution-order-query-having">HAVING</h1>
+<p>Check all documents using the criteria specified with <code>having</code>.</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#having">QueryBuilder-&gt;having()</a></li>
+</ul>
+</li>
+<li>
+<h1 id="execution-order-query-except">EXCEPT (Remove fields)</h1>
+<p>Exclude/ Remove fields from all documents.</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#except">QueryBuilder-&gt;except()</a></li>
+</ul>
+</li>
+<li>
+<h1 id="execution-order-query-orderBy">ORDER BY</h1>
+<p>Sort the result array using one or multiple fields.</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#orderBy">QueryBuilder-&gt;orderBy()</a></li>
+</ul>
+</li>
+<li>
+<h1 id="execution-order-query-skip">SKIP</h1>
+<p>Skip a specific amount of documents. (Slice the result array)</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#skip">QueryBuilder-&gt;skip()</a></li>
+</ul>
+</li>
+<li>
+<h1 id="execution-order-query-limit">LIMIT</h1>
+<p>Limit the amount of documents in result. (Slice the result array)</p>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#limit">QueryBuilder-&gt;limit()</a></li>
+</ul>
+</li>
+</ol>
+            <div class="editlink" 
+              file="execution-order.md" 
+              version="2.11">
             </div>
           </div>
         
@@ -3105,7 +3482,7 @@ $userQuery-&gt;update([
 $usersUpdated = $userQuery-&gt;fetch();</code></pre>
             <div class="editlink" 
               file="advanced.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -3168,7 +3545,7 @@ $newUser = [
   "username" =&gt; "Bob",
   "age" =&gt; 20,
   "address" =&gt; [
-    "street" =&gt; "down street"
+    "street" =&gt; "down street",
     "streetNumber" =&gt; 12,
     "postalCode" =&gt; "8174",
   ],
@@ -3210,7 +3587,7 @@ $newUsers = [
     "username" =&gt; "Lisa",
     "age" =&gt; 17,
     "address" =&gt; [
-      "street" =&gt; "up street"
+      "street" =&gt; "up street",
       "streetNumber" =&gt; 48,
       "postalCode" =&gt; "1822",
     ],
@@ -3219,7 +3596,7 @@ $newUsers = [
     "username" =&gt; "Bob",
     "age" =&gt; 20,
     "address" =&gt; [
-      "street" =&gt; "down street"
+      "street" =&gt; "down street",
       "streetNumber" =&gt; 12,
       "postalCode" =&gt; "8174",
     ],
@@ -3496,7 +3873,7 @@ header("Content-Type: application/json");
 echo json_encode($result);</code></pre>
             <div class="editlink" 
               file="complete-examples.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -3574,7 +3951,7 @@ echo json_encode($result);</code></pre>
 <p>Either <code>int</code> &gt;= 0 in seconds, where <code>0</code> means infinite, or <code>null</code>.</p>
             <div class="editlink" 
               file="cache.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -3596,7 +3973,7 @@ Returns the inserted document with it's new and unique _id.</p>
 Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function insertMany(array $data): array</code></pre>
 <p>Retrieve all documents of that store.</p>
-<pre><code class="language-php">function findAll(): array</code></pre>
+<pre><code class="language-php">function findAll(array $orderBy = null, int $limit = null, int $offset = null): array</code></pre>
 <p>Retrieve one document by its _id. Very fast because it finds the document by its file path.</p>
 <pre><code class="language-php">function findById(int|string $id): array|null</code></pre>
 <p>Retrieve one or multiple documents.</p>
@@ -3609,12 +3986,20 @@ Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function updateById(int|string $id, array $updatable): array|false</code></pre>
 <p>Update one or multiple documents.</p>
 <pre><code class="language-php">function update(array $updatable): bool</code></pre>
+<p>Create/Insert a new document in the store or update an existing one.<br/>
+Returns the inserted/ updated document.</p>
+<pre><code class="language-php">function updateOrInsert(array $data): array</code></pre>
+<p>Create/Insert many documents in the store or update existing ones.<br/>
+Returns the inserted/ updated documents.</p>
+<pre><code class="language-php">function updateOrInsertMany(array $data): array</code></pre>
 <p>Delete one or multiple documents.</p>
 <pre><code class="language-php">function deleteBy(array $criteria, int $returnOption = Query::DELETE_RETURN_BOOL): bool|array|null</code></pre>
 <p>Delete one document by its _id. Very fast because it deletes the document by its file path.</p>
 <pre><code class="language-php">function deleteById(int|string $id): bool</code></pre>
 <p>Remove fields from one document by its primary key.</p>
 <pre><code class="language-php">function removeFieldsById($id, array $fieldsToRemove): array|false</code></pre>
+<p>Returns the amount of documents in the store.</p>
+<pre><code class="language-php">function count(): int</code></pre>
 <p>Return the last created store object ID.</p>
 <pre><code class="language-php">function getLastInsertedId(): int</code></pre>
 <p>Deletes a store and wipes all the data and cache it contains.</p>
@@ -3651,14 +4036,15 @@ Returns the inserted documents with their new and unique _id.</p>
 <p>Add or-where conditions to filter data.</p>
 <pre><code class="language-php">function orWhere($conditions): QueryBuilder</code></pre>
 <p>Set the amount of data record to skip.</p>
-<pre><code class="language-php">function skip(int $skip = 0): QueryBuilder</code></pre>
+<pre><code class="language-php">function skip(int|string $skip = 0): QueryBuilder</code></pre>
 <p>Set the amount of data record to limit.</p>
-<pre><code class="language-php">function limit(int $limit = 0): QueryBuilder</code></pre>
+<pre><code class="language-php">function limit(int|string $limit = 0): QueryBuilder</code></pre>
 <p>Set the sort order.</p>
 <pre><code class="language-php">function orderBy(array $criteria): QueryBuilder</code></pre>
 <p>Group documents using one or multiple fields.</p>
 <pre><code class="language-php">function groupBy(array $groupByFields, string $counterKeyName = null, bool $allowEmpty = false): QueryBuilder</code></pre>
-<p>Filter grouped documents.</p>
+<p>The <code>having()</code> method was added, because the <code>where()</code> and <code>orWhere()</code> methods do not consider select functions and grouped documents.<br/>
+As you can see in the <a class="gotoblock" href="#/execution-order#query">Order of query execution</a> documentation you can use <code>having()</code> to further filter the result after <code>join()</code>, <code>search()</code>, <code>select()</code> and <code>groupBy()</code> is applied.</p>
 <pre><code class="language-php">function having(array $criteria): QueryBuilder</code></pre>
 <p>Do a fulltext like search against one or more fields.</p>
 <pre><code class="language-php">function search(string|array $fields, string $query, array $options = []): QueryBuilder</code></pre>
@@ -3727,7 +4113,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <pre><code class="language-php">function delete()</code></pre>
             <div class="editlink" 
               file="reference.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -3735,7 +4121,132 @@ Returns the inserted documents with their new and unique _id.</p>
             <h1>🎉 Release Notes</h1>
 <h2>📢 Optimizations, new query methods and more control</h2>
 <p>SleekDB 2.X comes with so many important optimizations and other features that make it faster and more mature. This is the recommended SleekDB release version for new projects, and if you are using an older version consider upgrading as soon as possible.</p>
-<h2>Changes from 2.6 to 2.7</h2>
+<h2>Summary</h2>
+<ul>
+<li><a class="gotoblock" href="#/release-notes#2.11">Changes from 2.10 to 2.11</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.10">Changes from 2.9 to 2.10</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.9">Changes from 2.8 to 2.9</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.8">Changes from 2.7 to 2.8</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.7">Changes from 2.6 to 2.7</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.6">Changes from 2.5 to 2.6</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.5">Changes from 2.4 to 2.5</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.4">Changes from 2.3 to 2.4</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.3">Changes from 2.2 to 2.3</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.2">Changes from 2.1 to 2.2</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.1">Changes from 2.0 to 2.1</a></li>
+<li><a class="gotoblock" href="#/release-notes#2.0">Changes from 1.5 to 2.0</a></li>
+</ul>
+<h2 id="release-notes-2.11">Changes from 2.10 to 2.11</h2>
+<ul>
+<li>
+<h1>✨ New configuration option</h1>
+<ul>
+<li>
+<h3>Set &quot;timeout&quot; to <code>false</code> if you can't use or don't want to use set_time_limit() function.</h3>
+<ul>
+<li><a class="gotoblock" href="#/configurations#timeout">timeout</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="release-notes-2.10">Changes from 2.9 to 2.10</h2>
+<ul>
+<li>
+<h1>✨ New functionality!</h1>
+<ul>
+<li>
+<h3>Create and use your own select functions</h3>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#select">QueryBuilder-&gt;select()</a></li>
+</ul>
+</li>
+<li>
+<h3>Filter documents with your own custom functions</h3>
+<ul>
+<li><a class="gotoblock" href="#/criteria">$criteria</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="release-notes-2.9">Changes from 2.8 to 2.9</h2>
+<ul>
+<li>
+<h1>✨ New functionality!</h1>
+<ul>
+<li>
+<h3>New select functions like <code>CONCAT</code>, <code>ROUND</code> and much more!</h3>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#select">QueryBuilder-&gt;select()</a></li>
+</ul>
+</li>
+<li>
+<h3>New <code>CONTAINS</code> and <code>NOT CONTAINS</code> conditions available!</h3>
+<ul>
+<li><a class="gotoblock" href="#/criteria">$criteria</a></li>
+</ul>
+</li>
+<li>
+<h3>New <code>Store-&gt;updateOrInsert()</code> and <code>Store-&gt;updateOrInsertMany()</code> methods!</h3>
+<ul>
+<li><a class="gotoblock" href="#/edit-data#updateOrInsert">Documentation of <code>updateOrInsert()</code> method</a></li>
+<li><a class="gotoblock" href="#/edit-data#updateOrInsertMany">Documentation of <code>updateOrInsertMany()</code> method</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h1>📝 New documentation page!</h1>
+<ul>
+<li>
+<h3>Order of execution description and diagram to better understand the internals!</h3>
+<ul>
+<li><a class="gotoblock" href="#/execution-order">&quot;Order of Execution&quot;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h1>🌈 Improved functionality!</h1>
+<ul>
+<li>
+<h3><code>findAll()</code> now accept orderBy, limit and offset as optional parameters!</h3>
+<ul>
+<li><a class="gotoblock" href="#/fetch-data#findAll">Documentation of <code>findAll()</code> method</a></li>
+</ul>
+</li>
+<li>
+<h3><code>limit()</code> and <code>skip()</code> now accept strings!</h3>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#limit">Documentation of <code>limit()</code> method</a></li>
+<li><a class="gotoblock" href="#/query-builder#skip">Documentation of <code>skip()</code> method</a></li>
+</ul>
+</li>
+<li>
+<h3>Having can now be used without Group-By!</h3>
+<ul>
+<li><a class="gotoblock" href="#/query-builder#having">QueryBuilder-&gt;having()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="release-notes-2.8">Changes from 2.7 to 2.8</h2>
+<ul>
+<li>
+<h1>✨ New functionality!</h1>
+<ul>
+<li>
+<h3>Retrieve the amount of documents stored in a fast way.</h3>
+<ul>
+<li><a class="gotoblock" href="#/fetch-data#count">Store-&gt;count()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="release-notes-2.7">Changes from 2.6 to 2.7</h2>
 <ul>
 <li>
 <h1>🚨 New requirement!</h1>
@@ -3838,7 +4349,7 @@ Returns the inserted documents with their new and unique _id.</p>
 </ul>
 </li>
 </ul>
-<h2>Changes from 2.5 to 2.6</h2>
+<h2 id="release-notes-2.6">Changes from 2.5 to 2.6</h2>
 <ul>
 <li>
 <h1>✨ New functionality</h1>
@@ -3894,7 +4405,7 @@ Returns the inserted documents with their new and unique _id.</p>
 </ul>
 </li>
 </ul>
-<h2>Changes from 2.4 to 2.5</h2>
+<h2 id="release-notes-2.5">Changes from 2.4 to 2.5</h2>
 <ul>
 <li>
 <h1>✨ New conditions:</h1>
@@ -3929,7 +4440,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <p>Visit our new <a class="gotoblock" href="#/dates">Working with Dates documentation</a> page to learn more about date handling.</p>
 </li>
 </ul>
-<h2>Changes from 2.3 to 2.4</h2>
+<h2 id="release-notes-2.4">Changes from 2.3 to 2.4</h2>
 <ul>
 <li>
 <h1>🚨 Deprecated in() &amp; notIn() methods</h1>
@@ -3939,7 +4450,7 @@ Available with the <code>findBy()</code>, <code>findOneBy</code>, <code>deleteBy
 See <a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/118" target="_blank">#118</a> for more details.</p>
 </li>
 </ul>
-<h2>Changes from 2.2 to 2.3</h2>
+<h2 id="release-notes-2.3">Changes from 2.2 to 2.3</h2>
 <ul>
 <li>
 <h1>🚨 Deprecated nestedWhere() method</h1>
@@ -4000,7 +4511,7 @@ Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
 See <a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/114" target="_blank">#114</a> for more details.</p>
 </li>
 </ul>
-<h2>Changes from 2.1 to 2.2</h2>
+<h2 id="release-notes-2.2">Changes from 2.1 to 2.2</h2>
 <ul>
 <li>
 <h1>🗃 Order by multiple fields</h1>
@@ -4013,14 +4524,14 @@ Look at the updated orderBy section of the <a class="gotoblock" href="#/query-bu
 Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a> to learn more.</p>
 </li>
 </ul>
-<h2>Changes from 2.0 to 2.1</h2>
+<h2 id="release-notes-2.1">Changes from 2.0 to 2.1</h2>
 <ul>
 <li>
 <h1>⚙️ New Configuration</h1>
 <p>With the new <code>primary_key</code> configuration you can now change the _id key name to everything you want. To see how to use the new configuration option visit the <a class="gotoblock" href="/#/configurations">Configurations</a> page.</p>
 </li>
 </ul>
-<h2>Changes from 1.5 to 2.0</h2>
+<h2 id="release-notes-2.0">Changes from 1.5 to 2.0</h2>
 <ul>
 <li>
 <h1>🔎 Improving document discovery process</h1>
@@ -4098,7 +4609,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="release-notes.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -4114,7 +4625,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Please write details about your PR.</p>
             <div class="editlink" 
               file="contributing.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -4127,7 +4638,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Let us know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.</p>
             <div class="editlink" 
               file="contact.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         
@@ -4150,7 +4661,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="versions.md" 
-              version="2.7">
+              version="2.11">
             </div>
           </div>
         

@@ -60,7 +60,7 @@
     href="#/versions"
     title="Find all versions of SleekDB"
     class="menu gotoblock"
-    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.10</a
+    ><ion-icon class="hide-sm" name="pricetag"></ion-icon> 2.11</a
   >
   <a
     class="menu"
@@ -217,7 +217,7 @@
 <p>Join our <a href="https://discord.gg/WJGqUFPtZw" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Discord</a> channel. We would love to know about you and your feedbacks.</p>
             <div class="editlink" 
               file="home.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -331,7 +331,7 @@
 </ul>
             <div class="editlink" 
               file="features.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -364,7 +364,7 @@ Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/p
 <pre><code class="language-sh">composer require rakibtg/sleekdb dev-dev</code></pre>
             <div class="editlink" 
               file="installation.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -436,7 +436,7 @@ print_r($allNews);</code></pre>
 </blockquote>
             <div class="editlink" 
               file="getting-started.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -479,7 +479,7 @@ $newsStore = new Store('news', $dataDir);</code></pre>
 <pre><code class="language-php">$userStore-&gt;deleteStore();</code></pre>
             <div class="editlink" 
               file="managing-store.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -538,7 +538,9 @@ Available caching method's are:</p>
 <p>Note: You will find more details on caching at <a class="gotoblock" href="/#/cache-management">Cache Management</a></p>
 </blockquote>
 <h2 id="configurations-timeout">timeout</h2>
-<p>Set timeout value. Default value is <code>120</code> seconds.</p>
+<p>Set timeout value. Default value is <code>120</code> seconds.
+It uses the build in php <a href="https://www.php.net/manual/en/function.set-time-limit.php" target="_blank" rel="noopener nofollow">set_time_limit()</a> function.<br/>
+You can set the timeout option to <code>false</code> if you do not want to use or can not use set_time_limit.</p>
 <h2 id="configurations-primary_key">primary_key</h2>
 <p>Set the primary key into any string you want.<br/>
 SleekDB will then use that key instead of the default <code>_id</code> key.</p>
@@ -569,7 +571,7 @@ They are available as a <strong>constant of the <code>Query</code> class</strong
 <pre><code class="language-php">Query::SEARCH_ALGORITHM["hits"] // default</code></pre>
             <div class="editlink" 
               file="configurations.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -770,7 +772,7 @@ $userStore-&gt;updateOrInsertMany($users, false);
 // Lisa will get a auto-generated _id, because there is no _id in the document!</code></pre>
             <div class="editlink" 
               file="insert-data.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -929,7 +931,7 @@ Visit the <a class="gotoblock" href="#/criteria">$criteria</a> documentation pag
 // Returns: 27 </code></pre>
             <div class="editlink" 
               file="fetch-data.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -1178,7 +1180,7 @@ $userStore-&gt;updateOrInsertMany($users, false);
 // Lisa will get a auto-generated _id, because there is no _id in the document!</code></pre>
             <div class="editlink" 
               file="edit-data.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -1263,7 +1265,7 @@ $deletedUsers = $userStore-&gt;deleteBy(["name", "=", "Joshua Edwards"], Query::
 // Returns true</code></pre>
             <div class="editlink" 
               file="delete-data.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -1448,7 +1450,7 @@ $news = $newsStore-&gt;findBy([
 ]);</code></pre>
             <div class="editlink" 
               file="criteria.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -2405,7 +2407,7 @@ SleekDB supports multiple notIn as object chain for different fields.</p>
   -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="query-builder.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -2520,7 +2522,7 @@ $users = $userQueryBuilder
     -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="cache-management.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -2642,7 +2644,7 @@ $users = $userStore
   -&gt;fetch();</code></pre>
             <div class="editlink" 
               file="join-stores.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -2839,7 +2841,7 @@ Update of nested values possible by using a dot between fieldNames (Example 2)</
 ]</code></pre>
             <div class="editlink" 
               file="query.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -2982,7 +2984,7 @@ $news = $newsStore-&gt;findBy([ "releaseDate", "IN", $datesToFilter ] );
 // WHERE releaseDate IN ("2020-12-01", "2021-01-04", "2021-01-19")</code></pre>
             <div class="editlink" 
               file="dates.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -3243,7 +3245,7 @@ $result = $newsStore-&gt;search(
 );</code></pre>
             <div class="editlink" 
               file="searching.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -3403,7 +3405,7 @@ Apply select functions that reduce result amount to one and their aliases.<br/>
 </ol>
             <div class="editlink" 
               file="execution-order.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -3479,7 +3481,7 @@ $userQuery-&gt;update([
 $usersUpdated = $userQuery-&gt;fetch();</code></pre>
             <div class="editlink" 
               file="advanced.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -3870,7 +3872,7 @@ header("Content-Type: application/json");
 echo json_encode($result);</code></pre>
             <div class="editlink" 
               file="complete-examples.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -3948,7 +3950,7 @@ echo json_encode($result);</code></pre>
 <p>Either <code>int</code> &gt;= 0 in seconds, where <code>0</code> means infinite, or <code>null</code>.</p>
             <div class="editlink" 
               file="cache.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -4110,7 +4112,7 @@ As you can see in the <a class="gotoblock" href="#/execution-order#query">Order 
 <pre><code class="language-php">function delete()</code></pre>
             <div class="editlink" 
               file="reference.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -4120,6 +4122,7 @@ As you can see in the <a class="gotoblock" href="#/execution-order#query">Order 
 <p>SleekDB 2.X comes with so many important optimizations and other features that make it faster and more mature. This is the recommended SleekDB release version for new projects, and if you are using an older version consider upgrading as soon as possible.</p>
 <h2>Summary</h2>
 <ul>
+<li><a class="gotoblock" href="#/release-notes#2.11">Changes from 2.10 to 2.11</a></li>
 <li><a class="gotoblock" href="#/release-notes#2.10">Changes from 2.9 to 2.10</a></li>
 <li><a class="gotoblock" href="#/release-notes#2.9">Changes from 2.8 to 2.9</a></li>
 <li><a class="gotoblock" href="#/release-notes#2.8">Changes from 2.7 to 2.8</a></li>
@@ -4131,6 +4134,20 @@ As you can see in the <a class="gotoblock" href="#/execution-order#query">Order 
 <li><a class="gotoblock" href="#/release-notes#2.2">Changes from 2.1 to 2.2</a></li>
 <li><a class="gotoblock" href="#/release-notes#2.1">Changes from 2.0 to 2.1</a></li>
 <li><a class="gotoblock" href="#/release-notes#2.0">Changes from 1.5 to 2.0</a></li>
+</ul>
+<h2 id="release-notes-2.11">Changes from 2.10 to 2.11</h2>
+<ul>
+<li>
+<h1>✨ New configuration option</h1>
+<ul>
+<li>
+<h3>Set &quot;timeout&quot; to <code>false</code> if you can't use or don't want to use set_time_limit() function.</h3>
+<ul>
+<li><a class="gotoblock" href="#/configurations#timeout">timeout</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="release-notes-2.10">Changes from 2.9 to 2.10</h2>
 <ul>
@@ -4591,7 +4608,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="release-notes.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -4607,7 +4624,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Please write details about your PR.</p>
             <div class="editlink" 
               file="contributing.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
@@ -4620,14 +4637,16 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 <p>Let us know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.</p>
             <div class="editlink" 
               file="contact.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
           <div class="intro" id="block_versions">
             <h1>Versions</h1>
 <ul>
-<li><strong><a href="/">2.9</a> (Actively Maintained Version)</strong></li>
+<li><strong><a href="/">2.11</a> (Actively Maintained Version)</strong></li>
+<li><strong><a href="/versions/2.10/">2.10</a></strong></li>
+<li><strong><a href="/versions/2.9/">2.9</a></strong></li>
 <li><strong><a href="/versions/2.8/">2.8</a></strong></li>
 <li><strong><a href="/versions/2.7/">2.7</a></strong></li>
 <li><strong><a href="/versions/2.6/">2.6</a></strong></li>
@@ -4641,7 +4660,7 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
             <div class="editlink" 
               file="versions.md" 
-              version="2.10">
+              version="2.11">
             </div>
           </div>
         
