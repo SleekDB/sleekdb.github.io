@@ -4,18 +4,17 @@ Darcula color scheme from the JetBrains family of IDEs
 
 */
 
-
 .hljs {
   display: block;
   overflow-x: auto;
   padding: 0.5em;
   background: #2b2b2b;
-  color: #bababa;
+  color: #eeeeee;
 }
 
 .hljs-strong,
 .hljs-emphasis {
-  color: #a8a8a2;
+  color: #d1d1bd;
 }
 
 .hljs-bullet,
@@ -46,11 +45,11 @@ Darcula color scheme from the JetBrains family of IDEs
 }
 
 .hljs-params {
-  color: #b9b9b9;
+  color: #dbdbdb;
 }
 
 .hljs-string {
-  color: #6a8759;
+  color: #acabe0;
 }
 
 .hljs-subst,
@@ -70,5 +69,6 @@ Darcula color scheme from the JetBrains family of IDEs
 .hljs-comment,
 .hljs-deletion,
 .hljs-meta {
-  color: #7f7f7f;
+  color: #acacac;
+  font-size: 13.5px;
 }
