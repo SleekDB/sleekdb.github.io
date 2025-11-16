@@ -5,45 +5,60 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SleekDB - PHP NoSQL Flat File Database</title>
+  <title>SleekDB 2.8</title>
   <link rel="stylesheet" type="text/css" href="/assets/app.css" />
   <link rel="stylesheet" type="text/css" href="/assets/normalize.css" />
   <link rel="stylesheet" href="/assets/highlighter/styles/darcula.css" />
   <script src="/assets/highlighter/highlight.pack.js"></script>
   <script src="https://unpkg.com/ionicons@4.3.0/dist/ionicons.js"></script>
   <!-- Search Engine -->
-  <meta name="description" content="SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files." />
+  <meta name="description" content="This is the documentation for SleekDB Version: 2.8" />
   <meta
     name="image"
     content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png"
   />
   <!-- Schema.org for Google -->
-  <meta itemprop="name" content="SleekDB - PHP NoSQL Flat File Database" />
-  <meta itemprop="description" content="SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files." />
+  <meta itemprop="name" content="SleekDB 2.8" />
+  <meta itemprop="description" content="This is the documentation for SleekDB Version: 2.8" />
   <meta
     itemprop="image"
     content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png"
   />
   <!-- Twitter -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="SleekDB - PHP NoSQL Flat File Database" />
-  <meta name="twitter:description" content="SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files." />
+  <meta name="twitter:title" content="SleekDB 2.8" />
+  <meta name="twitter:description" content="This is the documentation for SleekDB Version: 2.8" />
   <meta name="twitter:site" content="@rakibtg" />
   <meta name="twitter:creator" content="@rakibtg" />
   <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-  <meta name="og:title" content="SleekDB - PHP NoSQL Flat File Database" />
-  <meta name="og:description" content="SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files." />
+  <meta name="og:title" content="SleekDB 2.8" />
+  <meta name="og:description" content="This is the documentation for SleekDB Version: 2.8" />
   <meta
     name="og:image"
     content="https://sleekdb.github.io/assets/SleekDB_Thumbnail.png"
   />
   <meta name="og:url" content="https://sleekdb.github.io/" />
-  <meta name="og:site_name" content="SleekDB - PHP NoSQL Flat File Database" />
+  <meta name="og:site_name" content="SleekDB 2.8" />
   <meta name="og:locale" content="en_US" />
   <meta name="og:type" content="website" />
 </head>
 
         <body>
+
+        <script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-YZ3KHTYGDW"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+
+  gtag("config", "G-YZ3KHTYGDW");
+</script>
+
         
         <div class="container">
           <div class="header">
@@ -66,6 +81,7 @@
     class="menu"
     href="https://github.com/rakibtg/SleekDB"
     target="_blank"
+    rel="noopener noreferrer"
     title="SleekDB is open-source. See the source code in GitHub"
     ><ion-icon name="logo-github"></ion-icon>
     <span class="hide-sm">GitHub</span></a
@@ -74,17 +90,18 @@
     class="menu"
     href="https://twitter.com/rakibtg"
     target="_blank"
+    rel="noopener noreferrer"
     title="Follow me on twitter for SleekDB updates."
     ><ion-icon name="logo-twitter"></ion-icon>
     <span class="hide-sm">@rakibtg</span></a
   >
-  <!-- <a
+  <a
     class="menu gotoblock"
     href="/#/support"
     target="_blank"
     title="Learn more on supporting this open source database."
     ><ion-icon name="heart"></ion-icon> <span class="hide-sm">Support</span></a
-  > -->
+  >
 </div>
 
           </div>
@@ -95,10 +112,6 @@
           <a class="gotoblock" href="#/home">
             <ion-icon name="home"></ion-icon> 
             Home
-        </a>
-          <a class="gotoblock" href="#/features">
-            <ion-icon name="filing"></ion-icon> 
-            Features
         </a>
           <a class="gotoblock" href="#/installation">
             <ion-icon name="play"></ion-icon> 
@@ -176,9 +189,9 @@
             <ion-icon name="megaphone"></ion-icon> 
             Release Notes
         </a>
-          <a class="gotoblock" href="#/contributing">
+          <a class="gotoblock" href="#/support">
             <ion-icon name="heart"></ion-icon> 
-            Contributing
+            Support and Contributions
         </a>
           <a class="gotoblock" href="#/contact">
             <ion-icon name="mail"></ion-icon> 
@@ -193,137 +206,16 @@
             <div class="right" id="layoutRight">
               
           <div class="intro" id="block_home">
-            <h1>SleekDB - A NoSQL Database made using PHP</h1>
-<p>SleekDB is a simple flat file NoSQL like database implemented in PHP without any third-party dependencies that store data in plain JSON files.</p>
-<p>It is not comparable with databases like Sqlite, MySQL, PostgreSQL and MariaDB because they are relational databases! SleekDB is a NoSQL database and therefore more comparable with for example MongoDB.</p>
-<p>It is not designed to handle heavy-load IO operations, it is designed to have a simple solution where all we need a database for is managing a few gigabytes of data. You can think of it as a database for low to medium operation loads.</p>
-<h2>😎 Manage Static Data With Ease</h2>
-<p>SleekDB works great as the database engine for low to medium traffic websites. It makes simple database effortless.</p>
-<h2>📝 Your Dynamic Website Become Static</h2>
-<p>SleekDB will cache all query data by default, in a way that would make any dynamic site as fast as static sites.</p>
-<h2>🗄 Flat File Database</h2>
-<p>SleekDB is also a flat file database, but instead of a single file it stores data in multiple JSON files. That allows it to have a better concurrency support compared to fully FlatFile database systems. SleekDB can be compared with other flat file database systems because the final query output will be cached and later reused from a single file instead of traversing all the available files.</p>
-<h2>🥳 You Are Not Alone!</h2>
-<p>SleekDB is being used with many websites and applications which are in production right now. The core team consists of two developers. They actively maintain, contribute to, and develop the SleekDB Database.</p>
-<h2>👋 Say Hi!</h2>
-<p>Join our <a href="https://discord.gg/WJGqUFPtZw" target="_blank" rel="noopener nofollow" class="btn btn-primary btn-block">Discord</a> channel. We would love to know about you and your feedbacks.</p>
+            <h1>SleekDB: 2.8</h1>
+<p>This is the documentation for SleekDB version 2.8.</p>
+<p>For the latest features and updates, please visit the <a href="/">current version</a>.</p>
+<p></br></br></p>
+<h1><strong>IMPORTANT:</strong></h1>
+<h2>This version (2.8) is no longer actively maintained.</h2>
+<h3>Please refer to the current version (2.50) for the latest updates.</h3>
+<hr />
             <div class="editlink" 
-              file="home.md" 
-              version="2.8">
-            </div>
-          </div>
-        
-          <div class="intro" id="block_features">
-            <h1>Features</h1>
-<h2>Installing SleekDB</h2>
-<ul>
-<li>
-<h1>⚡ Lightweight &amp; Fast</h1>
-<p>Stores data in plain-text utilizing JSON format, no binary conversion needed to store or fetch the data. Default query cache layer.</p>
-</li>
-<li>
-<h1>🔆 Schema free data storage</h1>
-<p>SleekDB does not require any schema, so you can insert any types of data you want.</p>
-</li>
-<li>
-<h1>🔍 Query on nested properties</h1>
-<p>As it supports schema free data, so you can filter and use conditions on nested properties of the JSON documents!</p>
-<p>If you write this where clause:</p>
-<pre><code class="language-php">where( 'post.author.role', '=', 'admin' )</code></pre>
-<p>SleekDB will look for data at:</p>
-<pre><code class="language-json">{
-"post": {
-  "author": {
-    "role": "admin"
-  }
-}
-}</code></pre>
-</li>
-<li>
-<h1>✨ Dependency free, only needs PHP to run</h1>
-<p>Supports PHP 7+. Requires no third-party plugins or software.</p>
-</li>
-<li>
-<h1>🚀 Default caching layer</h1>
-<p>SleekDB will serve data from cache by default and regenerate cache automatically! Query results will be cached and later reused from a single file instead of traversing all the available files.</p>
-</li>
-<li>
-<h1>🌈 Rich Conditions and Filters</h1>
-<p>Use multiple conditional comparisons, text search, sorting on multiple properties and nested properties.</p>
-<table>
-<tbody>
-  <tr>
-    <td valign="top">
-      <ul>
-        <li>where</li>
-        <li>orWhere</li>
-        <li>select</li>
-        <li>except</li>
-        <li>in</li>
-        <li>not in</li>
-      </ul>
-    </td>
-    <td valign="top">
-      <ul>
-        <li>join</li>
-        <li>like</li>
-        <li>sort</li>
-        <li>skip</li>
-        <li>orderBy</li>
-        <li>update</li>
-      </ul>
-    </td>
-    <td valign="top">
-      <ul>
-        <li>limit</li>
-        <li>search</li>
-        <li>distinct</li>
-        <li>exists</li>
-        <li>first</li>
-        <li>delete</li>
-      </ul>
-    </td>
-    <td valign="top">
-      <ul>
-        <li>like</li>
-        <li>not like</li>
-        <li>between</li>
-        <li>not between</li>
-        <li>group by</li>
-        <li>having</li>
-      </ul>
-    </td>
-  </tr>
-</tbody>
-</table>
-</li>
-<li>
-<h1>👍 Process data on demand</h1>
-<p>SleekDB does not require any background process or network protocol in order to process data when you use it in a PHP project. All data for a query will be fetched at runtime within the same PHP process.</p>
-</li>
-<li>
-<h1>😍 Runs everywhere</h1>
-<p>Runs perfectly on shared-servers or VPS too.</p>
-</li>
-<li>
-<h1>🍰 Easy to learn and implement</h1>
-<p>SleekDB provides a very simple elegant API to handle all of your data.</p>
-</li>
-<li>
-<h1>🍰 Easily import/export or backup data.</h1>
-<p>SleekDB use files to store information. That makes tasks like backup, import and export very easy.</p>
-</li>
-<li>
-<h1>💪 Actively maintained</h1>
-<p>SleekDB is created by <a rel="noopener nofollow" href="https://twitter.com/rakibtg" target="_blank">@rakibtg</a> who is using it in various types of applications which are in production right now. Our other contributor and active maintainer is <a rel="noopener nofollow" href="https://www.goodsoft.de" target="_blank">Timucin</a> who is making SleekDB much better in terms of code quality and new features.</p>
-</li>
-<li>
-<h1>💌 Support</h1>
-<p>For support and other requirements <a class="gotoblock" href="/#/contact">contact</a>.</p>
-</li>
-</ul>
-            <div class="editlink" 
-              file="features.md" 
+              file="home-page-old-versions.md" 
               version="2.8">
             </div>
           </div>
@@ -339,22 +231,22 @@
 </ul>
 <h2>Composer Installation (recommended)</h2>
 <p>To install SleekDB using composer, open a terminal, cd into your project root directory where &quot;composer.json&quot; file lives and run this:</p>
-<pre><code class="language-sh">composer require rakibtg/sleekdb</code></pre>
+<pre><code class="language-sh">composer require rakibtg/sleekdb ^2.8</code></pre>
 <p>SleekDB should be auto loaded into your app using the composer.
 Find SleekDB on <strong><a rel="noopener nofollow" href="https://packagist.org/packages/rakibtg/sleekdb" target="_blank">packagist</a></strong>.</p>
 <h2>Install Manually (without composer)</h2>
 <ul>
-<li><a rel="noopener nofollow" href=" https://github.com/rakibtg/SleekDB/archive/master.zip">Download</a> the latest version and extract the ZIP file inside your project directory.</li>
+<li><a rel="noopener nofollow" href=" https://github.com/SleekDB/SleekDB/archive/master.zip">Download</a> the latest version and extract the ZIP file inside your project directory.</li>
 <li>
 <p>Import the SleekDB.php file where you want to use SleekDB.</p>
 <p>Example:</p>
 <pre><code class="language-php">require_once "../SleekDB/Store.php";</code></pre>
 </li>
 </ul>
-<p>To download older versions please check the <a rel="noopener nofollow" target="_blank" title="Click here to download old versions" href="https://github.com/rakibtg/SleekDB/releases">releases</a>.</p>
+<p>To download older versions please check the <a rel="noopener nofollow" target="_blank" title="Click here to download old versions" href="https://github.com/SleekDB/SleekDB/releases">releases</a>.</p>
 <h2>Using dev version (Not recommended)</h2>
 <p>We do a lot of experiments on the dev branch, which are not properly documented and the API will not be consistence in some cases. Use from <code>dev</code> branch if you have any specific reason or if you want play around with it.</p>
-<pre><code class="language-sh">composer require rakibtg/sleekdb dev-dev</code></pre>
+<pre><code class="language-sh">composer require rakibtg/sleekdb ^2.8 dev-dev</code></pre>
             <div class="editlink" 
               file="installation.md" 
               version="2.8">
@@ -3753,10 +3645,8 @@ Returns the inserted documents with their new and unique _id.</p>
 <ul>
 <li>
 <h3>Retrieve the amount of documents stored in a fast way.</h3>
-<ul>
-<li><a class="gotoblock" href="#/fetch-data#count">Store-&gt;count()</a></li>
-</ul>
 </li>
+<li><a class="gotoblock" href="#/fetch-data#count">Store-&gt;count()</a></li>
 </ul>
 </li>
 </ul>
@@ -3767,10 +3657,8 @@ Returns the inserted documents with their new and unique _id.</p>
 <ul>
 <li>
 <h3>In order to implement the new search functionality we had to add a new PHP module requirement to SleekDB.</h3>
-<ul>
-<li><strong><code>ext-mbstring</code></strong></li>
-</ul>
 </li>
+<li><strong><code>ext-mbstring</code></strong></li>
 </ul>
 </li>
 <li>
@@ -3786,10 +3674,8 @@ Returns the inserted documents with their new and unique _id.</p>
 <ul>
 <li>
 <h3>This new documentation page contains some complete code examples!</h3>
-<ul>
-<li><a class="gotoblock" href="#/complete-examples">&quot;Some complete code examples&quot;</a></li>
-</ul>
 </li>
+<li><a class="gotoblock" href="#/complete-examples">&quot;Some complete code examples&quot;</a></li>
 </ul>
 </li>
 <li>
@@ -3797,25 +3683,25 @@ Returns the inserted documents with their new and unique _id.</p>
 <ul>
 <li>
 <h3>SleekDB now has multiple enhanced searching algorithms with scored results!</h3>
-<ul>
-<li><a class="gotoblock" href="#/searching">New &quot;Searching&quot; documentation</a></li>
-</ul>
+</li>
+<li>
+<p><a class="gotoblock" href="#/searching">New &quot;Searching&quot; documentation</a></p>
 </li>
 <li>
 <h3>New store wide search configurations!</h3>
-<ul>
-<li><a class="gotoblock" href="#/configurations">Configure the search behavion when creating a <code>Store</code> object.</a></li>
-</ul>
+</li>
+<li>
+<p><a class="gotoblock" href="#/configurations">Configure the search behavion when creating a <code>Store</code> object.</a></p>
 </li>
 <li>
 <h3>New shorthand <code>search()</code> method for <code>Store</code> class!</h3>
-<ul>
-<li><a class="gotoblock" href="#/searching#store">Documentation of new shorthand <code>search()</code> method!</a></li>
-</ul>
+</li>
+<li>
+<p><a class="gotoblock" href="#/searching#store">Documentation of new shorthand <code>search()</code> method!</a></p>
 </li>
 <li>
 <h3>New comparisons!</h3>
-<ul>
+</li>
 <li>
 <h4>Type safe</h4>
 <ul>
@@ -3830,14 +3716,14 @@ Returns the inserted documents with their new and unique _id.</p>
 <li><code>&lt;&gt;</code></li>
 </ul>
 </li>
-</ul>
-</li>
 <li>
 <h3>Now you can easily remove fields from a document!</h3>
-<ul>
-<li><a class="gotoblock" href="#/edit-data#removeFieldsById">removeFieldsById()</a></li>
-<li><a class="gotoblock" href="#/query#removeFields">removeFields()</a></li>
-</ul>
+</li>
+<li>
+<p><a class="gotoblock" href="#/edit-data#removeFieldsById">removeFieldsById()</a></p>
+</li>
+<li>
+<p><a class="gotoblock" href="#/query#removeFields">removeFields()</a></p>
 </li>
 </ul>
 </li>
@@ -3846,19 +3732,25 @@ Returns the inserted documents with their new and unique _id.</p>
 <ul>
 <li>
 <h3>Configuration on a query by query base with the <code>search()</code> method of the <code>QueryBuilder</code> class</h3>
-<ul>
-<li><a class="gotoblock" href="#/query-builder#search">Documentation of <code>search()</code> method</a></li>
-</ul>
+</li>
+<li>
+<p><a class="gotoblock" href="#/query-builder#search">Documentation of <code>search()</code> method</a></p>
 </li>
 <li>
 <h3>All *byId methods now also accept strings as id!</h3>
 <p>For more details please visit the corresponding documentation pages:</p>
-<ul>
-<li><a class="gotoblock" href="#/fetch-data#findById">findById()</a></li>
-<li><a class="gotoblock" href="#/edit-data#updateById">updateById()</a></li>
-<li><a class="gotoblock" href="#/delete-data#deleteById">deleteById()</a></li>
-<li><a class="gotoblock" href="#/edit-data#removeFieldsById">removeFieldsById()</a></li>
-</ul>
+</li>
+<li>
+<p><a class="gotoblock" href="#/fetch-data#findById">findById()</a></p>
+</li>
+<li>
+<p><a class="gotoblock" href="#/edit-data#updateById">updateById()</a></p>
+</li>
+<li>
+<p><a class="gotoblock" href="#/delete-data#deleteById">deleteById()</a></p>
+</li>
+<li>
+<p><a class="gotoblock" href="#/edit-data#removeFieldsById">removeFieldsById()</a></p>
 </li>
 </ul>
 </li>
@@ -3870,22 +3762,24 @@ Returns the inserted documents with their new and unique _id.</p>
 <ul>
 <li>
 <h3>SleekDB now can group results and filter grouped results!</h3>
-<ul>
-<li><a class="gotoblock" href="#/query-builder#groupBy">groupBy()</a></li>
-<li><a class="gotoblock" href="#/query-builder#having">having()</a></li>
-</ul>
+</li>
+<li>
+<p><a class="gotoblock" href="#/query-builder#groupBy">groupBy()</a></p>
+</li>
+<li>
+<p><a class="gotoblock" href="#/query-builder#having">having()</a></p>
 </li>
 <li>
 <h3>Easily update parts of a document with its id!</h3>
-<ul>
-<li><a class="gotoblock" href="#/edit-data#updateById">updateById()</a></li>
-</ul>
+</li>
+<li>
+<p><a class="gotoblock" href="#/edit-data#updateById">updateById()</a></p>
 </li>
 <li>
 <h3>Use one Store object to manage multiple stores!</h3>
-<ul>
-<li><a class="gotoblock" href="#/advanced">changeStore()</a></li>
-</ul>
+</li>
+<li>
+<p><a class="gotoblock" href="#/advanced">changeStore()</a></p>
 </li>
 </ul>
 </li>
@@ -3895,27 +3789,21 @@ Returns the inserted documents with their new and unique _id.</p>
 <li>
 <h3>select()</h3>
 <p>For more details please visit the <a class="gotoblock" href="#/query-builder#select">documentation of select</a>.</p>
-<ul>
+</li>
 <li>The select method now accepts aliase!</li>
 <li>When using select in conjunction with <code>groupBy</code> you can use functions!</li>
 <li>You can now select nested fields!</li>
-</ul>
-</li>
 <li>
 <h3>except()</h3>
 <p>For more details please visit the <a class="gotoblock" href="#/query-builder#except">documentation of except</a>.</p>
-<ul>
-<li>You can now exclude nested fields!</li>
-</ul>
 </li>
+<li>You can now exclude nested fields!</li>
 <li>
 <h3>update() of Query class</h3>
 <p>For more details please visit the <a class="gotoblock" href="#/query#update">documentation of update</a>.</p>
-<ul>
+</li>
 <li>You can now update nested fields!</li>
 <li>Can now return the updated results!</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -3961,7 +3849,7 @@ Returns the inserted documents with their new and unique _id.</p>
 <p>They will be removed with the next major update.<br/>
 Please <strong>use the new conditions <code>"in"</code> and <code>"not in"</code> instead</strong>.<br/>
 Available with the <code>findBy()</code>, <code>findOneBy</code>, <code>deleteBy()</code>, <code>where()</code> and <code>orWhere()</code> methods since version 2.3.<br/>
-See <a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/118" target="_blank">#118</a> for more details.</p>
+See <a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/118" target="_blank">#118</a> for more details.</p>
 </li>
 </ul>
 <h2>Changes from 2.2 to 2.3</h2>
@@ -3976,38 +3864,38 @@ Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
 <h1>🌟 Nested where statements everywhere!</h1>
 <p>The <code>findBy()</code>, <code>findOneBy</code>, <code>deleteBy()</code>, <code>where()</code> and <code>orWhere()</code> methods now can handle nested statements!</p>
 <table>
-<tr>
-  <td>
-    <ul>
-      <li><code>findBy()</code></li>
-      <li><code>findOneBy()</code></li>
-    </ul>
-  </td>
-  <td>
-    <a class="gotoblock" href="#/fetch-data">Fetch Data documentation</a>
-  </td>
-</tr>
-<tr>
-  <td>
-    <ul>
-      <li><code>deleteBy()</code></li>
-    </ul>
-  </td>
-  <td>
-    <a class="gotoblock" href="#/delete-data">Delete Data documentation</a>
-  </td>
-</tr>
-<tr>
-  <td>
-    <ul>
-      <li><code>where()</code></li>
-      <li><code>orWhere()</code></li>
-    </ul>
-  </td>
-  <td>
-    <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a>
-  </td>
-</tr>
+  <tr>
+    <td>
+      <ul>
+        <li><code>findBy()</code></li>
+        <li><code>findOneBy()</code></li>
+      </ul>
+    </td>
+    <td>
+      <a class="gotoblock" href="#/fetch-data">Fetch Data documentation</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li><code>deleteBy()</code></li>
+      </ul>
+    </td>
+    <td>
+      <a class="gotoblock" href="#/delete-data">Delete Data documentation</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li><code>where()</code></li>
+        <li><code>orWhere()</code></li>
+      </ul>
+    </td>
+    <td>
+      <a class="gotoblock" href="#/query-builder">QueryBuilder documentation</a>
+    </td>
+  </tr>
 </table>
 </li>
 <li>
@@ -4022,7 +3910,7 @@ Please use <code>where()</code> and <code>orWhere()</code> instead.</p>
 <li>
 <h1>💡 Logical connection</h1>
 <p>All condition methods are now logically connected and the order when using them is now important.<br/>
-See <a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/114" target="_blank">#114</a> for more details.</p>
+See <a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/114" target="_blank">#114</a> for more details.</p>
 </li>
 </ul>
 <h2>Changes from 2.1 to 2.2</h2>
@@ -4099,27 +3987,27 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
 </ul>
 <h2>Issues</h2>
 <ul>
-<li>Deprecate SleekDB Class (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/84" target="_blank">#84</a>)</li>
-<li>first and exists methods does not use cache (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/82" target="_blank">#82</a>)</li>
-<li>Make where and orWhere just accept one array (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/80" target="_blank">#80</a>)</li>
-<li>Make dataDir required (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/79" target="_blank">#79</a>)</li>
-<li>Add update &amp; delete to Store class <a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/78" target="_blank">#78</a>)</li>
-<li>Change delete method of Query class to accept return options (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/77" target="_blank">#77</a>)</li>
-<li>Add find methods to new Store class to make the QueryBuilder optional for simple queries. (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/75" target="_blank">#75</a>)</li>
-<li>Allow to query on read-only file system (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/67" target="_blank">#67</a>)</li>
-<li>Use &quot;results&quot; property instead of returning data from methods (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/59" target="_blank">#59</a>)</li>
-<li>Return the first item only (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/56" target="_blank">#56</a>)</li>
-<li>Check if data exists (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/54" target="_blank">#54</a>)</li>
-<li>update return value (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/51" target="_blank">#51</a>)</li>
-<li>delete status (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/48" target="_blank">#48</a>)</li>
-<li>Extend not possible due to private helper methods (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/44" target="_blank">#44</a>)</li>
-<li>JOIN feature (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/42" target="_blank">#42</a>)</li>
-<li>Return distincted value (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/41" target="_blank">#41</a>)</li>
-<li>Suppress Key on fetch (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/38" target="_blank">#38</a>)</li>
-<li>Like Condition (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/34" target="_blank">#34</a>)</li>
-<li>Better code base (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/32" target="_blank">#32</a>)</li>
-<li>OR Condition Query (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/31" target="_blank">#31</a>)</li>
-<li>Possibility of duplicate ID’s (<a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues/30" target="_blank">#30</a>)</li>
+<li>Deprecate SleekDB Class (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/84" target="_blank">#84</a>)</li>
+<li>first and exists methods does not use cache (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/82" target="_blank">#82</a>)</li>
+<li>Make where and orWhere just accept one array (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/80" target="_blank">#80</a>)</li>
+<li>Make dataDir required (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/79" target="_blank">#79</a>)</li>
+<li>Add update &amp; delete to Store class <a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/78" target="_blank">#78</a>)</li>
+<li>Change delete method of Query class to accept return options (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/77" target="_blank">#77</a>)</li>
+<li>Add find methods to new Store class to make the QueryBuilder optional for simple queries. (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/75" target="_blank">#75</a>)</li>
+<li>Allow to query on read-only file system (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/67" target="_blank">#67</a>)</li>
+<li>Use &quot;results&quot; property instead of returning data from methods (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/59" target="_blank">#59</a>)</li>
+<li>Return the first item only (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/56" target="_blank">#56</a>)</li>
+<li>Check if data exists (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/54" target="_blank">#54</a>)</li>
+<li>update return value (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/51" target="_blank">#51</a>)</li>
+<li>delete status (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/48" target="_blank">#48</a>)</li>
+<li>Extend not possible due to private helper methods (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/44" target="_blank">#44</a>)</li>
+<li>JOIN feature (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/42" target="_blank">#42</a>)</li>
+<li>Return distincted value (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/41" target="_blank">#41</a>)</li>
+<li>Suppress Key on fetch (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/38" target="_blank">#38</a>)</li>
+<li>Like Condition (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/34" target="_blank">#34</a>)</li>
+<li>Better code base (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/32" target="_blank">#32</a>)</li>
+<li>OR Condition Query (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/31" target="_blank">#31</a>)</li>
+<li>Possibility of duplicate ID’s (<a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues/30" target="_blank">#30</a>)</li>
 </ul>
             <div class="editlink" 
               file="release-notes.md" 
@@ -4127,18 +4015,29 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
             </div>
           </div>
         
-          <div class="intro" id="block_contributing">
-            <h1>Contributing</h1>
+          <div class="intro" id="block_support">
+            <h1>Support and Contributions</h1>
+<p>SleekDB is an open-source project that thrives on community support and contributions. If you find SleekDB useful and would like to support its development, there are several ways you can contribute:</p>
+<h2>⭐ Star the Repository</h2>
+<p>Show your appreciation for SleekDB by starring the <a href="https://github.com/SleekDB/SleekDB">GitHub repository</a>. This helps increase visibility and encourages more users to discover and use SleekDB.</p>
+<h2>💖 Support Financially</h2>
+<p>Support SleekDB's development through <a href="https://github.com/sponsors/SleekDB">GitHub Sponsors</a>. Your sponsorship helps maintain and improve the project, keeping it reliable and efficient for everyone. Starting at just $3 (monthly or one-time) every contribution makes a difference!</p>
+<h2>🐛 Report Issues</h2>
+<p>If you encounter any bugs or issues while using SleekDB, please report them on the <a href="https://github.com/SleekDB/SleekDB/issues">GitHub Issues page</a>. Providing detailed information helps us identify and fix problems more efficiently.</p>
+<h2>🛠 Contribute Code</h2>
+<p>We welcome contributions from the community! If you'd like to contribute code, please follow these steps:</p>
 <ul>
 <li>Fork SleekDB</li>
-<li>Create your feature branch <code>git checkout -b feature/my-new-feature</code></li>
-<li>Commit your changes <code>git commit -am 'Added some feature'</code></li>
-<li>Push to the branch <code>git push origin feature/my-new-feature</code></li>
+<li>Create your feature branch: git checkout -b feature/my-new-feature</li>
+<li>Commit your changes: git commit -am 'Added some feature'</li>
+<li>Push to the branch: git push origin feature/my-new-feature</li>
 <li>Create new Pull Request targeting <code>dev</code> branch</li>
 </ul>
-<p>Please write details about your PR.</p>
+<h2>💬 Join the Community</h2>
+<p>Join our <a rel="noopener nofollow" href="https://discord.gg/WJGqUFPtZw" target="_blank">Discord channel</a>. We'd love to hear from you and get your feedback! Help other users by answering questions and sharing your experiences with SleekDB.</p>
+<p>Thank you for being a part of the SleekDB community! Your support and contributions are invaluable to us.</p>
             <div class="editlink" 
-              file="contributing.md" 
+              file="support.md" 
               version="2.8">
             </div>
           </div>
@@ -4147,9 +4046,9 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
             <h1>Contact</h1>
 <p>We would love to see how you are using the database, if you have implemented something or how it is working for you.</p>
 <p>What changes will make you more interested.</p>
-<p>If you want to submit a bug feel free to create a new <a rel="noopener nofollow" href="https://github.com/rakibtg/SleekDB/issues" target="_blank">issue</a> or email me @ rakibtg [-at-] gmail [-dot-] com</p>
-<h2>About</h2>
-<p>Let us know with a tweet if you love or hate SleekDB 😄, or if you have any question mail me or tweet to my twitter handle.</p>
+<p>If you want to submit a bug feel free to create a new <a rel="noopener nofollow" href="https://github.com/SleekDB/SleekDB/issues" target="_blank">issue</a> or email me @ rakibtg [-at-] gmail [-dot-] com</p>
+<h1>Sponsorship</h1>
+<p><a rel="noopener nofollow" href="https://github.com/sponsors/SleekDB" target="_blank">Become a sponsor to SleekDB</a> via our GitHub sponsorship program or find more ways to support in our <a class="gotoblock" href="#/support">support page</a>.</p>
             <div class="editlink" 
               file="contact.md" 
               version="2.8">
@@ -4157,25 +4056,33 @@ Look at the new nestedWhere section of the <a class="gotoblock" href="#/query-bu
           </div>
         
           <div class="intro" id="block_versions">
-            <h1>Versions</h1>
+            <h1>Latest Version</h1>
 <ul>
-<li><strong><a href="/">2.15</a> (Actively Maintained Version)</strong></li>
-<li><strong><a href="/versions/2.14/">2.14</a></strong></li>
-<li><strong><a href="/versions/2.13/">2.13</a></strong></li>
-<li><strong><a href="/versions/2.12/">2.12</a></strong></li>
-<li><strong><a href="/versions/2.10/">2.11</a></strong></li>
-<li><strong><a href="/versions/2.10/">2.10</a></strong></li>
-<li><strong><a href="/versions/2.9/">2.9</a></strong></li>
-<li><strong><a href="/versions/2.8/">2.8</a></strong></li>
-<li><strong><a href="/versions/2.7/">2.7</a></strong></li>
-<li><strong><a href="/versions/2.6/">2.6</a></strong></li>
-<li><strong><a href="/versions/2.5/">2.5</a></strong></li>
-<li><strong><a href="/versions/2.4/">2.4</a></strong></li>
-<li><strong><a href="/versions/2.3/">2.3</a></strong></li>
-<li><strong><a href="/versions/2.2/">2.2</a></strong></li>
-<li><strong><a href="/versions/2.1/">2.1</a></strong></li>
-<li><strong><a href="/versions/2.0/">2.0</a></strong></li>
-<li><strong><a href="/versions/1.5/">1.5</a> (Bug Fixes Only)</strong></li>
+<li><strong><a href="/">2.50</a></strong>  (Actively Maintained Version)</li>
+</ul>
+<p>Always refer to the latest version for the most up-to-date features and security updates.</p>
+<h2>Bug Fix Only Version</h2>
+<ul>
+<li><strong><a href="/versions/2.15/">2.15</a></strong> (Bug Fix Only)</li>
+</ul>
+<h2>Archived Versions</h2>
+<ul>
+<li><strong><a href="/versions/2.14/">2.14</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.13/">2.13</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.12/">2.12</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.11/">2.11</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.10/">2.10</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.9/">2.9</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.8/">2.8</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.7/">2.7</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.6/">2.6</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.5/">2.5</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.4/">2.4</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.3/">2.3</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.2/">2.2</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.1/">2.1</a></strong> (Archived)</li>
+<li><strong><a href="/versions/2.0/">2.0</a></strong> (Archived)</li>
+<li><strong><a href="/versions/1.5/">1.5</a></strong> (Archived)</li>
 </ul>
             <div class="editlink" 
               file="versions.md" 
